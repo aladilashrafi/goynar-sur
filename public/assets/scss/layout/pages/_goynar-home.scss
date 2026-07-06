@@ -1,0 +1,270 @@
+@use '../../utils' as *;
+
+.goynar-home {
+    --goynar-primary: #811a49;
+    --goynar-wine: #933a44;
+    --goynar-teal: #38767d;
+    --goynar-plum: #6a526b;
+    --goynar-rose: #b8778c;
+    --goynar-blush: #e1ccd3;
+    --goynar-soft: #fbf6f8;
+
+    background:
+        radial-gradient(circle at 8% 18%, rgba(129, 26, 73, .10), transparent 28%),
+        radial-gradient(circle at 90% 48%, rgba(56, 118, 125, .12), transparent 30%),
+        linear-gradient(180deg, #fff 0%, var(--goynar-soft) 48%, #fff 100%);
+
+    .khaki-bg,
+    .tp-slider-item-4 {
+        background:
+            radial-gradient(circle at 72% 52%, rgba(225, 204, 211, .75), transparent 32%),
+            linear-gradient(115deg, #f0a28e 0%, #ffc8ba 42%, #ffffff 100%) !important;
+    }
+
+    .tp-slider-content-4 {
+        span {
+            color: #f7dde7;
+            font-weight: 600;
+            letter-spacing: .04em;
+        }
+
+        .tp-slider-title-4 {
+            max-width: 660px;
+            color: var(--tp-common-white);
+            text-shadow: 0 14px 40px rgba(43, 27, 47, .26);
+        }
+    }
+
+    .tp-slider-height-4 {
+        min-height: 720px;
+    }
+
+    .tp-slider-item-4 {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .tp-slider-thumb-4 {
+        position: absolute !important;
+        left: auto !important;
+        right: 0 !important;
+        top: auto !important;
+        bottom: 0 !important;
+        transform: none !important;
+        margin-left: auto !important;
+        margin-right: 0 !important;
+        width: min(44vw, 620px);
+        height: 620px;
+        border-radius: 8px 8px 0 0;
+        overflow: hidden;
+        box-shadow: 0 28px 70px rgba(43, 27, 47, .28);
+
+        &::after {
+            position: absolute;
+            content: '';
+            inset: 0;
+            background: linear-gradient(180deg, rgba(129, 26, 73, 0), rgba(43, 27, 47, .12));
+            pointer-events: none;
+        }
+
+        img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: right center;
+            filter: saturate(1.03);
+        }
+    }
+
+    .tp-slider-thumb-4-shape {
+        display: none;
+    }
+
+    .tp-slider-nav-item {
+        border-color: rgba(255, 255, 255, .22);
+        background: rgba(255, 255, 255, .08);
+        backdrop-filter: blur(10px);
+    }
+
+    .tp-feature-area {
+        background-color: #fff;
+    }
+
+    .tp-feature-icon-2 span {
+        color: var(--goynar-primary);
+        background-color: rgba(225, 204, 211, .38);
+    }
+
+    .tp-section-title-pre-4,
+    .tp-banner-content-4 span,
+    .tp-banner-full-content span,
+    .tp-collection-subtitle-4 {
+        color: var(--goynar-primary) !important;
+        font-weight: 600;
+        letter-spacing: .04em;
+    }
+
+    .tp-section-title-4,
+    .tp-banner-title-4,
+    .tp-banner-full-title,
+    .tp-collection-title-4 {
+        color: #2b1b2f;
+    }
+
+    .tp-banner-item-4,
+    .tp-banner-full,
+    .tp-collection-inner-4 {
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 18px 45px rgba(106, 82, 107, .10);
+    }
+
+    .tp-banner-thumb-4,
+    .tp-banner-full-thumb,
+    .tp-collection-thumb-4 {
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+
+    .tp-banner-thumb-4::after {
+        position: absolute;
+        content: '';
+        inset: 0;
+        background: linear-gradient(90deg, rgba(255, 255, 255, .90) 0%, rgba(255, 255, 255, .62) 42%, rgba(255, 255, 255, .10) 100%);
+    }
+
+    .tp-banner-full-thumb::after {
+        background: linear-gradient(180deg, rgba(43, 27, 47, .10), rgba(43, 27, 47, .54));
+    }
+
+    .tp-about-area {
+        background: linear-gradient(180deg, rgba(225, 204, 211, .18), rgba(255, 255, 255, 0));
+    }
+
+    .tp-about-thumb,
+    .tp-about-thumb-2 {
+        overflow: hidden;
+        border-radius: 8px;
+        box-shadow: 0 22px 54px rgba(43, 27, 47, .12);
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+    }
+
+    .tp-about-thumb {
+        aspect-ratio: 4 / 5;
+    }
+
+    .tp-about-thumb-2 {
+        aspect-ratio: 1 / 1;
+    }
+
+    .tp-about-content p {
+        max-width: 620px;
+        color: #5d5361;
+    }
+
+    .tp-product-area,
+    .tp-best-area {
+        background-color: rgba(254, 254, 254, .86);
+    }
+
+    .tp-product-tab .nav-link.active,
+    .tp-product-tab .nav-link:hover {
+        color: var(--goynar-primary);
+    }
+
+    .tp-tab-line {
+        background-color: var(--goynar-primary);
+    }
+
+    .tp-collection-wrapper-4 {
+        background:
+            linear-gradient(180deg, rgba(225, 204, 211, .34), rgba(255, 255, 255, .92)) !important;
+    }
+
+    .tp-collection-thumb-banner-4 {
+        overflow: hidden;
+        border-radius: 8px;
+
+        img {
+            width: 100%;
+            height: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            object-position: center;
+        }
+    }
+
+    .tp-hotspot {
+        background-color: var(--goynar-primary);
+        color: var(--tp-common-white);
+    }
+
+    .tp-brand-area {
+        padding-bottom: 10px;
+    }
+
+    .tp-instagram-style-4 {
+        background-color: #fff;
+    }
+
+    .tp-instagram-item-2 {
+        aspect-ratio: 1 / 1;
+        overflow: hidden;
+        border-radius: 8px;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+    }
+}
+
+@media #{$md, $sm, $xs} {
+    .goynar-home {
+        .tp-slider-height-4 {
+            min-height: 760px;
+        }
+
+        .tp-slider-thumb-4 {
+            right: 0 !important;
+            bottom: 28px !important;
+            width: 58vw;
+            height: 430px;
+            opacity: .72;
+        }
+
+        .tp-slider-content-4 .tp-slider-title-4 {
+            max-width: 520px;
+        }
+
+        .tp-banner-item-4,
+        .tp-banner-full,
+        .tp-collection-inner-4 {
+            border-radius: 0;
+        }
+    }
+}
+
+@media #{$xs} {
+    .goynar-home {
+        .tp-slider-thumb-4 {
+            width: 86vw;
+            height: 390px;
+            right: 0 !important;
+            opacity: .46;
+        }
+
+        .tp-banner-thumb-4::after {
+            background: linear-gradient(90deg, rgba(255, 255, 255, .94), rgba(255, 255, 255, .58));
+        }
+    }
+}
