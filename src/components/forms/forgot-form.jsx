@@ -13,23 +13,21 @@ const schema = Yup.object().shape({
 });
 
 const ForgotForm = () => {
-  const [resetPassword, {}] = useResetPasswordMutation();
+  const [resetPassword, { isLoading }] = useResetPasswordMutation();
     // react hook form
     const {register,handleSubmit,formState: { errors },reset} = useForm({
       resolver: yupResolver(schema), 
     });
     // onSubmit
-    const onSubmit = (data) => {
-      resetPassword({
-        verifyEmail: data.email,
-      }).then((result) => {
-        if(result?.error){
-          notifyError(result?.error?.data?.message)
-        }
-        else {
-          notifySuccess(result.data?.message);
-        }
-      });
+    const onSubmit = async (data) => {
+      try {
+        const result = await resetPassword({
+          email: data.email,
+        }).unwrap();
+        notifySuccess(result?.message || "If that email exists, we sent password reset instructions.");
+      } catch (error) {
+        notifyError(error?.data?.message || "Unable to send reset email");
+      }
       reset();
     };
   return (
@@ -52,8 +50,8 @@ const ForgotForm = () => {
         </div>
       </div>
       <div className="tp-login-bottom mb-15">
-        <button type="submit" className="tp-login-btn w-100">
-          Send Mail
+        <button type="submit" className="tp-login-btn w-100" disabled={isLoading}>
+          {isLoading ? "Sending..." : "Send Mail"}
         </button>
       </div>
     </form>

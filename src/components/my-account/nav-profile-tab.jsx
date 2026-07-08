@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Box, DeliveryTwo, Processing, Truck } from "@/svg";
 import { userLoggedOut } from "@/redux/features/auth/authSlice";
 
-const NavProfileTab = ({ orderData }) => {
+const NavProfileTab = ({ orderData, isOrderLoading = false }) => {
   const {user} = useSelector(state => state.auth)
   const dispatch = useDispatch();
   const router = useRouter();
@@ -21,7 +21,7 @@ const NavProfileTab = ({ orderData }) => {
           <div className="col-md-6">
             <div className="profile__main-inner d-flex flex-wrap align-items-center">
               <div className="profile__main-content">
-                <h4 className="profile__main-title">Welcome Mr. {user?.name}</h4>
+                <h4 className="profile__main-title">Welcome {user?.name || "Goynar Sur Customer"}</h4>
               </div>
             </div>
           </div>
@@ -40,7 +40,7 @@ const NavProfileTab = ({ orderData }) => {
             <div className="profile__main-info-item">
               <div className="profile__main-info-icon">
                 <span>
-                  <span className="profile-icon-count profile-download">{orderData?.totalDoc}</span>
+                  <span className="profile-icon-count profile-download">{isOrderLoading ? "..." : orderData?.totalDoc || 0}</span>
                   <Box />
                 </span>
               </div>
@@ -51,7 +51,7 @@ const NavProfileTab = ({ orderData }) => {
             <div className="profile__main-info-item">
               <div className="profile__main-info-icon">
                 <span>
-                  <span className="profile-icon-count profile-order">{orderData?.pending}</span>
+                  <span className="profile-icon-count profile-order">{isOrderLoading ? "..." : orderData?.pending || 0}</span>
                   <Processing />
                 </span>
               </div>
@@ -63,7 +63,7 @@ const NavProfileTab = ({ orderData }) => {
               <div className="profile__main-info-icon">
                 <span>
                   <span className="profile-icon-count profile-wishlist">
-                    {orderData?.processing}
+                    {isOrderLoading ? "..." : orderData?.processing || 0}
                   </span>
                   <Truck />
                 </span>
@@ -76,7 +76,7 @@ const NavProfileTab = ({ orderData }) => {
               <div className="profile__main-info-icon">
                 <span>
                   <span className="profile-icon-count profile-wishlist">
-                    {orderData?.delivered}
+                    {isOrderLoading ? "..." : orderData?.delivered || 0}
                   </span>
                   <DeliveryTwo />
                 </span>

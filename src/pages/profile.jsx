@@ -1,24 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
+import Cookies from "js-cookie";
 // internal
 import SEO from "@/components/seo";
 import Wrapper from "@/layout/wrapper";
 import HeaderTwo from "@/layout/headers/header-2";
 import Footer from "@/layout/footers/footer";
 import CommonBreadcrumb from "@/components/breadcrumb/common-breadcrumb";
-import PhaseOneDisabled from "@/components/common/phase-one-disabled";
+import ProfileArea from "@/components/my-account/profile-area";
 
 const ProfilePage = () => {
+  const router = useRouter();
+  const { accessToken } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    const hasStoredSession = Boolean(Cookies.get("userInfo"));
+    if (!accessToken && !hasStoredSession) {
+      router.replace("/login?redirect=/profile");
+    }
+  }, [accessToken, router]);
+
   return (
     <Wrapper>
       <SEO pageTitle="Account" />
       <HeaderTwo style_2={true} />
-      <CommonBreadcrumb title="Account" subtitle="Phase 2" center={true} />
-      <PhaseOneDisabled
-        title="Customer accounts are coming in Phase 2"
-        message="Phase 1 keeps checkout simple: browse products, add to cart, and place a guest Cash on Delivery order."
-        primaryLabel="Continue Shopping"
-        primaryHref="/shop"
-      />
+      <CommonBreadcrumb title="My Account" subtitle="Account" center={true} />
+      {accessToken && <ProfileArea />}
       <Footer primary_style={true} />
     </Wrapper>
   );

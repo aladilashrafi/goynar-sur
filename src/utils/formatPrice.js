@@ -2,10 +2,10 @@ export function formatPrice(value) {
   const amount = typeof value === "string" ? Number(value) : value;
 
   if (!Number.isFinite(amount)) {
-    return "৳0";
+    return "\u09F30";
   }
 
-  return `৳${Math.round(amount).toLocaleString("en-IN")}`;
+  return `\u09F3${Math.round(amount).toLocaleString("en-IN")}`;
 }
 
 export function calcDiscountPercent(regularPrice, salePrice) {

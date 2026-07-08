@@ -5,8 +5,15 @@ import NavProfileTab from "./nav-profile-tab";
 import ProfileInfo from "./profile-info";
 import ChangePassword from "./change-password";
 import MyOrders from "./my-orders";
+import { useGetUserOrdersQuery } from "@/redux/features/order/orderApi";
 
-const ProfileArea = ({orderData}) => {
+const ProfileArea = () => {
+  const {
+    data: orderData,
+    isLoading: isOrderLoading,
+    isError: isOrderError,
+  } = useGetUserOrdersQuery();
+
   return (
     <>
       <section className="profile__area pt-120 pb-120">
@@ -28,7 +35,10 @@ const ProfileArea = ({orderData}) => {
                       role="tabpanel"
                       aria-labelledby="nav-profile-tab"
                     >
-                      <NavProfileTab orderData={orderData} />
+                      <NavProfileTab
+                        orderData={orderData}
+                        isOrderLoading={isOrderLoading}
+                      />
                     </div>
 
                     <div
@@ -55,7 +65,11 @@ const ProfileArea = ({orderData}) => {
                       role="tabpanel"
                       aria-labelledby="nav-order-tab"
                     >
-                      <MyOrders orderData={orderData} />
+                      <MyOrders
+                        orderData={orderData}
+                        isLoading={isOrderLoading}
+                        isError={isOrderError}
+                      />
                     </div>
                   </div>
                 </div>

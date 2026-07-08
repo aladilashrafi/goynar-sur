@@ -14,36 +14,30 @@ const schema = Yup.object().shape({
   name: Yup.string().required().label("Name"),
   email: Yup.string().required().email().label("Email"),
   phone: Yup.string().required().min(11).label("Phone"),
-  address: Yup.string().required().label("Address"),
-  bio: Yup.string().required().min(20).label("Bio"),
+  address: Yup.string().label("Address"),
 });
 
 const ProfileInfo = () => {
   const { user } = useSelector((state) => state.auth);
 
-  const [updateProfile, {}] = useUpdateProfileMutation();
+  const [updateProfile, { isLoading }] = useUpdateProfileMutation();
   // react hook form
-  const {register,handleSubmit,formState: { errors },reset} = useForm({
+  const {register,handleSubmit,formState: { errors }} = useForm({
     resolver: yupResolver(schema),
   });
   // on submit
-  const onSubmit = (data) => {
-    updateProfile({
-      id:user?._id,
-      name:data.name,
-      email:data.email,
-      phone:data.phone,
-      address:data.address,
-      bio:data.bio,
-    }).then((result) => {
-      if(result?.error){
-        notifyError(result?.error?.data?.message);
-      }
-      else {
-        notifySuccess(result?.data?.message);
-      }
-    })
-    reset();
+  const onSubmit = async (data) => {
+    try {
+      const result = await updateProfile({
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        address: data.address,
+      }).unwrap();
+      notifySuccess(result?.message || "Profile updated successfully");
+    } catch (error) {
+      notifyError(error?.data?.message || "Unable to update profile");
+    }
   };
   return (
     <div className="profile__info">
@@ -54,7 +48,7 @@ const ProfileInfo = () => {
             <div className="col-xxl-6 col-md-6">
               <div className="profile__input-box">
                 <div className="profile__input">
-                  <input {...register("name", { required: `Name is required!` })} name='name' type="text" placeholder="Enter your username" defaultValue={user?.name} />
+                  <input {...register("name", { required: `Name is required!` })} name='name' type="text" placeholder="Enter your name" defaultValue={user?.name} />
                   <span>
                     <UserThree/>
                   </span>
@@ -78,7 +72,7 @@ const ProfileInfo = () => {
             <div className="col-xxl-12">
               <div className="profile__input-box">
                 <div className="profile__input">
-                  <input {...register("phone", { required: true })} name='phone' type="text" placeholder="Enter your number" defaultValue="0123 456 7889" />
+                  <input {...register("phone", { required: true })} name='phone' type="text" placeholder="Enter your number" defaultValue={user?.phone || ""} />
                   <span>
                     <PhoneThree/>
                   </span>
@@ -90,7 +84,7 @@ const ProfileInfo = () => {
             <div className="col-xxl-12">
               <div className="profile__input-box">
                 <div className="profile__input">
-                  <input {...register("address", { required: true })} name='address' type="text" placeholder="Enter your address" defaultValue="3304 Randall Drive" />
+                  <input {...register("address")} name='address' type="text" placeholder="Enter your address" defaultValue={user?.customer?.billing?.address_1 || ""} />
                   <span>
                     <LocationTwo/>
                   </span>
@@ -100,16 +94,10 @@ const ProfileInfo = () => {
             </div>
 
             <div className="col-xxl-12">
-              <div className="profile__input-box">
-                <div className="profile__input">
-                  <textarea {...register("bio", { required: true })} name='bio' placeholder="Enter your bio" defaultValue="Hi there, this is my bio..." />
-                  <ErrorMsg msg={errors.bio?.message} />
-                </div>
-              </div>
-            </div>
-            <div className="col-xxl-12">
               <div className="profile__btn">
-                <button type="submit" className="tp-btn">Update Profile</button>
+                <button type="submit" className="tp-btn" disabled={isLoading}>
+                  {isLoading ? "Updating..." : "Update Profile"}
+                </button>
               </div>
             </div>
           </div>

@@ -18,7 +18,7 @@ const schema = Yup.object().shape({
 });
 const LoginForm = () => {
   const [showPass, setShowPass] = useState(false);
-  const [loginUser, { }] = useLoginUserMutation();
+  const [loginUser, { isLoading }] = useLoginUserMutation();
   const router = useRouter();
   const { redirect } = router.query;
   // react hook form
@@ -31,21 +31,18 @@ const LoginForm = () => {
     resolver: yupResolver(schema),
   });
   // onSubmit
-  const onSubmit = (data) => {
-    loginUser({
-      email: data.email,
-      password: data.password,
-    })
-      .then((data) => {
-        if (data?.data) {
-          notifySuccess("Login successfully");
-          router.push(redirect || "/");
-        }
-        else {
-          notifyError(data?.error?.data?.error)
-        }
-      })
-    reset();
+  const onSubmit = async (data) => {
+    try {
+      await loginUser({
+        email: data.email,
+        password: data.password,
+      }).unwrap();
+      notifySuccess("Login successful");
+      reset();
+      router.push(redirect || "/profile");
+    } catch (error) {
+      notifyError(error?.data?.message || "Unable to login");
+    }
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -91,7 +88,9 @@ const LoginForm = () => {
         </div>
       </div>
       <div className="tp-login-bottom">
-        <button type='submit' className="tp-login-btn w-100">Login</button>
+        <button type='submit' className="tp-login-btn w-100" disabled={isLoading}>
+          {isLoading ? "Logging in..." : "Login"}
+        </button>
       </div>
     </form>
   );

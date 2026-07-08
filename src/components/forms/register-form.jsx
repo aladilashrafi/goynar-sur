@@ -21,7 +21,7 @@ const schema = Yup.object().shape({
 
 const RegisterForm = () => {
   const [showPass, setShowPass] = useState(false);
-  const [registerUser, {}] = useRegisterUserMutation();
+  const [registerUser, { isLoading }] = useRegisterUserMutation();
   const router = useRouter();
   const { redirect } = router.query;
   // react hook form
@@ -29,20 +29,19 @@ const RegisterForm = () => {
     resolver: yupResolver(schema),
   });
   // on submit
-  const onSubmit = (data) => {
-    registerUser({
-      name: data.name,
-      email: data.email,
-      password: data.password,
-    }).then((result) => {
-      if (result?.error) {
-        notifyError("Register Failed");
-      } else {
-        notifySuccess(result?.data?.message);
-        // router.push(redirect || "/");
-      }
-    });
-    reset();
+  const onSubmit = async (data) => {
+    try {
+      const result = await registerUser({
+        name: data.name,
+        email: data.email,
+        password: data.password,
+      }).unwrap();
+      notifySuccess(result?.message || "Account created successfully");
+      reset();
+      router.push(redirect || "/profile");
+    } catch (error) {
+      notifyError(error?.data?.message || "Register failed");
+    }
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -117,8 +116,8 @@ const RegisterForm = () => {
         </div>
       </div>
       <div className="tp-login-bottom">
-        <button type="submit" className="tp-login-btn w-100">
-          Sign Up
+        <button type="submit" className="tp-login-btn w-100" disabled={isLoading}>
+          {isLoading ? "Creating Account..." : "Sign Up"}
         </button>
       </div>
     </form>
