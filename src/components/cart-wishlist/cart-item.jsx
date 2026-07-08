@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Close, Minus, Plus } from "@/svg";
 import { add_cart_product, quantityDecrement, remove_product } from "@/redux/features/cartSlice";
 import { formatPrice } from "@/utils/formatPrice";
+import { productUrl } from "@/utils/routes";
 
 const CartItem = ({product}) => {
   const {_id, id, img,title,price, orderQuantity = 0, selectedAttributes = [] } = product || {};
@@ -30,13 +31,13 @@ const CartItem = ({product}) => {
     <tr>
       {/* img */}
       <td className="tp-cart-img">
-        <Link href={`/product-details/${id || _id}`}>
+        <Link href={productUrl(product)}>
           <Image src={img} alt="product img" width={70} height={100} />
         </Link>
       </td>
       {/* title */}
       <td className="tp-cart-title">
-        <Link href={`/product-details/${id || _id}`}>{title}</Link>
+        <Link href={productUrl(product)}>{title}</Link>
         {selectedAttributes.length > 0 && (
           <p className="mb-0">
             {selectedAttributes.map((item) => `${item.name}: ${item.value}`).join(" / ")}

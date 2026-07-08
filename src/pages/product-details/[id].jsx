@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 // internal
 import SEO from '@/components/seo';
 import HeaderTwo from '@/layout/headers/header-2';
@@ -9,9 +9,19 @@ import { useGetProductQuery } from '@/redux/features/productApi';
 import ProductDetailsBreadcrumb from '@/components/breadcrumb/product-details-breadcrumb';
 import ProductDetailsArea from '@/components/product-details/product-details-area';
 import PrdDetailsLoader from '@/components/loader/prd-details-loader';
+import { useRouter } from 'next/router';
+import { productUrl } from '@/utils/routes';
 
 const ProductDetailsPage = ({ query }) => {
+  const router = useRouter();
   const { data: product, isLoading, isError } = useGetProductQuery(query.id);
+
+  useEffect(() => {
+    if (product?.slug) {
+      router.replace(productUrl(product));
+    }
+  }, [product, router]);
+
   // decide what to render
   let content = null;
   if (isLoading) {

@@ -10,6 +10,9 @@ const ALLOWED_PARAMS = [
   "orderby",
   "order",
   "on_sale",
+  "min_price",
+  "max_price",
+  "stock_status",
   "status",
 ];
 

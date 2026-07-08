@@ -10,6 +10,8 @@ import Timer from "@/components/common/timer";
 import { handleProductModal } from "@/redux/features/productModalSlice";
 import { add_cart_product } from "@/redux/features/cartSlice";
 import { add_to_wishlist } from "@/redux/features/wishlist-slice";
+import { formatPrice } from "@/utils/formatPrice";
+import { productUrl } from "@/utils/routes";
 
 const ProductItem = ({ product, offer_style = false }) => {
   const { _id, img, category, title, reviews, price, discount,status,offerDate } = product || {};
@@ -47,7 +49,7 @@ const ProductItem = ({ product, offer_style = false }) => {
           } tp-product-item transition-3`}
       >
         <div className="tp-product-thumb p-relative fix">
-          <Link href={`/product-details/${_id}`}>
+          <Link href={productUrl(product)}>
             <Image
               src={img}
               width="0"
@@ -111,7 +113,7 @@ const ProductItem = ({ product, offer_style = false }) => {
             <a href="#">{category?.name}</a>
           </div>
           <h3 className="tp-product-title">
-            <Link href={`/product-details/${_id}`}>{title}</Link>
+            <Link href={productUrl(product)}>{title}</Link>
           </h3>
           <div className="tp-product-rating d-flex align-items-center">
             <div className="tp-product-rating-icon">
@@ -131,13 +133,13 @@ const ProductItem = ({ product, offer_style = false }) => {
           <div className="tp-product-price-wrapper">
             {discount > 0 ? (
               <>
-                <span className="tp-product-price old-price">${price}</span>
+                <span className="tp-product-price old-price">{formatPrice(price)}</span>
                 <span className="tp-product-price new-price">
-                  {" "} ${(Number(price) - (Number(price) * Number(discount)) / 100).toFixed(2)}
+                  {" "} {formatPrice((Number(price) - (Number(price) * Number(discount)) / 100).toFixed(2))}
                 </span>
               </>
             ) : (
-              <span className="tp-product-price new-price">${parseFloat(price).toFixed(2)}</span>
+              <span className="tp-product-price new-price">{formatPrice(price)}</span>
             )}
           </div>
           {offer_style && (

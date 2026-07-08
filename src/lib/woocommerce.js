@@ -93,6 +93,18 @@ export async function getProductById(id) {
   return data;
 }
 
+export async function getProductBySlug(slug) {
+  const { data } = await wcFetch("/products", {
+    params: {
+      slug,
+      per_page: 1,
+      status: "publish",
+    },
+  });
+
+  return Array.isArray(data) ? data[0] : null;
+}
+
 export async function getProductVariations(productId, params = {}) {
   const { data } = await wcFetch(`/products/${productId}/variations`, {
     params: {

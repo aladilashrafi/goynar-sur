@@ -8,6 +8,8 @@ import { useGetProductTypeQuery } from '@/redux/features/productApi';
 import { ArrowRightLong, NextLongArr, PrevLongArr, TextShapeLine } from '@/svg';
 import ErrorMsg from '@/components/common/error-msg';
 import { HomeTwoFeaturedPrdLoader } from '@/components/loader';
+import { formatPrice } from '@/utils/formatPrice';
+import { productUrl } from '@/utils/routes';
 
 // slider setting 
 const slider_setting = {
@@ -58,31 +60,31 @@ const WeeksFeatured = () => {
     content = (
       <Swiper {...slider_setting} modules={[Navigation]} className="tp-featured-slider-active swiper-container">
         {product_items.map((item) => {
-          const {_id, img, title, price, discount, reviews } = item || {};
+          const { img, title, price, discount, reviews } = item || {};
           return (
             <SwiperSlide key={item._id} className="tp-featured-item white-bg p-relative z-index-1">
               <div className="tp-featured-thumb include-bg" style={{ backgroundImage: `url(${img})` }} data-background="assets/img/product/slider/product-slider-1.jpg"></div>
               <div className="tp-featured-content">
                 <h3 className="tp-featured-title">
-                  <Link href={`/product-details/${_id}`}>{title}</Link>
+                  <Link href={productUrl(item)}>{title}</Link>
                 </h3>
                 <div className="tp-featured-price-wrapper">
                   {discount > 0 ? (
                     <>
-                      <span className="tp-featured-price new-price">${price}</span>
+                      <span className="tp-featured-price new-price">{formatPrice(price)}</span>
                       <span className="tp-featured-price old-price">
-                        {" "} $ {(Number(price) - (Number(price) * Number(discount)) / 100).toFixed(2)}
+                        {" "} {formatPrice((Number(price) - (Number(price) * Number(discount)) / 100).toFixed(2))}
                       </span>
                     </>
                   ) : (
-                    <span className="tp-featured-price new-price">${price}</span>
+                    <span className="tp-featured-price new-price">{formatPrice(price)}</span>
                   )}
                 </div>
                 <div className="tp-product-rating-icon tp-product-rating-icon-2">
                   <Rating allowFraction size={16} initialValue={reviews && reviews.length > 0 ? reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length : 0} readonly={true} />
                 </div>
                 <div className="tp-featured-btn">
-                  <Link href={`/product-details/${_id}`} className="tp-btn tp-btn-border tp-btn-border-sm">Shop Now
+                  <Link href={productUrl(item)} className="tp-btn tp-btn-border tp-btn-border-sm">Shop Now
                     {" "}<ArrowRightLong />
                   </Link>
                 </div>

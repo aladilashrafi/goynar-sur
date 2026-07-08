@@ -6,18 +6,25 @@ import { handleFilterSidebarClose } from "@/redux/features/shop-filter-slice";
 const StatusFilter = ({setCurrPage,shop_right=false}) => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const status = ["On sale", "In Stock"];
+  const status = [
+    { label: "On sale", key: "status", value: "on-sale" },
+    { label: "In Stock", key: "status", value: "in-stock" },
+    { label: "Featured", key: "featured", value: "true" },
+  ];
 
   // handle status route 
-  const handleStatusRoute = (status) => {
+  const handleStatusRoute = (filter) => {
     setCurrPage(1)
-    router.push(
-      `/${shop_right?'shop-right-sidebar':'shop'}?status=${status
-        .toLowerCase()
-        .replace("&", "")
-        .split(" ")
-        .join("-")}`
-        )
+    const nextQuery = { ...router.query };
+    if (router.query[filter.key] === filter.value) {
+      delete nextQuery[filter.key];
+    } else {
+      nextQuery[filter.key] = filter.value;
+    }
+    router.push({
+      pathname: `/${shop_right ? "shop-right-sidebar" : "shop"}`,
+      query: nextQuery,
+    }, undefined, { scroll: false });
       dispatch(handleFilterSidebarClose())
   }
   return (
@@ -29,21 +36,16 @@ const StatusFilter = ({setCurrPage,shop_right=false}) => {
             {status.map((s, i) => (
               <li key={i} className="filter-item checkbox">
                 <input
-                  id={s}
+                  id={s.label}
                   type="checkbox"
-                  checked={
-                    router.query.status ===
-                    s.toLowerCase().replace("&", "").split(" ").join("-")
-                      ? "checked"
-                      : false
-                  }
+                  checked={router.query[s.key] === s.value}
                   readOnly
                 />
                 <label
                   onClick={() => handleStatusRoute(s)}
-                  htmlFor={s}
+                  htmlFor={s.label}
                 >
-                  {s}
+                  {s.label}
                 </label>
               </li>
             ))}

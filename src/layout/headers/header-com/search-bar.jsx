@@ -1,16 +1,25 @@
 import React from "react";
 import useSearchFormSubmit from "@/hooks/use-search-form-submit";
+import { useGetShowCategoryQuery } from "@/redux/features/categoryApi";
 
 const SearchBar = ({ isSearchOpen, setIsSearchOpen }) => {
-  const { setSearchText, setCategory, handleSubmit, searchText } =
-    useSearchFormSubmit();
+  const {
+    setSearchText,
+    setCategory,
+    handleSubmit,
+    searchText,
+    suggestions,
+    isSuggestionsLoading,
+    handleSuggestionClick,
+  } = useSearchFormSubmit();
+  const { data: categories } = useGetShowCategoryQuery();
 
   // selectHandle
   const handleCategory = (value) => {
     setCategory(value);
   };
 
-  const categories = ["electronics", "fashion", "beauty", "jewelry"];
+  const categoryItems = categories?.result || [];
   return (
     <>
       <section
@@ -39,17 +48,36 @@ const SearchBar = ({ isSearchOpen, setIsSearchOpen }) => {
                     <button type="submit">
                       <i className="flaticon-search-1"></i>
                     </button>
+                    {(isSuggestionsLoading || suggestions.length > 0) && (
+                      <div className="tp-search-suggestions">
+                        {isSuggestionsLoading && <span>Searching...</span>}
+                        {!isSuggestionsLoading &&
+                          suggestions.map((product) => (
+                            <button
+                              key={product._id}
+                              type="button"
+                              onClick={() => {
+                                setIsSearchOpen(false);
+                                handleSuggestionClick(product);
+                              }}
+                            >
+                              {product.title}
+                              <small>{product.parent}</small>
+                            </button>
+                          ))}
+                      </div>
+                    )}
                   </div>
                   <div className="tp-search-category">
                     <span>Search by : </span>
-                    {categories.map((c, i) => (
+                    {categoryItems.map((c, i) => (
                       <a
-                        key={i}
-                        onClick={() => handleCategory(c)}
+                        key={c.id}
+                        onClick={() => handleCategory(String(c.id))}
                         className="cursor-pointer"
                       >
-                        {c}
-                        {i < categories.length - 1 && ", "}
+                        {c.name}
+                        {i < categoryItems.length - 1 && ", "}
                       </a>
                     ))}
                   </div>

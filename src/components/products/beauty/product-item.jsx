@@ -8,6 +8,7 @@ import { handleProductModal } from "@/redux/features/productModalSlice";
 import { add_cart_product } from "@/redux/features/cartSlice";
 import { add_to_wishlist } from "@/redux/features/wishlist-slice";
 import { formatPrice } from "@/utils/formatPrice";
+import { productUrl } from "@/utils/routes";
 
 const ProductItem = ({ product, prdCenter = false,primary_style=false }) => {
   const { _id, img, title, discount, price, tags,status } = product || {};
@@ -31,7 +32,7 @@ const ProductItem = ({ product, prdCenter = false,primary_style=false }) => {
       className={`tp-product-item-3 mb-50 ${primary_style?"tp-product-style-primary":""} ${prdCenter ? "text-center" : ""}`}
     >
       <div className="tp-product-thumb-3 mb-15 fix p-relative z-index-1">
-        <Link href={`/product-details/${_id}`}>
+        <Link href={productUrl(product)}>
           <Image src={img} alt="product image" width={282} height={320} />
         </Link>
 
@@ -103,7 +104,7 @@ const ProductItem = ({ product, prdCenter = false,primary_style=false }) => {
           <span>{tags?.[1] || tags?.[0]}</span>
         </div>
         <h3 className="tp-product-title-3">
-          <Link href={`/product-details/${_id}`}>{title}</Link>
+          <Link href={productUrl(product)}>{title}</Link>
         </h3>
         <div className="tp-product-price-wrapper-3">
           <span className="tp-product-price-3">{formatPrice(price)}</span>

@@ -56,6 +56,8 @@ export default async function handler(req, res) {
     const lastName = body.lastName?.trim() || "-";
     const state = getStateCodeByName(district) || district;
     const shippingCost = Number(body.shippingCost || 0);
+    const discountAmount = Number(body.discount || body.coupon?.discountAmount || 0);
+    const couponCode = String(body.coupon?.code || "").trim();
     const fullAddress = [body.address, body.upazila || body.address_2].filter(Boolean).join(", ");
 
     const orderPayload = {
@@ -63,6 +65,7 @@ export default async function handler(req, res) {
       payment_method_title: "Cash on Delivery",
       set_paid: false,
       status: "processing",
+      ...(body.customerId ? { customer_id: Number(body.customerId) } : {}),
       billing: {
         first_name: firstName,
         last_name: lastName,
@@ -93,10 +96,26 @@ export default async function handler(req, res) {
           total: shippingCost.toFixed(2),
         },
       ],
+      ...(couponCode
+        ? {
+            coupon_lines: [
+              {
+                code: couponCode,
+                discount: discountAmount.toFixed(2),
+              },
+            ],
+          }
+        : {}),
       customer_note: body.orderNote || "",
       meta_data: [
         { key: "_goynar_sur_payment_method", value: "cod" },
         { key: "_goynar_sur_delivery_address", value: fullAddress },
+        ...(couponCode
+          ? [
+              { key: "_goynar_sur_coupon_code", value: couponCode },
+              { key: "_goynar_sur_coupon_discount", value: discountAmount.toFixed(2) },
+            ]
+          : []),
       ],
     };
 

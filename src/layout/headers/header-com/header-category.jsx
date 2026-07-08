@@ -15,24 +15,8 @@ const HeaderCategory = ({ isCategoryActive, categoryType = "electronics" }) => {
   const router = useRouter();
 
   // handle category route
-  const handleCategoryRoute = (title, route) => {
-    if (route === "parent") {
-      router.push(
-        `/shop?category=${title
-          .toLowerCase()
-          .replace("&", "")
-          .split(" ")
-          .join("-")}`
-      );
-    } else {
-      router.push(
-        `/shop?subCategory=${title
-          .toLowerCase()
-          .replace("&", "")
-          .split(" ")
-          .join("-")}`
-      );
-    }
+  const handleCategoryRoute = (item) => {
+    router.push(`/product-category/${item.slug}`);
   };
   // decide what to render
   let content = null;
@@ -56,17 +40,17 @@ const HeaderCategory = ({ isCategoryActive, categoryType = "electronics" }) => {
       <li className="has-dropdown" key={item._id}>
         <a
           className="cursor-pointer"
-          onClick={() => handleCategoryRoute(item.parent, "parent")}
+          onClick={() => handleCategoryRoute(item)}
         >
           {item.img && (
             <span>
               <Image src={item.img} alt="cate img" width={50} height={50} />
             </span>
           )}
-          {item.parent}
+          {item.name}
         </a>
 
-        {item.children && (
+        {item.children?.length > 0 && (
           <ul className="tp-submenu">
             {item.children.map((child, i) => (
               <li

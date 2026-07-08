@@ -8,6 +8,7 @@ import { add_cart_product } from "@/redux/features/cartSlice";
 import { add_to_wishlist } from "@/redux/features/wishlist-slice";
 import { notifyError } from "@/utils/toast";
 import { formatPrice } from "@/utils/formatPrice";
+import { productUrl } from "@/utils/routes";
 
 const ProductSliderItem = ({ product }) => {
   const { _id, title, price, img,status, isVariable } = product || {};
@@ -44,7 +45,7 @@ const ProductSliderItem = ({ product }) => {
         <div className="tp-product-action-item-3 d-flex flex-column">
           {isVariable ? (
             <Link
-              href={`/product-details/${_id}`}
+              href={productUrl(product)}
               className="tp-product-action-btn-3 tp-product-add-cart-btn"
             >
               <Cart />
@@ -88,13 +89,13 @@ const ProductSliderItem = ({ product }) => {
       </div>
       <div className="tp-category-content-4">
         <h3 className="tp-category-title-4">
-          <Link href={`/product-details/${_id}`}>{title}</Link>
+          <Link href={productUrl(product)}>{title}</Link>
         </h3>
         <div className="tp-category-price-wrapper-4">
           <span className="tp-category-price-4">{formatPrice(price)}</span>
           <div className="tp-category-add-to-cart">
             {isVariable ? (
-              <Link href={`/product-details/${_id}`} className="tp-category-add-to-cart-4">
+              <Link href={productUrl(product)} className="tp-category-add-to-cart-4">
                 <AddCart />{" "}Select Options
               </Link>
             ) : isAddedToCart ? (

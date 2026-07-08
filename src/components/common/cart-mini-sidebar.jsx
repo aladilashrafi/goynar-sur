@@ -8,6 +8,7 @@ import RenderCartProgress from './render-cart-progress';
 import empty_cart_img from '@assets/img/product/cartmini/empty-cart.png';
 import { closeCartMini, remove_product } from '@/redux/features/cartSlice';
 import { formatPrice } from '@/utils/formatPrice';
+import { productUrl } from '@/utils/routes';
 
 const CartMiniSidebar = () => {
   const { cart_products, cartMiniOpen } = useSelector((state) => state.cart);
@@ -45,13 +46,13 @@ const handleCloseCartMini = () => {
               {cart_products.map((item) => (
                 <div key={item._id} className="cartmini__widget-item">
                   <div className="cartmini__thumb">
-                    <Link href={`/product-details/${item.id || item._id}`}>
+                    <Link href={productUrl(item)}>
                       <Image src={item.img} width={70} height={60} alt="product img" />
                     </Link>
                   </div>
                   <div className="cartmini__content">
                     <h5 className="cartmini__title">
-                      <Link href={`/product-details/${item.id || item._id}`}>{item.title}</Link>
+                      <Link href={productUrl(item)}>{item.title}</Link>
                     </h5>
                     {item.selectedAttributes?.length > 0 && (
                       <p className="mb-0">

@@ -8,6 +8,7 @@ import { handleProductModal } from "@/redux/features/productModalSlice";
 import { add_cart_product } from "@/redux/features/cartSlice";
 import { add_to_wishlist } from "@/redux/features/wishlist-slice";
 import { formatPrice } from "@/utils/formatPrice";
+import { productUrl } from "@/utils/routes";
 
 const ProductItem = ({ product }) => {
   const { _id, img, title, price, tags,status, isVariable } = product || {};
@@ -30,7 +31,7 @@ const ProductItem = ({ product }) => {
   return (
     <div className="tp-product-item-4 p-relative mb-40">
       <div className="tp-product-thumb-4 p-relative fix">
-        <Link href={`/product-details/${_id}`}>
+        <Link href={productUrl(product)}>
           <Image src={img} alt="product img" width={284} height={352} />
         </Link>
         <div className="tp-product-badge">
@@ -40,7 +41,7 @@ const ProductItem = ({ product }) => {
           <div className="tp-product-action-item-3 d-flex flex-column">
             {isVariable ? (
               <Link
-                href={`/product-details/${_id}`}
+                href={productUrl(product)}
                 className="tp-product-action-btn-3 tp-product-add-cart-btn text-center"
               >
                 <Cart />
@@ -87,7 +88,7 @@ const ProductItem = ({ product }) => {
       </div>
       <div className="tp-product-content-4">
         <h3 className="tp-product-title-4">
-          <Link href={`/product-details/${_id}`}>{title}</Link>
+          <Link href={productUrl(product)}>{title}</Link>
         </h3>
         <div className="tp-product-info-4">
           <p>{tags?.[0]}</p>
@@ -98,7 +99,7 @@ const ProductItem = ({ product }) => {
             <span className="tp-product-price-4">{formatPrice(price)}</span>
           </div>
           <div className="tp-product-price-add-to-cart">
-            {isVariable ? <Link href={`/product-details/${_id}`} className="tp-product-add-to-cart-4">
+            {isVariable ? <Link href={productUrl(product)} className="tp-product-add-to-cart-4">
               <AddCart /> Select Options
             </Link> : isAddedToCart ? <Link href="/cart" className="tp-product-add-to-cart-4">
               <AddCart /> View Cart

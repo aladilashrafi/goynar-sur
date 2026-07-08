@@ -7,6 +7,7 @@ import { Close, Minus, Plus } from "@/svg";
 import {add_cart_product,quantityDecrement} from "@/redux/features/cartSlice";
 import { remove_wishlist_product } from "@/redux/features/wishlist-slice";
 import { formatPrice } from "@/utils/formatPrice";
+import { productUrl } from "@/utils/routes";
 
 const WishlistItem = ({ product }) => {
   const { _id, img, title, price, isVariable } = product || {};
@@ -29,12 +30,12 @@ const WishlistItem = ({ product }) => {
   return (
     <tr>
       <td className="tp-cart-img">
-        <Link href={`/product-details/${_id}`}>
+        <Link href={productUrl(product)}>
           <Image src={img} alt="product img" width={70} height={100} />
         </Link>
       </td>
       <td className="tp-cart-title">
-        <Link href={`/product-details/${_id}`}>{title}</Link>
+        <Link href={productUrl(product)}>{title}</Link>
       </td>
       <td className="tp-cart-price">
         <span>{formatPrice(price)}</span>
@@ -64,7 +65,7 @@ const WishlistItem = ({ product }) => {
 
       <td className="tp-cart-add-to-cart">
         {isVariable ? (
-          <Link href={`/product-details/${_id}`} className="tp-btn tp-btn-2 tp-btn-blue">
+          <Link href={productUrl(product)} className="tp-btn tp-btn-2 tp-btn-blue">
             Select Options
           </Link>
         ) : (

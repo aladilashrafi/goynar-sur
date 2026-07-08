@@ -13,15 +13,10 @@ const CategoryFilter = ({setCurrPage,shop_right=false}) => {
   const dispatch = useDispatch();
 
   // handle category route
-  const handleCategoryRoute = (title) => {
+  const handleCategoryRoute = (categoryId) => {
     setCurrPage(1);
-    router.push(
-      `/${shop_right?'shop-right-sidebar':'shop'}?category=${title
-        .toLowerCase()
-        .replace("&", "")
-        .split(" ")
-        .join("-")}`
-        )
+    const category = categories?.result?.find((item) => Number(item.id) === Number(categoryId));
+    router.push(`/product-category/${category?.slug || categoryId}`, undefined, { scroll: false });
     dispatch(handleFilterSidebarClose());
   }
   // decide what to render
@@ -41,16 +36,15 @@ const CategoryFilter = ({setCurrPage,shop_right=false}) => {
     content = category_items.map((item) => (
       <li key={item._id}>
         <a
-          onClick={() => handleCategoryRoute(item.parent)}
+          onClick={() => handleCategoryRoute(item.id)}
           style={{ cursor: "pointer" }}
           className={
-            router.query.category ===
-            item.parent.toLowerCase().replace("&", "").split(" ").join("-")
+            String(router.query.category) === String(item.id)
               ? "active"
               : ""
           }
         >
-          {item.parent} <span>{item.products.length}</span>
+          {item.name} <span>{item.count}</span>
         </a>
       </li>
     ));

@@ -352,6 +352,21 @@ export async function addCustomerWishlistProduct(token, productId) {
   return data.entries || [];
 }
 
+export async function setCustomerWishlistProducts(token, productIds = []) {
+  const cleanIds = [...new Set(productIds.map(Number).filter(Boolean))];
+  let entries = await getCustomerWishlist(token);
+  const existing = new Set(entries.map((entry) => Number(entry.product_id || entry.productId || entry.id)).filter(Boolean));
+
+  for (const productId of cleanIds) {
+    if (!existing.has(productId)) {
+      entries = await addCustomerWishlistProduct(token, productId);
+      existing.add(productId);
+    }
+  }
+
+  return entries;
+}
+
 export async function removeCustomerWishlistProduct(token, productId) {
   const data = await goynarFetch("/account/wishlist", {
     method: "DELETE",

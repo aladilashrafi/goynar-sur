@@ -1,5 +1,5 @@
 import React from "react";
-import { useRouter } from "next/router";
+import Link from "next/link";
 // internal
 import ErrorMsg from "../common/error-msg";
 import { ArrowRightLong } from "@/svg";
@@ -12,18 +12,6 @@ const FashionCategory = () => {
     isLoading,
     isError,
   } = useGetProductTypeCategoryQuery("fashion");
-  const router = useRouter()
-
-  // handle category route
-  const handleCategoryRoute = (title) => {
-    router.push(
-      `/shop?category=${title
-        .toLowerCase()
-        .replace("&", "")
-        .split(" ")
-        .join("-")}`
-    );
-  };
   // decide what to render
   let content = null;
 
@@ -46,20 +34,12 @@ const FashionCategory = () => {
             style={{ backgroundImage: `url(${item.img})` }}
           ></div>
           <h3 className="tp-banner-title-2">
-            <a
-              className="cursor-pointer"
-              onClick={() => handleCategoryRoute(item.parent)}
-            >
-              {item.parent}
-            </a>
+            <Link href={`/product-category/${item.slug}`}>{item.name}</Link>
           </h3>
           <div className="tp-banner-btn-2">
-            <a
-              onClick={() => handleCategoryRoute(item.parent)}
-              className="cursor-pointer tp-btn tp-btn-border tp-btn-border-sm"
-            >
+            <Link href={`/product-category/${item.slug}`} className="tp-btn tp-btn-border tp-btn-border-sm">
               Shop Now <ArrowRightLong />
-            </a>
+            </Link>
           </div>
         </div>
       </div>

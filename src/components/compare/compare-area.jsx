@@ -7,6 +7,7 @@ import { Rating } from "react-simple-star-rating";
 import { add_cart_product } from "@/redux/features/cartSlice";
 import { remove_compare_product } from "@/redux/features/compareSlice";
 import { formatPrice } from "@/utils/formatPrice";
+import { productUrl } from "@/utils/routes";
 
 const CompareArea = () => {
   const { compareItems } = useSelector((state) => state.compare);
@@ -51,7 +52,7 @@ const CompareArea = () => {
                                 height={176}
                               />
                               <h4 className="tp-compare-product-title">
-                                <Link href={`/product-details/${item._id}`}>
+                                <Link href={productUrl(item)}>
                                   {item.title}
                                 </Link>
                               </h4>

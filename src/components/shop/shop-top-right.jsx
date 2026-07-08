@@ -17,6 +17,8 @@ const ShopTopRight = ({selectHandleFilter}) => {
             { value: "High to Low", text: "High to Low" },
             { value: "New Added", text: "New Added" },
             { value: "On Sale", text: "On Sale" },
+            { value: "Popularity", text: "Popularity" },
+            { value: "Rating", text: "Rating" },
           ]}
           defaultCurrent={0}
           onChange={selectHandleFilter}

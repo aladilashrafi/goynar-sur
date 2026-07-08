@@ -10,6 +10,7 @@ import { add_cart_product } from "@/redux/features/cartSlice";
 import { add_to_wishlist } from "@/redux/features/wishlist-slice";
 import { add_to_compare } from "@/redux/features/compareSlice";
 import { formatPrice } from "@/utils/formatPrice";
+import { productUrl } from "@/utils/routes";
 
 const ShopListItem = ({ product }) => {
   const { _id, img, category, title, reviews, price, regularPrice, discount, tags, description, isVariable } = product || {};
@@ -43,7 +44,7 @@ const ShopListItem = ({ product }) => {
   return (
     <div className="tp-product-list-item d-md-flex">
       <div className="tp-product-list-thumb p-relative fix">
-        <Link href={`/product-details/${_id}`}>
+        <Link href={productUrl(product)}>
           <Image src={img} alt="product img" width={350} height={310} />
         </Link>
 
@@ -89,7 +90,7 @@ const ShopListItem = ({ product }) => {
             {tags?.map((t, i) => <a key={i} href="#">{t}</a>)}
           </div>
           <h3 className="tp-product-title-2">
-            <Link href={`/product-details/${_id}`}>{title}</Link>
+            <Link href={productUrl(product)}>{title}</Link>
           </h3>
           <div className="tp-product-rating-icon tp-product-rating-icon-2">
             <Rating allowFraction size={16} initialValue={ratingVal} readonly={true} />
@@ -111,7 +112,7 @@ const ShopListItem = ({ product }) => {
           </p>
           <div className="tp-product-list-add-to-cart">
             {isVariable ? (
-              <Link href={`/product-details/${_id}`} className="tp-product-list-add-to-cart-btn">
+              <Link href={productUrl(product)} className="tp-product-list-add-to-cart-btn">
                 Select Options
               </Link>
             ) : (

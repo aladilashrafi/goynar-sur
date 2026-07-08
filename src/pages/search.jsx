@@ -3,38 +3,42 @@ import ErrorMsg from "@/components/common/error-msg";
 import SearchPrdLoader from "@/components/loader/search-prd-loader";
 import ProductItem from "@/components/products/fashion/product-item";
 import SEO from "@/components/seo";
-import ShopTopLeft from "@/components/shop/shop-top-left";
 import Footer from "@/layout/footers/footer";
 import HeaderTwo from "@/layout/headers/header-2";
 import Wrapper from "@/layout/wrapper";
-import { useGetAllProductsQuery } from "@/redux/features/productApi";
+import { useGetShowCategoryQuery } from "@/redux/features/categoryApi";
+import { useGetAllProductsQuery, useGetPopularProductByTypeQuery } from "@/redux/features/productApi";
 import NiceSelect from "@/ui/nice-select";
-import { useState } from "react";
-// internal
-
-function slugify(value = "") {
-  return value.toLowerCase().replace("&", "").split(" ").join("-");
-}
+import Link from "next/link";
+import { useMemo, useState } from "react";
 
 export default function SearchPage({ query }) {
-  const { searchText, productType } = query;
-  const { data: products, isError, isLoading } = useGetAllProductsQuery();
+  const { searchText = "", productType = "" } = query;
+  const productQuery = useMemo(() => {
+    const params = new URLSearchParams();
+    params.set("per_page", "48");
+    if (searchText) params.set("search", searchText);
+    if (productType && Number.isFinite(Number(productType))) params.set("category", productType);
+    return params.toString();
+  }, [productType, searchText]);
+
+  const { data: products, isError, isLoading } = useGetAllProductsQuery(productQuery);
+  const { data: categories } = useGetShowCategoryQuery();
+  const { data: popularProducts } = useGetPopularProductByTypeQuery();
   const [shortValue, setShortValue] = useState("");
   const perView = 8;
   const [next, setNext] = useState(perView);
 
-  // selectShortHandler
   const shortHandler = (e) => {
     setShortValue(e.value);
   };
 
-  //   handleLoadMore
   const handleLoadMore = () => {
     setNext((value) => value + 4);
   };
 
-  // decide what to render
   let content = null;
+
   if (isLoading) {
     content = <SearchPrdLoader loading={isLoading} />;
   }
@@ -44,114 +48,104 @@ export default function SearchPage({ query }) {
   }
 
   if (!isLoading && !isError && products?.data?.length === 0) {
-    content = <ErrorMsg msg="No products found!" />;
+    content = (
+      <div className="text-center pt-80 pb-80">
+        <h3>
+          Sorry, nothing matched <span style={{ color: "#811a49" }}>{searchText}</span>.
+        </h3>
+        {categories?.result?.length > 0 && (
+          <div className="mt-25">
+            <p>Try a popular category:</p>
+            {categories.result.slice(0, 6).map((category) => (
+              <Link
+                key={category.id}
+                href={`/product-category/${category.slug}`}
+                className="tp-btn tp-btn-2 tp-btn-blue mr-10 mb-10"
+              >
+                {category.name}
+              </Link>
+            ))}
+          </div>
+        )}
+        {popularProducts?.data?.length > 0 && (
+          <div className="mt-35">
+            <p>Popular products may help you continue browsing.</p>
+          </div>
+        )}
+      </div>
+    );
   }
 
   if (!isLoading && !isError && products?.data?.length > 0) {
-    let all_products = products.data;
-    let product_items = all_products;
+    let productItems = products.data;
 
-    if (searchText && !productType) {
-      product_items = all_products.filter((prd) =>
-        prd.title?.toLowerCase().includes(searchText?.toLowerCase())
-      );
+    if (shortValue === "Price low to high") {
+      productItems = productItems.slice().sort((a, b) => Number(a.price) - Number(b.price));
     }
-    if (searchText && productType) {
-      product_items = all_products.filter(
-        (prd) => slugify(prd.parent || prd.category?.name) === slugify(productType)
-      ).filter(p => p?.title?.toLowerCase().includes(searchText?.toLowerCase()));
-    }
-     // Price low to high
-     if (shortValue === "Price low to high") {
-      product_items = product_items
-        .slice()
-        .sort((a, b) => Number(a.price) - Number(b.price));
-    }
-    // Price high to low
+
     if (shortValue === "Price high to low") {
-      product_items = product_items
-        .slice()
-        .sort((a, b) => Number(b.price) - Number(a.price));
-    }
-    if (product_items.length === 0) {
-      content = (
-        <div className="text-center pt-80 pb-80">
-          <h3>Sorry, nothing matched <span style={{color:'#811a49'}}>{searchText}</span> search terms</h3>
-        </div>
-      );
+      productItems = productItems.slice().sort((a, b) => Number(b.price) - Number(a.price));
     }
 
-    else {
-      content = ( 
-        <>
-          <section className="tp-shop-area pb-120">
-            <div className="container">
-              <div className="row">
-                <div className="col-xl-12 col-lg-12">
-                  <div className="tp-shop-main-wrapper">
-                    <div className="tp-shop-top mb-45">
-                      <div className="row">
-                        <div className="col-xl-6">
-
-                          <div className="tp-shop-top-left d-flex align-items-center ">
-                            <div className="tp-shop-top-result">
-                              <p>Showing 1–{product_items.length} of {all_products.length} results</p>
-                            </div>
-                          </div>
-
-                        </div>
-                        <div className="col-xl-6">
-                          <div className="tp-shop-top-right d-sm-flex align-items-center justify-content-xl-end">
-                            <div className="tp-shop-top-select">
-                              <NiceSelect
-                                options={[
-                                  { value: "Short By Price", text: "Short By Price" },
-                                  { value: "Price low to high", text: "Price low to high" },
-                                  { value: "Price high to low", text: "Price high to low" },
-                                ]}
-                                defaultCurrent={0}
-                                onChange={shortHandler}
-                                name="Short By Price"
-                              />
-                            </div>
-                          </div>
-
+    content = (
+      <section className="tp-shop-area pb-120">
+        <div className="container">
+          <div className="row">
+            <div className="col-xl-12 col-lg-12">
+              <div className="tp-shop-main-wrapper">
+                <div className="tp-shop-top mb-45">
+                  <div className="row">
+                    <div className="col-xl-6">
+                      <div className="tp-shop-top-left d-flex align-items-center">
+                        <div className="tp-shop-top-result">
+                          <p>
+                            Showing 1-{productItems.length} of {products.count || productItems.length} results
+                          </p>
                         </div>
                       </div>
                     </div>
-                    
-                      <div className="tp-shop-items-wrapper tp-shop-item-primary">
-                        <div className="row">
-                          {product_items
-                            .slice(0, next)
-                            ?.map((item) => (
-                              <div
-                                key={item._id}
-                                className="col-xl-3 col-lg-4 col-md-6 col-sm-6"
-                              >
-                                <ProductItem product={item} />
-                              </div>
-                            ))}
+                    <div className="col-xl-6">
+                      <div className="tp-shop-top-right d-sm-flex align-items-center justify-content-xl-end">
+                        <div className="tp-shop-top-select">
+                          <NiceSelect
+                            options={[
+                              { value: "Sort By Price", text: "Sort By Price" },
+                              { value: "Price low to high", text: "Price low to high" },
+                              { value: "Price high to low", text: "Price high to low" },
+                            ]}
+                            defaultCurrent={0}
+                            onChange={shortHandler}
+                            name="Sort By Price"
+                          />
                         </div>
                       </div>
-
-                    {/* load more btn start */}
-                    {next < product_items?.length && (
-                      <div className="load-more-btn text-center pt-50">
-                        <button onClick={handleLoadMore} className="tp-btn tp-btn-2 tp-btn-blue">
-                          Load More
-                        </button>
-                      </div>
-                    )}
-                    {/* load more btn end */}
+                    </div>
                   </div>
                 </div>
+
+                <div className="tp-shop-items-wrapper tp-shop-item-primary">
+                  <div className="row">
+                    {productItems.slice(0, next).map((item) => (
+                      <div key={item._id} className="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                        <ProductItem product={item} />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {next < productItems.length && (
+                  <div className="load-more-btn text-center pt-50">
+                    <button onClick={handleLoadMore} className="tp-btn tp-btn-2 tp-btn-blue">
+                      Load More
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
-          </section>
-        </>
-      );
-    }
+          </div>
+        </div>
+      </section>
+    );
   }
 
   return (

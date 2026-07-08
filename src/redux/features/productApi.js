@@ -4,7 +4,13 @@ export const productApi = apiSlice.injectEndpoints({
   overrideExisting: true,
   endpoints: (builder) => ({
     getAllProducts: builder.query({
-      query: () => `/api/products?per_page=100`,
+      query: (query) => {
+        const search = new URLSearchParams(query || "");
+        if (!search.has("per_page")) {
+          search.set("per_page", "100");
+        }
+        return `/api/products?${search.toString()}`;
+      },
       transformResponse: (response) => ({ data: response.products || [], count: response.count || 0 }),
       providesTags:['Products']
     }),

@@ -5,6 +5,7 @@ import Link from "next/link";
 import CheckoutBillingArea from "./checkout-billing-area";
 import CheckoutOrderArea from "./checkout-order-area";
 import CheckoutLogin from "./checkout-login";
+import CheckoutCoupon from "./checkout-coupon";
 import useCheckoutSubmit from "@/hooks/use-checkout-submit";
 
 const CheckoutArea = () => {
@@ -34,6 +35,13 @@ const CheckoutArea = () => {
                   <CheckoutLogin />
                 </div>
               )}
+              <div className="col-12">
+                <CheckoutCoupon
+                  handleCouponCode={checkoutData.handleCouponCode}
+                  couponRef={checkoutData.couponRef}
+                  couponApplyMsg={checkoutData.couponApplyMsg}
+                />
+              </div>
               <form onSubmit={handleSubmit(submitHandler)}>
                 <div className="row">
                   <div className="col-lg-7">

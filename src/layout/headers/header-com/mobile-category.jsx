@@ -22,24 +22,8 @@ const MobileCategory = ({ isCategoryActive, categoryType }) => {
   }
 
   // handle category route
-  const handleCategoryRoute = (title, route) => {
-    if (route === "parent") {
-      router.push(
-        `/shop?category=${title
-          .toLowerCase()
-          .replace("&", "")
-          .split(" ")
-          .join("-")}`
-      );
-    } else {
-      router.push(
-        `/shop?subCategory=${title
-          .toLowerCase()
-          .replace("&", "")
-          .split(" ")
-          .join("-")}`
-      );
-    }
+  const handleCategoryRoute = (item) => {
+    router.push(`/product-category/${item.slug}`);
   };
   // decide what to render
   let content = null;
@@ -61,22 +45,22 @@ const MobileCategory = ({ isCategoryActive, categoryType }) => {
     const category_items = categories.result;
     content = category_items.map((item) => (
       <li className="has-dropdown" key={item._id}>
-        <a className="cursor-pointer" onClick={() => handleCategoryRoute(item.parent, "parent")}>
+        <a className="cursor-pointer" onClick={() => handleCategoryRoute(item)}>
           {item.img && (
             <span>
               <Image src={item.img} alt="cate img" width={50} height={50} />
             </span>
           )}
-          {item.parent}
-          {item.children && (
-            <button onClick={(event)=> { event.stopPropagation(); handleOpenSubMenu(item.parent); }} className="dropdown-toggle-btn">
+          {item.name}
+          {item.children?.length > 0 && (
+            <button onClick={(event)=> { event.stopPropagation(); handleOpenSubMenu(item.name); }} className="dropdown-toggle-btn">
               <i className="fa-regular fa-angle-right"></i>
             </button>
           )}
         </a>
 
-        {item.children && (
-          <ul className={`tp-submenu ${isActiveSubMenu === item.parent ? 'active':''}`}>
+        {item.children?.length > 0 && (
+          <ul className={`tp-submenu ${isActiveSubMenu === item.name ? 'active':''}`}>
             {item.children.map((child, i) => (
               <li
                 key={i}

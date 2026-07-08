@@ -13,16 +13,6 @@ const BeautyCategory = () => {
     isError,
   } = useGetProductTypeCategoryQuery("beauty");
 
-  // handle category route
-  const handleCategoryRoute = (title) => {
-    router.push(
-      `/shop?category=${title
-        .toLowerCase()
-        .replace("&", "")
-        .split(" ")
-        .join("-")}`
-    );
-  };
   // decide what to render
   let content = null;
 
@@ -46,24 +36,16 @@ const BeautyCategory = () => {
           ></div>
           <div className="tp-category-content-3 transition-3">
             <h3 className="tp-category-title-3">
-              <a
-                className="cursor-pointer"
-                onClick={() => handleCategoryRoute(item.parent)}
-              >
-                {item.parent}
-              </a>
+              <Link href={`/product-category/${item.slug}`}>{item.name}</Link>
             </h3>
             <span className="tp-categroy-ammount-3">
               {item.products.length} Products
             </span>
             <div className="tp-category-btn-3">
-              <a
-                onClick={() => handleCategoryRoute(item.parent)}
-                className="cursor-pointer tp-link-btn tp-link-btn-2"
-              >
+              <Link href={`/product-category/${item.slug}`} className="tp-link-btn tp-link-btn-2">
                 View Now
                 <ArrowRightSm />
-              </a>
+              </Link>
             </div>
           </div>
         </div>

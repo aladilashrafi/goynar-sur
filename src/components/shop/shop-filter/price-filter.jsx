@@ -1,8 +1,8 @@
-import { useState } from "react";
 import InputRange from "@/ui/input-range";
+import { formatPrice } from "@/utils/formatPrice";
 
 const PriceFilter = ({ priceFilterValues,maxPrice }) => {
-  const { priceValue,handleChanges } = priceFilterValues;
+  const { priceValue,handleChanges, applyPriceFilter } = priceFilterValues;
   return (
     <>
       <div className="tp-shop-widget mb-35">
@@ -21,9 +21,9 @@ const PriceFilter = ({ priceFilterValues,maxPrice }) => {
             </div>
             <div className="tp-shop-widget-filter-info d-flex align-items-center justify-content-between">
               <span className="input-range">
-                ${priceValue[0]} - ${priceValue[1]}
+                {formatPrice(priceValue[0])} - {formatPrice(priceValue[1])}
               </span>
-              <button className="tp-shop-widget-filter-btn" type="button">
+              <button onClick={applyPriceFilter} className="tp-shop-widget-filter-btn" type="button">
                 Filter
               </button>
             </div>

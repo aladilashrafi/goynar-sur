@@ -2,9 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { Rating } from "react-simple-star-rating";
+import { formatPrice } from "@/utils/formatPrice";
+import { productUrl } from "@/utils/routes";
 
 const ProductSmItem = ({ product }) => {
-  const {_id, img, category, title,price, reviews } = product || {};
+  const { img, category, title, price, reviews } = product || {};
   const [ratingVal, setRatingVal] = useState(0);
 
   useEffect(() => {
@@ -21,7 +23,7 @@ const ProductSmItem = ({ product }) => {
   return (
     <div className="tp-product-sm-item d-flex align-items-center">
       <div className="tp-product-thumb mr-25 fix">
-        <Link href={`/product-details/${_id}`}>
+        <Link href={productUrl(product)}>
           <Image
             src={img}
             alt="product img"
@@ -35,7 +37,7 @@ const ProductSmItem = ({ product }) => {
           <a href="#">{category?.name}</a>
         </div>
         <h3 className="tp-product-title">
-          <Link href={`/product-details/${_id}`}>{title}</Link>
+          <Link href={productUrl(product)}>{title}</Link>
         </h3>
         <div className="tp-product-rating d-sm-flex align-items-center">
           <div className="tp-product-rating-icon">
@@ -46,7 +48,7 @@ const ProductSmItem = ({ product }) => {
           </div>
         </div>
         <div className="tp-product-price-wrapper">
-          <span className="tp-product-price">${price.toFixed(2)}</span>
+          <span className="tp-product-price">{formatPrice(price)}</span>
         </div>
       </div>
     </div>

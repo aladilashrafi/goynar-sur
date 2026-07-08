@@ -10,6 +10,7 @@ import { add_cart_product } from "@/redux/features/cartSlice";
 import { add_to_wishlist } from "@/redux/features/wishlist-slice";
 import { add_to_compare } from "@/redux/features/compareSlice";
 import { formatPrice } from "@/utils/formatPrice";
+import { productUrl } from "@/utils/routes";
 
 const ProductItem = ({ product, style_2 = false }) => {
   const { _id, img, category, title, reviews, price, regularPrice, discount, tags, status } = product || {};
@@ -49,7 +50,7 @@ const ProductItem = ({ product, style_2 = false }) => {
   return (
     <div className={`tp-product-item-2 ${style_2 ? "" : "mb-40"}`}>
       <div className="tp-product-thumb-2 p-relative z-index-1 fix">
-        <Link href={`/product-details/${_id}`}>
+        <Link href={productUrl(product)}>
           <Image
             src={img}
             alt="product img"
@@ -120,7 +121,7 @@ const ProductItem = ({ product, style_2 = false }) => {
           ))}
         </div>
         <h3 className="tp-product-title-2">
-          <Link href={`/product-details/${_id}`}>{title}</Link>
+          <Link href={productUrl(product)}>{title}</Link>
         </h3>
         <div className="tp-product-rating-icon tp-product-rating-icon-2">
           <Rating allowFraction size={16} initialValue={ratingVal} readonly={true} />

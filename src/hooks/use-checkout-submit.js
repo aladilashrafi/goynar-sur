@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
@@ -8,12 +8,16 @@ import { set_shipping } from "@/redux/features/order/orderSlice";
 import { clear_cart_after_order } from "@/redux/features/cartSlice";
 import { notifyError, notifySuccess } from "@/utils/toast";
 import { useSaveOrderMutation } from "@/redux/features/order/orderApi";
+import { useValidateCouponMutation } from "@/redux/features/coupon/couponApi";
+import { clear_coupon, set_coupon } from "@/redux/features/coupon/couponSlice";
 
 const useCheckoutSubmit = () => {
   const [saveOrder] = useSaveOrderMutation();
+  const [validateCoupon] = useValidateCouponMutation();
   const { cart_products } = useSelector((state) => state.cart);
   const { shipping_info } = useSelector((state) => state.order);
   const { accessToken, user } = useSelector((state) => state.auth);
+  const { coupon_info } = useSelector((state) => state.coupon);
   const { total, setTotal } = useCartInfo();
   const [shippingCost, setShippingCost] = useState(0);
   const [shippingRates, setShippingRates] = useState([]);
@@ -21,7 +25,9 @@ const useCheckoutSubmit = () => {
   const [shippingError, setShippingError] = useState("");
   const [isShippingLoading, setIsShippingLoading] = useState(false);
   const [isCheckoutSubmit, setIsCheckoutSubmit] = useState(false);
-  const discountAmount = 0;
+  const [couponApplyMsg, setCouponApplyMsg] = useState("");
+  const couponRef = useRef(null);
+  const discountAmount = Number(coupon_info?.discountAmount || 0);
 
   const dispatch = useDispatch();
   const router = useRouter();
@@ -144,6 +150,37 @@ const useCheckoutSubmit = () => {
     };
   }, [address, cart_products, district, handleShippingRateSelect, upazila]);
 
+  useEffect(() => {
+    if (coupon_info && !cart_products.length) {
+      dispatch(clear_coupon());
+      setCouponApplyMsg("");
+    }
+  }, [cart_products.length, coupon_info, dispatch]);
+
+  const handleCouponCode = async (event) => {
+    event?.preventDefault();
+    const code = couponRef.current?.value?.trim();
+
+    if (!code) {
+      notifyError("Please enter a coupon code.");
+      return;
+    }
+
+    try {
+      const response = await validateCoupon({
+        code,
+        cart: cart_products,
+      }).unwrap();
+      dispatch(set_coupon(response.coupon));
+      setCouponApplyMsg(`${response.coupon.code} applied successfully.`);
+      notifySuccess("Coupon applied.");
+    } catch (error) {
+      dispatch(clear_coupon());
+      setCouponApplyMsg("");
+      notifyError(error?.data?.message || error?.message || "Coupon could not be applied.");
+    }
+  };
+
   const submitHandler = async (data) => {
     if (!cart_products.length) {
       notifyError("Your cart is empty.");
@@ -178,8 +215,16 @@ const useCheckoutSubmit = () => {
       shippingOption: selectedShippingRate.name,
       shippingRateId: selectedShippingRate.rateId,
       discount: discountAmount,
+      coupon: coupon_info
+        ? {
+            code: coupon_info.code,
+            discountAmount,
+            discountType: coupon_info.discountType,
+          }
+        : undefined,
       totalAmount: cartTotal,
       paymentMethod: "cod",
+      customerId: user?.id || user?._id || user?.customer?.id,
     };
 
     try {
@@ -225,7 +270,7 @@ const useCheckoutSubmit = () => {
         }
       }
       localStorage.removeItem("cart_products");
-      localStorage.removeItem("couponInfo");
+      dispatch(clear_coupon());
       localStorage.removeItem("shipping_info");
       dispatch(clear_cart_after_order());
       notifySuccess("Your order is confirmed.");
@@ -238,14 +283,14 @@ const useCheckoutSubmit = () => {
   };
 
   return {
-    handleCouponCode: (event) => event?.preventDefault(),
-    couponRef: null,
+    handleCouponCode,
+    couponRef,
     handleShippingRateSelect,
     discountAmount,
     total,
     shippingCost,
-    discountPercentage: 0,
-    discountProductType: "",
+    discountPercentage: coupon_info?.discountType === "percent" ? Number(coupon_info.amount || 0) : 0,
+    discountProductType: coupon_info?.discountType || "",
     isCheckoutSubmit,
     setTotal,
     register,
@@ -253,7 +298,7 @@ const useCheckoutSubmit = () => {
     submitHandler,
     handleSubmit,
     cartTotal,
-    couponApplyMsg: "",
+    couponApplyMsg,
     watch,
     shippingRates,
     selectedShippingRateId,

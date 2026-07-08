@@ -3,21 +3,10 @@ import ErrorMsg from "../common/error-msg";
 import { useGetShowCategoryQuery } from "@/redux/features/categoryApi";
 import { useRouter } from "next/router";
 import ShopCategoryLoader from "../loader/shop/shop-category-loader";
+import Link from "next/link";
 
 const ShopCategoryArea = () => {
   const { data: categories, isLoading, isError } = useGetShowCategoryQuery();
-  const router = useRouter();
-  // handle category route
-  const handleCategoryRoute = (title) => {
-    router.push(
-      `/shop?category=${title
-        .toLowerCase()
-        .replace("&", "")
-        .split(" ")
-        .join("-")}`
-    );
-  };
-
   // decide what to render
   let content = null;
 
@@ -41,12 +30,11 @@ const ShopCategoryArea = () => {
           <div className="tp-category-main-content">
             <h3
               className="tp-category-main-title pb-1"
-              onClick={() => handleCategoryRoute(item.parent)}
             >
-              <a className="cursor-pointer">{item.parent}</a>
+              <Link href={`/product-category/${item.slug}`}>{item.name}</Link>
             </h3>
             <span className="tp-category-main-item">
-              {item.products.length} Products
+              {item.count} Products
             </span>
           </div>
         </div>

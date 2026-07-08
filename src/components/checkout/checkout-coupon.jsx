@@ -31,7 +31,12 @@ const CheckoutCoupon = ({ handleCouponCode, couponRef,couponApplyMsg }) => {
               Apply
             </button>
           </form>
-          {couponApplyMsg && <p className="p-2" style={{color:'green'}}>{couponApplyMsg}</p>}
+          {couponApplyMsg && <p className="p-2" style={{ color: "green" }}>{couponApplyMsg}</p>}
+          {coupon_info && (
+            <p className="p-2">
+              Applied coupon: <strong>{coupon_info.code}</strong>
+            </p>
+          )}
         </div>
       )}
     </div>

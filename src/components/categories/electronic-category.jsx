@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
+import Link from 'next/link';
 // internal
 import ErrorMsg from '../common/error-msg';
 import { useGetProductTypeCategoryQuery } from '@/redux/features/categoryApi';
@@ -8,12 +8,6 @@ import HomeCateLoader from '../loader/home/home-cate-loader';
 
 const ElectronicCategory = () => {
   const { data: categories, isLoading, isError } = useGetProductTypeCategoryQuery('electronics');
-  const router = useRouter()
-
-  // handle category route
-  const handleCategoryRoute = (title) => {
-    router.push(`/shop?category=${title.toLowerCase().replace("&", "").split(" ").join("-")}`)
-  }
   // decide what to render
   let content = null;
 
@@ -34,17 +28,15 @@ const ElectronicCategory = () => {
       <div className="col" key={item._id}>
         <div className="tp-product-category-item text-center mb-40">
           <div className="tp-product-category-thumb fix">
-            <a className='cursor-pointer' onClick={() => handleCategoryRoute(item.parent)}>
+            <Link href={`/product-category/${item.slug}`}>
               <Image src={item.img} alt="product-category" width={76} height={98} />
-            </a>
+            </Link>
           </div>
           <div className="tp-product-category-content">
             <h3 className="tp-product-category-title">
-              <a className='cursor-pointer' onClick={() => handleCategoryRoute(item.parent)}>
-                {item.parent}
-              </a>
+              <Link href={`/product-category/${item.slug}`}>{item.name}</Link>
             </h3>
-            <p>{item.products.length} Product</p>
+            <p>{item.count} Product</p>
           </div>
         </div>
       </div>

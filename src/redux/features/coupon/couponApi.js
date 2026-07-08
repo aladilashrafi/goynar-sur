@@ -3,6 +3,14 @@ import { apiSlice } from "@/redux/api/apiSlice";
 export const authApi = apiSlice.injectEndpoints({
   overrideExisting:true,
   endpoints: (builder) => ({
+    validateCoupon: builder.mutation({
+      query: (data) => ({
+        url: "/api/coupons/validate",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Coupon"],
+    }),
     // get offer coupon
     getOfferCoupons: builder.query({
       queryFn: async () => ({ data: [] }),
@@ -12,4 +20,4 @@ export const authApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetOfferCouponsQuery } = authApi;
+export const { useGetOfferCouponsQuery, useValidateCouponMutation } = authApi;

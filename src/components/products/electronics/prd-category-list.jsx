@@ -1,5 +1,5 @@
 import React from "react";
-import { useRouter } from "next/router";
+import Link from "next/link";
 // internal
 import ErrorMsg from "@/components/common/error-msg";
 import { useGetProductTypeCategoryQuery } from "@/redux/features/categoryApi";
@@ -11,18 +11,6 @@ const PrdCategoryList = () => {
     isError,
     isLoading,
   } = useGetProductTypeCategoryQuery("electronics");
-  const router = useRouter()
-
-  // handle category route
-  const handleCategoryRoute = (title) => {
-    router.push(
-      `/shop?category=${title
-        .toLowerCase()
-        .replace("&", "")
-        .split(" ")
-        .join("-")}`
-    )
-  }
   // decide what to render
   let content = null;
 
@@ -39,7 +27,7 @@ const PrdCategoryList = () => {
     const category_items = categories.result;
     content = category_items.map((item) => (
       <li key={item._id}>
-        <a onClick={()=>handleCategoryRoute(item.parent)} className="cursor-pointer">{item.parent}</a>
+        <Link href={`/product-category/${item.slug}`}>{item.name}</Link>
       </li>
     ));
   }

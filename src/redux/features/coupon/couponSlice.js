@@ -16,6 +16,10 @@ export const couponSlice = createSlice({
         JSON.stringify(payload)
       );
     },
+    clear_coupon: (state) => {
+      state.coupon_info = undefined;
+      localStorage.removeItem("couponInfo");
+    },
     get_coupons: (state, { payload }) => {
       const data = localStorage.getItem('couponInfo');
       if (data) {
@@ -28,5 +32,5 @@ export const couponSlice = createSlice({
   },
 });
 
-export const { set_coupon,get_coupons } = couponSlice.actions;
+export const { set_coupon, clear_coupon, get_coupons } = couponSlice.actions;
 export default couponSlice.reducer;
