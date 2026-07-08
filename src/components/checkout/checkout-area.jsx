@@ -4,12 +4,14 @@ import Link from "next/link";
 // internal
 import CheckoutBillingArea from "./checkout-billing-area";
 import CheckoutOrderArea from "./checkout-order-area";
+import CheckoutLogin from "./checkout-login";
 import useCheckoutSubmit from "@/hooks/use-checkout-submit";
 
 const CheckoutArea = () => {
   const checkoutData = useCheckoutSubmit();
   const {handleSubmit,submitHandler,register,errors,watch} = checkoutData;
   const { cart_products } = useSelector((state) => state.cart);
+  const { accessToken } = useSelector((state) => state.auth);
   return (
     <>
       <section
@@ -27,6 +29,11 @@ const CheckoutArea = () => {
           )}
           {cart_products.length > 0 && (
             <div className="row">
+              {!accessToken && (
+                <div className="col-12">
+                  <CheckoutLogin />
+                </div>
+              )}
               <form onSubmit={handleSubmit(submitHandler)}>
                 <div className="row">
                   <div className="col-lg-7">

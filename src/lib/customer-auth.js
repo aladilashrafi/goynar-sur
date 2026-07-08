@@ -157,6 +157,12 @@ export async function getCustomerFromToken(token) {
 
 function mapWooOrder(order = {}) {
   const status = order.status || "pending";
+  const lineItems = order.line_items || [];
+  const shippingLines = order.shipping_lines || [];
+  const couponLines = order.coupon_lines || [];
+  const feeLines = order.fee_lines || [];
+  const refunds = order.refunds || [];
+  const subtotal = lineItems.reduce((sum, item) => sum + Number(item.subtotal || item.total || 0), 0);
 
   return {
     _id: String(order.id),
@@ -164,18 +170,43 @@ function mapWooOrder(order = {}) {
     number: order.number || String(order.id),
     createdAt: order.date_created || order.date_created_gmt || "",
     dateCreated: order.date_created || order.date_created_gmt || "",
+    dateModified: order.date_modified || order.date_modified_gmt || "",
+    datePaid: order.date_paid || order.date_paid_gmt || "",
+    dateCompleted: order.date_completed || order.date_completed_gmt || "",
     status,
     statusLabel: status
       .split("-")
       .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
       .join(" "),
+    subtotal: subtotal.toFixed(2),
+    discountTotal: order.discount_total || "0",
+    shippingTotal: order.shipping_total || "0",
+    taxTotal: order.total_tax || "0",
     total: order.total,
     currency: order.currency || "BDT",
+    customerNote: order.customer_note || "",
     paymentMethod: order.payment_method_title || order.payment_method || "Cash on Delivery",
-    lineItems: order.line_items || [],
+    transactionId: order.transaction_id || "",
+    lineItems,
+    shippingLines,
+    couponLines,
+    feeLines,
+    refunds,
+    metaData: order.meta_data || [],
     billing: order.billing || {},
     shipping: order.shipping || {},
   };
+}
+
+function customerOwnsOrder(order = {}, user = {}) {
+  if (order.customer_id && user.id && Number(order.customer_id) === Number(user.id)) {
+    return true;
+  }
+
+  const billingEmail = order.billing?.email?.trim().toLowerCase();
+  const userEmail = user.email?.trim().toLowerCase();
+
+  return Boolean(billingEmail && userEmail && billingEmail === userEmail);
 }
 
 function orderStats(orders = []) {
@@ -250,6 +281,23 @@ export async function getCustomerOrders(token) {
     orders,
     ...orderStats(orders),
   };
+}
+
+export async function getCustomerOrderById(token, orderId) {
+  const user = await getCustomerFromToken(token);
+  const cleanOrderId = Number(orderId);
+
+  if (!cleanOrderId) {
+    throw new CustomerAuthError("A valid order id is required.", 400);
+  }
+
+  const { data } = await wcFetch(`/orders/${cleanOrderId}`);
+
+  if (!customerOwnsOrder(data, user)) {
+    throw new CustomerAuthError("Order not found for this customer.", 404);
+  }
+
+  return mapWooOrder(data);
 }
 
 export async function validateCustomerToken(token) {

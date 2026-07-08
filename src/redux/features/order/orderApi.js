@@ -34,7 +34,8 @@ export const authApi = apiSlice.injectEndpoints({
     }),
     // getUserOrders
     getUserOrderById: builder.query({
-      queryFn: async () => ({ data: null }),
+      query: (id) => `/api/account/orders/${id}`,
+      transformResponse: (response) => response.order,
       providesTags: (result, error, arg) => [{ type: "UserOrder", id: arg }],
       keepUnusedDataFor: 600,
     }),

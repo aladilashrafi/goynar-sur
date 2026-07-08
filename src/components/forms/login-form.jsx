@@ -16,7 +16,7 @@ const schema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
   password: Yup.string().required().min(6).label("Password"),
 });
-const LoginForm = () => {
+const LoginForm = ({ redirectTo }) => {
   const [showPass, setShowPass] = useState(false);
   const [loginUser, { isLoading }] = useLoginUserMutation();
   const router = useRouter();
@@ -39,7 +39,7 @@ const LoginForm = () => {
       }).unwrap();
       notifySuccess("Login successful");
       reset();
-      router.push(redirect || "/profile");
+      router.push(redirectTo || redirect || "/profile");
     } catch (error) {
       notifyError(error?.data?.message || "Unable to login");
     }

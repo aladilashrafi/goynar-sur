@@ -22,6 +22,8 @@ function splitName(fullName = "") {
 function profilePayload(body = {}) {
   const { firstName, lastName } = splitName(body.name || body.displayName);
   const payload = {};
+  const billing = body.billing && typeof body.billing === "object" ? body.billing : null;
+  const shipping = body.shipping && typeof body.shipping === "object" ? body.shipping : null;
 
   if (body.email) payload.email = body.email;
   if (body.phone) payload.phone = body.phone;
@@ -34,7 +36,35 @@ function profilePayload(body = {}) {
   if (lastName) payload.last_name = lastName;
   if (body.displayName || body.name) payload.display_name = body.displayName || body.name;
 
-  if (body.address || body.city || body.district || body.upazila || body.phone || body.email) {
+  if (billing) {
+    payload.billing = {
+      first_name: billing.first_name || firstName,
+      last_name: billing.last_name || lastName,
+      email: billing.email || body.email || "",
+      phone: billing.phone || body.phone || "",
+      address_1: billing.address_1 || "",
+      address_2: billing.address_2 || "",
+      city: billing.city || "",
+      state: billing.state || billing.city || "",
+      postcode: billing.postcode || "",
+      country: "BD",
+    };
+  }
+
+  if (shipping) {
+    payload.shipping = {
+      first_name: shipping.first_name || firstName,
+      last_name: shipping.last_name || lastName,
+      address_1: shipping.address_1 || "",
+      address_2: shipping.address_2 || "",
+      city: shipping.city || "",
+      state: shipping.state || shipping.city || "",
+      postcode: shipping.postcode || "",
+      country: "BD",
+    };
+  }
+
+  if (!billing && !shipping && (body.address || body.city || body.district || body.upazila || body.phone || body.email)) {
     payload.billing = {
       first_name: firstName,
       last_name: lastName,

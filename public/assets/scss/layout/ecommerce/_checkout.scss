@@ -64,7 +64,8 @@
             }
         }
         & input,
-        & textarea{
+        & textarea,
+        & select{
             width: 100%;
             background: #FFFFFF;
             border: 1px solid #D5D8DB;
@@ -73,6 +74,30 @@
 
             &:focus{
                 border-color: var(--tp-common-black);
+            }
+        }
+        & select{
+            padding: 0 44px 0 18px;
+            line-height: 48px;
+            border-radius: 0;
+            outline: 0;
+            cursor: pointer;
+            @include appearance(none);
+            background-image: linear-gradient(45deg, transparent 50%, var(--tp-common-black) 50%), linear-gradient(135deg, var(--tp-common-black) 50%, transparent 50%);
+            background-position: calc(100% - 22px) 21px, calc(100% - 16px) 21px;
+            background-size: 6px 6px, 6px 6px;
+            background-repeat: no-repeat;
+            @include tp-transition(border-color, .2s);
+
+            &:hover,
+            &:focus{
+                border-color: var(--tp-theme-primary);
+            }
+
+            &:disabled{
+                color: #8B8F92;
+                cursor: not-allowed;
+                background-color: #F6F7F8;
             }
         }
         & textarea{

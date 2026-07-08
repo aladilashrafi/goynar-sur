@@ -13,6 +13,7 @@ const useCheckoutSubmit = () => {
   const [saveOrder] = useSaveOrderMutation();
   const { cart_products } = useSelector((state) => state.cart);
   const { shipping_info } = useSelector((state) => state.order);
+  const { accessToken, user } = useSelector((state) => state.auth);
   const { total, setTotal } = useCartInfo();
   const [shippingCost, setShippingCost] = useState(0);
   const [shippingRates, setShippingRates] = useState([]);
@@ -38,6 +39,7 @@ const useCheckoutSubmit = () => {
       payment: "COD",
       shippingOption: "",
       shippingRateId: "",
+      saveToAccount: false,
     },
   });
 
@@ -55,20 +57,25 @@ const useCheckoutSubmit = () => {
   }, [setValue]);
 
   useEffect(() => {
-    setValue("firstName", shipping_info.firstName || "");
-    setValue("lastName", shipping_info.lastName || "");
+    const billing = user?.customer?.billing || {};
+    const savedFirstName = billing.first_name || user?.customer?.first_name || "";
+    const savedLastName = billing.last_name || user?.customer?.last_name || "";
+    const savedDistrict = billing.city || billing.state || "";
+
+    setValue("firstName", shipping_info.firstName || savedFirstName || "");
+    setValue("lastName", shipping_info.lastName || savedLastName || "");
     setValue("country", "Bangladesh");
-    setValue("address", shipping_info.address || "");
-    setValue("district", shipping_info.district || shipping_info.city || "");
-    setValue("upazila", shipping_info.upazila || "");
-    setValue("zipCode", "");
-    setValue("contactNo", shipping_info.contactNo || "");
-    setValue("email", shipping_info.email || "");
+    setValue("address", shipping_info.address || billing.address_1 || "");
+    setValue("district", shipping_info.district || shipping_info.city || savedDistrict || "");
+    setValue("upazila", shipping_info.upazila || billing.address_2 || "");
+    setValue("zipCode", shipping_info.zipCode || billing.postcode || "");
+    setValue("contactNo", shipping_info.contactNo || billing.phone || user?.phone || "");
+    setValue("email", shipping_info.email || billing.email || user?.email || "");
     setValue("orderNote", shipping_info.orderNote || "");
     setValue("payment", "COD");
     setValue("shippingOption", shipping_info.shippingOption || "");
     setValue("shippingRateId", shipping_info.shippingRateId || "");
-  }, [setValue, shipping_info]);
+  }, [setValue, shipping_info, user]);
 
   const district = watch("district");
   const upazila = watch("upazila");
@@ -163,7 +170,7 @@ const useCheckoutSubmit = () => {
       upazila: data.upazila,
       address_2: data.upazila,
       country: "Bangladesh",
-      zipCode: "",
+      zipCode: data.zipCode || "",
       orderNote: data.orderNote,
       cart: cart_products,
       subTotal: total,
@@ -177,6 +184,46 @@ const useCheckoutSubmit = () => {
 
     try {
       const order = await saveOrder(orderPayload).unwrap();
+      if (accessToken && data.saveToAccount) {
+        const profileResponse = await fetch("/api/account/profile", {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+          body: JSON.stringify({
+            name: [data.firstName, data.lastName].filter(Boolean).join(" "),
+            email: data.email,
+            phone: data.contactNo,
+            billing: {
+              first_name: data.firstName,
+              last_name: data.lastName || data.firstName,
+              email: data.email,
+              phone: data.contactNo,
+              address_1: data.address,
+              address_2: data.upazila,
+              city: data.district,
+              state: data.district,
+              postcode: data.zipCode || "",
+              country: "BD",
+            },
+            shipping: {
+              first_name: data.firstName,
+              last_name: data.lastName || data.firstName,
+              address_1: data.address,
+              address_2: data.upazila,
+              city: data.district,
+              state: data.district,
+              postcode: data.zipCode || "",
+              country: "BD",
+            },
+          }),
+        });
+
+        if (!profileResponse.ok) {
+          notifyError("Order placed, but saved account details could not be updated.");
+        }
+      }
       localStorage.removeItem("cart_products");
       localStorage.removeItem("couponInfo");
       localStorage.removeItem("shipping_info");
@@ -213,6 +260,7 @@ const useCheckoutSubmit = () => {
     selectedShippingRate,
     shippingError,
     isShippingLoading,
+    accessToken,
   };
 };
 

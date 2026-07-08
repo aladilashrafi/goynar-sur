@@ -12,6 +12,11 @@ const CheckoutBillingArea = ({ register, errors, watch }) => {
   return (
     <div className="tp-checkout-bill-area">
       <h3 className="tp-checkout-bill-title">Billing Details</h3>
+      {user && (
+        <p className="alert alert-success mb-25">
+          Using your saved account details. You can edit these fields for this order.
+        </p>
+      )}
 
       <div className="tp-checkout-bill-form">
         <div className="tp-checkout-bill-inner">
@@ -133,6 +138,32 @@ const CheckoutBillingArea = ({ register, errors, watch }) => {
                 <ErrorMsg msg={errors?.email?.message} />
               </div>
             </div>
+            <div className="col-md-12">
+              <div className="tp-checkout-input">
+                <label>Postcode (optional)</label>
+                <input
+                  {...register("zipCode")}
+                  name="zipCode"
+                  id="zipCode"
+                  type="text"
+                  placeholder="Postcode"
+                />
+                <ErrorMsg msg={errors?.zipCode?.message} />
+              </div>
+            </div>
+            {user && (
+              <div className="col-md-12">
+                <div className="tp-checkout-option mb-20">
+                  <input
+                    {...register("saveToAccount")}
+                    name="saveToAccount"
+                    id="saveToAccount"
+                    type="checkbox"
+                  />
+                  <label htmlFor="saveToAccount">Save these details to my account</label>
+                </div>
+              </div>
+            )}
             <div className="col-md-12">
               <div className="tp-checkout-input">
                 <label>Order notes (optional)</label>
