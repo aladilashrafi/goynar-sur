@@ -1,69 +1,275 @@
-# Shofy Jewelry – Full Stack eCommerce Web Application + Admin Panel
+Goynar Sur — Headless WooCommerce Storefront
 
+Goynar Sur is a Bangladesh-focused handmade jewellery e-commerce storefront built with Next.js, React, Redux Toolkit, Bootstrap, and Sass. The frontend is adapted from the Shofy jewellery template and customized to work as a headless storefront for a WordPress + WooCommerce backend.
 
-![Shofy Image Banner](https://i.ibb.co/jVzQLfX/sofy-jewelry.png)
+The project uses Next.js API routes as a server-side bridge between the frontend and WooCommerce. Product, category, coupon, shipping, customer account, wishlist, order, and checkout flows are handled through internal API endpoints that communicate with WooCommerce REST API, WooCommerce Store API, and a custom WordPress REST namespace.
 
-Shofy Jewelry is a powerful and modern full stack eCommerce web application built using Next.js, Express.js, MongoDB with Mongoose, Redux Toolkit, RTK Query, Stripe payment method, Bootstrap 5, and Sass. It includes a feature-rich admin panel for easy management and control of your online store.
+---
 
-## Features Overview
+Project Status
 
-- **Next.js:** Next.js is The React Framework for Production, providing a fast and scalable foundation for your eCommerce website.
-- **Express.js:** Express.js is a minimal and flexible Node.js web application framework that offers a robust set of features for web and mobile applications.
-- **MongoDB:** MongoDB is a developer-friendly data platform that provides the services and tools necessary to build distributed applications at scale.
-- **Mongoose:** Mongoose provides a straightforward, schema-based solution to model your application data, offering built-in type casting, validation, and query building.
-- **Stripe:** Stripe offers online payment solutions, allowing you to create a secure and reliable website with e-commerce functionality.
-- **Nodemailer:** Nodemailer is a module for Node.js applications that facilitates easy email sending, keeping your users informed and engaged.
-- **Authentication:** Shofy includes features for Google login, user registration, email verification, forgot password, reset password, and profile updates.
-- **Redux Toolkit:** Manage state effortlessly with Redux Toolkit, providing a convenient and efficient way to handle state in your application.
-- **RTK Query:** RTK Query is a powerful data fetching and caching tool, ensuring efficient data retrieval for a smoother user experience.
-- **Typescript + Next.js App Directory:** Shofy leverages TypeScript in combination with Next.js, enhancing code reliability and maintainability.
-- **Form Validation:** Ensure data accuracy and consistency with form validation capabilities.
-- **Bootstrap 5 (latest Version) Framework:** Bootstrap is a popular HTML, CSS, and JS framework for responsive, mobile-first projects.
-- **Responsive Layout Design:** Shofy is fully responsive across all devices, providing a seamless experience for your customers.
-- **Touch Friendly:** The web application is designed for easy browsing on touch devices, making it accessible to a wide range of users.
+This repository currently contains the customer-facing storefront only.
 
-## Full Features List
+It does not contain a separate Express.js server, MongoDB database, Stripe integration, or standalone admin panel. Product, order, coupon, shipping, and customer data are expected to be managed from the connected WordPress/WooCommerce dashboard.
 
-- **React JS:** Utilize the power of React.js to create dynamic and interactive user interfaces.
-- **Next.js:** The React Framework for Production, optimizing your web application's performance.
-- **Express.js:** Create a robust backend for your eCommerce website using Express.js.
-- **MongoDB:** Store and retrieve data efficiently with the flexibility and scalability of MongoDB.
-- **Mongoose:** Model your application data effortlessly with Mongoose's schema-based solution.
-- **Stripe:** Integrate secure and reliable payment solutions into your online store.
-- **Nodemailer:** Keep your users informed with easy email sending capabilities.
-- **Authentication:** Enable secure user registration, login, and profile updates, including Google login option.
-- **Redux Toolkit:** Efficiently manage state in your application with Redux Toolkit.
-- **Dynamic Routes:** Create dynamic and user-friendly URLs for enhanced navigation.
-- **Based on Bootstrap 5.x:** Utilize the latest version of Bootstrap for responsive and customizable design elements.
-- **Free Premium Quality Support:** Enjoy premium support for a smooth development experience.
-- **Logo Slider Integration:** Showcase your brand and products with a logo slider.
-- **Sticky Header:** Improve user navigation with a sticky header that remains visible as users scroll.
-- **Google Fonts:** Access a wide range of fonts from Google Fonts for creative typography.
-- **100% Responsive:** Ensure a seamless experience on all devices with a fully responsive layout.
-- **Nice and Clean Design:** Present your products with a clean and professional design.
-- **Clean and Commented Code:** Maintainable and well-organized code for easy customization.
-- **Customizable Components:** Tailor the components of each page to match your brand identity.
-- **Integrated with FontAwesome:** Utilize FontAwesome icons to enhance the visual appeal of your website.
-- **Multiple Home Pages:** Choose from a variety of home page designs to best suit your business.
-- **Inner Pages:** Access a range of inner pages for various sections of your eCommerce website.
-- **Image Background:** Customize page backgrounds with visually appealing images.
-- **Flexible and Multi-Purpose:** Shofy is versatile and can be adapted to various eCommerce niches.
-- **Valid CSS3:** Comply with modern CSS standards for a better user experience.
-- **24/7 Awesome Support:** Get continuous support for any inquiries or issues you may encounter.
-- **Detailed Documentation:** Access comprehensive documentation for easy development and setup.
+---
 
-## Powerful Additional Features
+Tech Stack
 
-- **All E-commerce Features and Apps Included:** Shofy provides a comprehensive eCommerce solution with all the essential features and apps needed for a successful online store.
-- **Variation Swatch:** Create clean and professional product pages with variation swatches that capture your customer's attention and allow easy selection of product variations.
-- **Filter Variations, Pagination, Filters by Size & Color:** Improve user experience and boost conversion rates by reducing the time needed for customers to complete their orders through filtering options and pagination.
-- **Video Gallery:** Offer customers a detailed view of products with an engaging video gallery that showcases products from different angles or in use.
-- **Sale Countdown Timer:** Increase sales and engagement for special occasions or limited-time offers with sale countdown timers that create a sense of urgency for shoppers.
-- **Product Quick View:** Enable customers to view product details without leaving their current page, providing a convenient and efficient shopping experience.
-- **Quantity Select:** Provide users with two options for selecting product quantities: a dropdown select box or manual input for more flexibility.
-- **Google and Email Password-based Authentication:** Secure user accounts with authentication methods, including Google login and email-based password authentication.
-- **User Profile and Information Update:** Allow users to update their profile information, ensuring accurate and up-to-date data for future interactions.
-- **Powerful Payment Gateway Integration using Stripe:** Securely process payments with Stripe integration, providing a smooth and reliable shopping experience for customers.
+- Next.js — Pages Router based React application
+- React 18 — UI layer
+- Redux Toolkit + RTK Query — cart, wishlist, auth, product, coupon, and order state management
+- WooCommerce REST API — products, categories, coupons, customers, and orders
+- WooCommerce Store API — cart/session based shipping rate calculation
+- Custom WordPress REST API — customer authentication, account profile, orders, wishlist, and password reset flows
+- Bootstrap 5 — layout and responsive UI components
+- Sass/SCSS — project styling
+- React Hook Form + Yup — form handling and validation
+- Next Image Remote Patterns — image loading from WordPress, WooCommerce, Cloudinary, i.ibb.co, and Gravatar
+
+---
+
+Main Features
+
+Storefront
+
+- Handmade jewellery homepage
+- Responsive product listing/shop page
+- Product filtering by category, stock status, price, sale status, featured status, and sorting
+- Product detail flow with product ID or slug support
+- Related products
+- Variable product and variation support
+- Category API with fallback image handling
+- Cart, wishlist, compare, and quick-view state management
+
+Checkout & Orders
+
+- Cash on Delivery checkout flow for Bangladesh
+- WooCommerce order creation from frontend cart data
+- Billing and shipping address mapping for Bangladesh
+- District/upazila based checkout fields
+- Shipping rate calculation using WooCommerce Store API cart sessions
+- Coupon validation with minimum/maximum amount checks
+- Coupon discount calculation for percent, fixed cart, and fixed product coupons
+- Order confirmation redirect after successful checkout
+
+Customer Account
+
+- Customer registration through WooCommerce
+- Customer login through the custom WordPress REST API
+- Password reset request and reset flow
+- Authenticated customer order history
+- Authenticated single order view
+- Customer profile update support
+- Wishlist sync support through the custom WordPress REST API
+
+---
+
+Important Backend Requirements
+
+Before running the storefront against a live backend, the connected WordPress site must provide:
+
+1. WooCommerce REST API credentials with permission to read products/categories/coupons/customers/orders and create orders.
+
+2. WooCommerce Store API availability for cart and shipping rate calculation.
+
+3. A custom WordPress REST namespace:
+   
+   goynar-sur/v1
+   
+   The frontend expects this namespace for customer authentication, profile, orders, wishlist, and password reset flows.
+
+4. Proper WooCommerce shipping zones/rates for Bangladesh districts.
+
+5. Product images served from an allowed remote image domain in "next.config.js".
+
+---
+
+Environment Variables
+
+Create a ".env.local" file in the project root:
+
+NEXT_PUBLIC_WORDPRESS_URL=https://cms.goynarsur.com
+WOOCOMMERCE_URL=https://cms.goynarsur.com
+WOOCOMMERCE_CONSUMER_KEY=ck_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+WOOCOMMERCE_CONSUMER_SECRET=cs_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+Notes
+
+- "WOOCOMMERCE_URL" is used for server-side WooCommerce REST API calls.
+- "NEXT_PUBLIC_WORDPRESS_URL" is used where the frontend or Store API helper needs the WordPress base URL.
+- Do not commit real WooCommerce keys to GitHub.
+- The current ".gitignore" already excludes ".env*.local" files.
+
+---
+
+Installation
+
+Clone the repository:
+
+git clone https://github.com/aladilashrafi/goynar-sur.git
+cd goynar-sur
+
+Install dependencies:
+
+npm install
+
+Run the development server:
+
+npm run dev
+
+Open the site:
+
+http://localhost:3000
+
+---
+
+Available Scripts
+
+npm run dev
+
+Runs the project locally in development mode.
+
+npm run build
+
+Creates a production build.
+
+npm run start
+
+Starts the production server after a successful build.
+
+npm run lint
+
+Runs ESLint across ".js" and ".jsx" files.
+
+---
+
+Key Project Structure
+
+src/
+├── components/          # Reusable UI sections and feature components
+├── hooks/               # Checkout, cart, product, and custom frontend hooks
+├── layout/              # Header, footer, wrapper, and layout components
+├── lib/                 # WooCommerce, Store API, customer auth, and BD state helpers
+├── pages/               # Next.js Pages Router pages and API routes
+│   ├── api/             # Internal API layer for WooCommerce and WordPress
+│   ├── shop.jsx         # Product listing page
+│   ├── checkout.jsx     # Checkout page
+│   └── index.jsx        # Homepage
+├── redux/               # Redux store, RTK Query APIs, and feature slices
+├── styles/              # Global SCSS styles
+└── utils/               # Product mapping, inventory, formatting, and utility helpers
+
+---
+
+Internal API Overview
+
+The storefront uses internal API routes so WooCommerce secrets stay on the server side.
+
+Product APIs
+
+- "GET /api/products"
+- "GET /api/products/[id-or-slug]"
+- "GET /api/products/related/[id]"
+- "GET /api/products/variations?productId=ID"
+- "GET /api/categories"
+
+Checkout APIs
+
+- "POST /api/orders"
+- "POST /api/shipping-rates"
+- "POST /api/coupons/validate"
+
+Auth & Account APIs
+
+- "POST /api/auth/register"
+- "POST /api/auth/login"
+- "POST /api/auth/forgot-password"
+- "POST /api/auth/reset-password"
+- "GET /api/account/orders"
+- "GET /api/account/orders/[id]"
+- Account profile and wishlist routes are also expected by the frontend account flow.
+
+---
+
+WooCommerce Data Mapping
+
+WooCommerce product data is normalized before it reaches the UI. The mapper converts WooCommerce products into the structure expected by the Shofy-derived components, including:
+
+- product ID and slug
+- title and SKU
+- regular price, sale price, and discount percentage
+- gallery images
+- category and tag data
+- stock status and available quantity
+- product attributes and default attributes
+- variation IDs
+- fallback branding for missing images
+
+---
+
+Deployment Notes
+
+This project can be deployed to Vercel, a Node-compatible VPS, or compatible shared hosting that supports Next.js.
+
+Before deployment:
+
+1. Add the required environment variables to the hosting platform.
+
+2. Confirm the WordPress/WooCommerce backend is reachable from the deployed app.
+
+3. Confirm image domains are allowed in "next.config.js".
+
+4. Run a production build locally or in CI:
+   
+   npm run build
+
+5. Test the full purchase flow:
+   
+   - product listing
+   - product details
+   - add to cart
+   - coupon validation
+   - shipping calculation
+   - COD order placement
+   - order confirmation
+
+---
+
+Known Implementation Notes
+
+- The package name is still "shofy-client"; it can be renamed later if needed.
+- The project is based on the Pages Router, not the App Router.
+- The checkout is currently designed around Cash on Delivery.
+- The customer account flow depends on a working custom WordPress REST API under "goynar-sur/v1".
+- There is no separate backend repository inside this repo.
+- There is no separate admin panel inside this repo; WooCommerce/WordPress acts as the admin system.
+
+---
+
+Credits
+
+This storefront is adapted from the Shofy jewellery e-commerce template and customized for the Goynar Sur headless WooCommerce implementation.
+
+Primary technologies and libraries used:
+
+- Next.js
+- React
+- Redux Toolkit
+- RTK Query
+- Bootstrap
+- Sass
+- Swiper
+- Slick Carousel
+- React Hook Form
+- WooCommerce REST API
+- WooCommerce Store API
+
+---
+
+License
+
+No license file is currently included in this repository. Add a license before distributing or open-sourcing the project for wider public use.- **Powerful Payment Gateway Integration using Stripe:** Securely process payments with Stripe integration, providing a smooth and reliable shopping experience for customers.
 
 ## Installation and Usage
 
