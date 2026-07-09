@@ -106,12 +106,31 @@
 }
 
 .#{$theme-prifix}-shop-item-primary{
+    .tab-content > .tab-pane:not(.active) {
+        display: none;
+    }
+
     .tp-product-tag-2 a:hover,
     .tp-product-title-2 a:hover {
         color: var(--tp-theme-primary);
     }
     .tp-product-tag-2 a::after {
         background-color: var(--tp-theme-primary);
+    }
+}
+
+.tp-shop-list-wrapper {
+    .tp-product-list-thumb {
+        width: 350px;
+        max-width: 100%;
+
+        @media #{$lg} {
+            width: 300px;
+        }
+
+        @media #{$md, $sm, $xs} {
+            width: 100%;
+        }
     }
 }
 

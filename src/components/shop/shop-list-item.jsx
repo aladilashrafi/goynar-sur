@@ -45,7 +45,13 @@ const ShopListItem = ({ product }) => {
     <div className="tp-product-list-item d-md-flex">
       <div className="tp-product-list-thumb p-relative fix">
         <Link href={productUrl(product)}>
-          <Image src={img} alt="product img" width={350} height={350} />
+          <Image
+            src={img}
+            alt={title || "Goynar Sur product"}
+            width={350}
+            height={350}
+            sizes="(max-width: 767px) 92vw, (max-width: 1199px) 300px, 350px"
+          />
         </Link>
 
         {/* <!-- product action --> */}
