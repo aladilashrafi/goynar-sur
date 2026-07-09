@@ -75,23 +75,218 @@ Before running the storefront against a live backend, the connected WordPress si
 
    ```txt
    goynar-sur/v1
+   ```
 
-The frontend expects this namespace for customer authentication, profile, orders, wishlist, and password reset flows.
+   The frontend expects this namespace for customer authentication, profile, orders, wishlist, and password reset flows.
 
 4. Proper WooCommerce shipping zones/rates for Bangladesh districts.
-
-
-5. Product images served from an allowed remote image domain in next.config.js.
-
-
-
+5. Product images served from an allowed remote image domain in `next.config.js`.
 
 ---
 
-Environment Variables
+## Environment Variables
 
-Create a .env.local file in the project root:
+Create a `.env.local` file in the project root:
 
+```env
+NEXT_PUBLIC_WORDPRESS_URL=https://cms.goynarsur.com
+WOOCOMMERCE_URL=https://cms.goynarsur.com
+WOOCOMMERCE_CONSUMER_KEY=ck_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+WOOCOMMERCE_CONSUMER_SECRET=cs_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+### Notes
+
+- `WOOCOMMERCE_URL` is used for server-side WooCommerce REST API calls.
+- `NEXT_PUBLIC_WORDPRESS_URL` is used where the frontend or Store API helper needs the WordPress base URL.
+- Do not commit real WooCommerce keys to GitHub.
+- The current `.gitignore` already excludes `.env*.local` files.
+
+---
+
+## Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/aladilashrafi/goynar-sur.git
+cd goynar-sur
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run the development server:
+
+```bash
+npm run dev
+```
+
+Open the site:
+
+```txt
+http://localhost:3000
+```
+
+---
+
+## Available Scripts
+
+```bash
+npm run dev
+```
+
+Runs the project locally in development mode.
+
+```bash
+npm run build
+```
+
+Creates a production build.
+
+```bash
+npm run start
+```
+
+Starts the production server after a successful build.
+
+```bash
+npm run lint
+```
+
+Runs ESLint across `.js` and `.jsx` files.
+
+---
+
+## Key Project Structure
+
+```txt
+src/
+├── components/          # Reusable UI sections and feature components
+├── hooks/               # Checkout, cart, product, and custom frontend hooks
+├── layout/              # Header, footer, wrapper, and layout components
+├── lib/                 # WooCommerce, Store API, customer auth, and BD state helpers
+├── pages/               # Next.js Pages Router pages and API routes
+│   ├── api/             # Internal API layer for WooCommerce and WordPress
+│   ├── shop.jsx         # Product listing page
+│   ├── checkout.jsx     # Checkout page
+│   └── index.jsx        # Homepage
+├── redux/               # Redux store, RTK Query APIs, and feature slices
+├── styles/              # Global SCSS styles
+└── utils/               # Product mapping, inventory, formatting, and utility helpers
+```
+
+---
+
+## Internal API Overview
+
+The storefront uses internal API routes so WooCommerce secrets stay on the server side.
+
+### Product APIs
+
+- `GET /api/products`
+- `GET /api/products/[id-or-slug]`
+- `GET /api/products/related/[id]`
+- `GET /api/products/variations?productId=ID`
+- `GET /api/categories`
+
+### Checkout APIs
+
+- `POST /api/orders`
+- `POST /api/shipping-rates`
+- `POST /api/coupons/validate`
+
+### Auth & Account APIs
+
+- `POST /api/auth/register`
+- `POST /api/auth/login`
+- `POST /api/auth/forgot-password`
+- `POST /api/auth/reset-password`
+- `GET /api/account/orders`
+- `GET /api/account/orders/[id]`
+- Account profile and wishlist routes are also expected by the frontend account flow.
+
+---
+
+## WooCommerce Data Mapping
+
+WooCommerce product data is normalized before it reaches the UI. The mapper converts WooCommerce products into the structure expected by the Shofy-derived components, including:
+
+- product ID and slug
+- title and SKU
+- regular price, sale price, and discount percentage
+- gallery images
+- category and tag data
+- stock status and available quantity
+- product attributes and default attributes
+- variation IDs
+- fallback branding for missing images
+
+---
+
+## Deployment Notes
+
+This project can be deployed to Vercel, a Node-compatible VPS, or compatible shared hosting that supports Next.js.
+
+Before deployment:
+
+1. Add the required environment variables to the hosting platform.
+2. Confirm the WordPress/WooCommerce backend is reachable from the deployed app.
+3. Confirm image domains are allowed in `next.config.js`.
+4. Run a production build locally or in CI:
+
+   ```bash
+   npm run build
+   ```
+
+5. Test the full purchase flow:
+   - product listing
+   - product details
+   - add to cart
+   - coupon validation
+   - shipping calculation
+   - COD order placement
+   - order confirmation
+
+---
+
+## Known Implementation Notes
+
+- The package name is still `shofy-client`; it can be renamed later if needed.
+- The project is based on the Pages Router, not the App Router.
+- The checkout is currently designed around **Cash on Delivery**.
+- The customer account flow depends on a working custom WordPress REST API under `goynar-sur/v1`.
+- There is no separate backend repository inside this repo.
+- There is no separate admin panel inside this repo; WooCommerce/WordPress acts as the admin system.
+
+---
+
+## Credits
+
+This storefront is adapted from the Shofy jewellery e-commerce template and customized for the Goynar Sur headless WooCommerce implementation.
+
+Primary technologies and libraries used:
+
+- Next.js
+- React
+- Redux Toolkit
+- RTK Query
+- Bootstrap
+- Sass
+- Swiper
+- Slick Carousel
+- React Hook Form
+- WooCommerce REST API
+- WooCommerce Store API
+
+---
+
+## License
+
+No license file is currently included in this repository. Add a license before distributing or open-sourcing the project for wider public use.
 NEXT_PUBLIC_WORDPRESS_URL=https://cms.goynarsur.com
 WOOCOMMERCE_URL=https://cms.goynarsur.com
 WOOCOMMERCE_CONSUMER_KEY=ck_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
