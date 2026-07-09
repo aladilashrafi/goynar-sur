@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import ProductItem from './product-item';
 import ErrorMsg from '@/components/common/error-msg';
 import { useGetProductTypeQuery } from '@/redux/features/productApi';
-import { HomeTwoBestSellPrdPrdLoader } from '@/components/loader';
+import HomeTwoBestSellPrdPrdLoader from '@/components/loader/home-2/home-2-bestSell-loader';
 
 // slider setting
 const slider_setting = {

@@ -32,7 +32,13 @@ const ProductItem = ({ product }) => {
     <div className="tp-product-item-4 p-relative mb-40">
       <div className="tp-product-thumb-4 p-relative fix">
         <Link href={productUrl(product)}>
-          <Image src={img} alt="product img" width={284} height={352} />
+          <Image
+            src={img}
+            alt={title || "Goynar Sur product"}
+            width={284}
+            height={284}
+            sizes="(max-width: 575px) 92vw, (max-width: 991px) 46vw, (max-width: 1199px) 30vw, 284px"
+          />
         </Link>
         <div className="tp-product-badge">
           {status === 'out-of-stock' && <span className="product-hot">out-stock</span>}

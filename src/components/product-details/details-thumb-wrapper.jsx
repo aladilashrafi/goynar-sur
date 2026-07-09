@@ -1,15 +1,16 @@
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import PopupVideo from "../common/popup-video";
 
 const DetailsThumbWrapper = ({
   imageURLs,
   handleImageActive,
   activeImg,
-  imgWidth = 416,
+  imgWidth = 480,
   imgHeight = 480,
   videoId = false,
-  status
+  status,
+  priority = false,
 }) => {
   const [isVideoOpen, setIsVideoOpen] = useState(false);
   return (
@@ -27,7 +28,8 @@ const DetailsThumbWrapper = ({
                   src={item.img}
                   alt="image"
                   width={78}
-                  height={100}
+                  height={78}
+                  sizes="78px"
                   style={{ width: "100%", height: "100%" }}
                 />
               </button>
@@ -42,6 +44,8 @@ const DetailsThumbWrapper = ({
                 alt="product img"
                 width={imgWidth}
                 height={imgHeight}
+                priority={priority}
+                sizes="(max-width: 575px) 92vw, (max-width: 991px) 50vw, 580px"
               />
               <div className="tp-product-badge">
                 {status === 'out-of-stock' && <span className="product-hot">out-stock</span>}

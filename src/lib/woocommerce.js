@@ -105,6 +105,30 @@ export async function getProductBySlug(slug) {
   return Array.isArray(data) ? data[0] : null;
 }
 
+export async function getProductReviews(productId, params = {}) {
+  const { data, total, totalPages } = await wcFetch("/products/reviews", {
+    params: {
+      product: productId,
+      status: "approved",
+      per_page: 20,
+      order: "desc",
+      orderby: "date_gmt",
+      ...params,
+    },
+  });
+
+  return { reviews: Array.isArray(data) ? data : [], count: total || data?.length || 0, totalPages };
+}
+
+export async function createProductReview(input = {}) {
+  const { data } = await wcFetch("/products/reviews", {
+    method: "POST",
+    body: input,
+  });
+
+  return data;
+}
+
 export async function getProductVariations(productId, params = {}) {
   const { data } = await wcFetch(`/products/${productId}/variations`, {
     params: {

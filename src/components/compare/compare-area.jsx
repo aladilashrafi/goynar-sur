@@ -49,7 +49,7 @@ const CompareArea = () => {
                                 src={item.img}
                                 alt="compare"
                                 width={205}
-                                height={176}
+                                height={205}
                               />
                               <h4 className="tp-compare-product-title">
                                 <Link href={productUrl(item)}>

@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
+import dynamic from "next/dynamic";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
-import { useRouter } from "next/router";
 // internal
 import BackToTopCom from "@/components/common/back-to-top";
-import ProductModal from "@/components/common/product-modal";
 import {
   get_cart_products,
   initialOrderQuantity,
@@ -14,6 +13,10 @@ import { get_compare_products } from "@/redux/features/compareSlice";
 import { get_coupons } from "@/redux/features/coupon/couponSlice";
 import useAuthCheck from "@/hooks/use-auth-check";
 import Loader from "@/components/loader/loader";
+
+const ProductModal = dynamic(() => import("@/components/common/product-modal"), {
+  ssr: false,
+});
 
 const Wrapper = ({ children }) => {
   const { productItem } = useSelector((state) => state.productModal);

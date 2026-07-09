@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 // internal
@@ -34,13 +35,19 @@ const ProductSliderItem = ({ product }) => {
   return (
     <div className="tp-category-item-4 p-relative z-index-1 fix text-center">
       <div
-        className="tp-category-thumb-4 include-bg"
+        className="tp-category-thumb-4 include-bg p-relative"
         style={{
-          backgroundImage: `url(${img})`,
           backgroundColor: "#FFFFFF",
-          backgroundPosition: "0px -80px",
         }}
-      ></div>
+      >
+        <Image
+          src={img}
+          alt={title || "Goynar Sur product"}
+          fill
+          sizes="(max-width: 575px) 92vw, (max-width: 991px) 46vw, 284px"
+          style={{ objectFit: "cover", objectPosition: "center" }}
+        />
+      </div>
       <div className="tp-product-action-3 tp-product-action-4 tp-product-action-blackStyle tp-product-action-brownStyle">
         <div className="tp-product-action-item-3 d-flex flex-column">
           {isVariable ? (

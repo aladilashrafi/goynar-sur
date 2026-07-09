@@ -55,7 +55,7 @@ const ProductItem = ({ product, style_2 = false }) => {
             src={img}
             alt="product img"
             width={284}
-            height={302}
+            height={284}
           />
         </Link>
         <div className="tp-product-badge">

@@ -2,7 +2,7 @@ import ErrorMsg from '@/components/common/error-msg';
 import { useGetProductTypeQuery } from '@/redux/features/productApi';
 import React, { useEffect, useRef, useState } from 'react';
 import ProductItem from './product-item';
-import { HomeTwoPrdLoader } from '@/components/loader';
+import HomeTwoPrdLoader from '@/components/loader/home-2/home-2-prd-loder';
 
 // tabs
 const tabs = ["All Collection", "Bracelets", "Necklaces", "Earrings"];

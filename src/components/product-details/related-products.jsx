@@ -5,7 +5,7 @@ import { Scrollbar, Navigation,Autoplay } from "swiper/modules";
 import { useGetRelatedProductsQuery } from "@/redux/features/productApi";
 import ProductItem from "../products/beauty/product-item";
 import ErrorMsg from "../common/error-msg";
-import { HomeNewArrivalPrdLoader } from "../loader";
+import HomeNewArrivalPrdLoader from "../loader/home/home-newArrival-prd-loader";
 
 // slider setting
 const slider_setting = {

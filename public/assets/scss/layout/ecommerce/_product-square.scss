@@ -1,0 +1,73 @@
+/* Square WooCommerce product imagery */
+.tp-product-thumb,
+.tp-product-thumb-2,
+.tp-product-thumb-3,
+.tp-product-thumb-4,
+.tp-product-list-thumb,
+.tp-category-thumb-2,
+.tp-category-thumb-4,
+.tp-featured-thumb,
+.tp-shop-widget-product-thumb,
+.tp-compare-thumb,
+.tp-product-sm-item .tp-product-thumb,
+.tp-product-details-nav-main-thumb {
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+}
+
+.tp-product-thumb > a,
+.tp-product-thumb-2 > a,
+.tp-product-thumb-3 > a,
+.tp-product-thumb-4 > a,
+.tp-product-list-thumb > a,
+.tp-category-thumb-2 > a,
+.tp-shop-widget-product-thumb > a,
+.tp-product-sm-item .tp-product-thumb > a,
+.tp-product-details-nav-main-thumb > img {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.tp-product-thumb img,
+.tp-product-thumb-2 img,
+.tp-product-thumb-3 img,
+.tp-product-thumb-4 img,
+.tp-product-list-thumb img,
+.tp-category-thumb-2 img,
+.tp-shop-widget-product-thumb img,
+.tp-compare-thumb img,
+.tp-product-sm-item .tp-product-thumb img,
+.tp-product-details-thumb-wrapper img,
+.tp-cart-img img,
+.cartmini__thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.tp-category-thumb-4,
+.tp-featured-thumb {
+    background-size: cover;
+    background-position: center;
+}
+
+.tp-cart-img a,
+.cartmini__thumb a,
+.tp-product-details-thumb-wrapper .nav-tabs .nav-link {
+    aspect-ratio: 1 / 1;
+}
+
+.tp-cart-img a,
+.cartmini__thumb a {
+    display: block;
+    overflow: hidden;
+}
+
+.tp-cart-img a {
+    width: 70px;
+}
+
+.cartmini__thumb a {
+    width: 70px;
+}

@@ -29,7 +29,7 @@ const ElectronicCategory = () => {
         <div className="tp-product-category-item text-center mb-40">
           <div className="tp-product-category-thumb fix">
             <Link href={`/product-category/${item.slug}`}>
-              <Image src={item.img} alt="product-category" width={76} height={98} />
+              <Image src={item.img} alt="product-category" width={76} height={76} />
             </Link>
           </div>
           <div className="tp-product-category-content">

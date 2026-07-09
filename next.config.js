@@ -15,6 +15,7 @@ const nextConfig = {
       { protocol: 'https', hostname: 'www.goynarsur.com' },
       { protocol: 'https', hostname: 'cms.goynarsur.com' },
       { protocol: 'https', hostname: 'cms.omegamartbd.com' },
+      { protocol: 'https', hostname: 'secure.gravatar.com' },
     ],
   },
 }

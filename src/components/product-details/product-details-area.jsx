@@ -1,9 +1,12 @@
 import React, { useCallback, useState, useEffect } from "react";
+import dynamic from "next/dynamic";
 import DetailsThumbWrapper from "./details-thumb-wrapper";
 import DetailsWrapper from "./details-wrapper";
-import DetailsTabNav from "./details-tab-nav";
-import RelatedProducts from "./related-products";
 import { useGetProductVariationsQuery } from "@/redux/features/productApi";
+import LazySection from "@/components/common/lazy-section";
+
+const ProductDetailsTabsSection = dynamic(() => import("./product-details-tabs-section"));
+const RelatedProducts = dynamic(() => import("./related-products"));
 
 const ProductDetailsArea = ({ productItem }) => {
   const { _id, id, img, imageURLs, videoId,status, isVariable } = productItem || {};
@@ -35,6 +38,7 @@ const ProductDetailsArea = ({ productItem }) => {
                 imgHeight={670}
                 videoId={videoId}
                 status={status}
+                priority={true}
               />
               {/* product-details-thumb-wrapper end */}
             </div>
@@ -60,7 +64,9 @@ const ProductDetailsArea = ({ productItem }) => {
         <div className="container">
           <div className="row">
             <div className="col-xl-12">
-              <DetailsTabNav product={productItem} />
+              <LazySection minHeight={360}>
+                <ProductDetailsTabsSection product={productItem} />
+              </LazySection>
             </div>
           </div>
         </div>
@@ -77,7 +83,9 @@ const ProductDetailsArea = ({ productItem }) => {
             </div>
           </div>
           <div className="row">
-            <RelatedProducts id={_id} />
+            <LazySection minHeight={360}>
+              <RelatedProducts id={_id} />
+            </LazySection>
           </div>
         </div>
       </section>

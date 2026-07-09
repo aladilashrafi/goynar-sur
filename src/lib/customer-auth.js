@@ -300,6 +300,54 @@ export async function getCustomerOrderById(token, orderId) {
   return mapWooOrder(data);
 }
 
+export async function customerHasPurchasedProduct(token, productId) {
+  const user = await getCustomerFromToken(token);
+  const cleanProductId = Number(productId);
+
+  if (!cleanProductId) {
+    throw new CustomerAuthError("A valid product id is required.", 400);
+  }
+
+  async function fetchOrders(params = {}) {
+    const { data } = await wcFetch("/orders", {
+      params: {
+        per_page: 50,
+        ...params,
+      },
+    });
+
+    return Array.isArray(data) ? data : [];
+  }
+
+  const [customerOrders, emailOrders] = await Promise.all([
+    user.id ? fetchOrders({ customer: user.id }).catch(() => []) : Promise.resolve([]),
+    user.email ? fetchOrders({ search: user.email }).catch(() => []) : Promise.resolve([]),
+  ]);
+
+  const merged = new Map();
+
+  customerOrders.forEach((order) => merged.set(order.id, order));
+  emailOrders.forEach((order) => {
+    const billingEmail = order.billing?.email?.trim().toLowerCase();
+    if (billingEmail && user.email && billingEmail === user.email.trim().toLowerCase()) {
+      merged.set(order.id, order);
+    }
+  });
+
+  const hasPurchased = Array.from(merged.values()).some((order) => {
+    if (!["processing", "completed", "on-hold"].includes(order.status)) {
+      return false;
+    }
+
+    return (order.line_items || []).some((item) => Number(item.product_id) === cleanProductId);
+  });
+
+  return {
+    hasPurchased,
+    user,
+  };
+}
+
 export async function validateCustomerToken(token) {
   await goynarFetch("/auth/token/validate", { token });
   return true;

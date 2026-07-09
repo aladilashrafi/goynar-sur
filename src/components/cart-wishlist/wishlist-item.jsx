@@ -31,7 +31,7 @@ const WishlistItem = ({ product }) => {
     <tr>
       <td className="tp-cart-img">
         <Link href={productUrl(product)}>
-          <Image src={img} alt="product img" width={70} height={100} />
+          <Image src={img} alt="product img" width={70} height={70} />
         </Link>
       </td>
       <td className="tp-cart-title">

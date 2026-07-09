@@ -5,10 +5,12 @@ import { Rating } from "react-simple-star-rating";
 
 const ReviewItem = ({ review }) => {
   const { comment, createdAt, rating, userId } = review || {};
+  const reviewerName = userId?.name || "Goynar Sur Customer";
+  const reviewerInitial = reviewerName.charAt(0) || "G";
   return (
     <div className="tp-product-details-review-avater d-flex align-items-start">
       <div className="tp-product-details-review-avater-thumb">
-        {!userId?.imageURL && <h5 className="review-name">{userId?.name[0]}</h5>}
+        {!userId?.imageURL && <h5 className="review-name">{reviewerInitial}</h5>}
         <a href="#">
           {userId?.imageURL && <Image src={userId?.imageURL} alt="user img" width={60} height={60} />}
         </a>
@@ -17,7 +19,7 @@ const ReviewItem = ({ review }) => {
         <div className="tp-product-details-review-avater-rating d-flex align-items-center">
           <Rating allowFraction size={16} initialValue={rating} readonly={true} />
         </div>
-        <h3 className="tp-product-details-review-avater-title">{userId?.name}</h3>
+        <h3 className="tp-product-details-review-avater-title">{reviewerName}</h3>
         <span className="tp-product-details-review-avater-meta">
           {dayjs(createdAt).format("MMMM D, YYYY")}
         </span>
