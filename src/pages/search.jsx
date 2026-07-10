@@ -1,6 +1,7 @@
 import CommonBreadcrumb from "@/components/breadcrumb/common-breadcrumb";
 import ErrorMsg from "@/components/common/error-msg";
 import SearchPrdLoader from "@/components/loader/search-prd-loader";
+import EmptyState from "@/components/common/empty-state";
 import ProductItem from "@/components/products/fashion/product-item";
 import SEO from "@/components/seo";
 import Footer from "@/layout/footers/footer";
@@ -44,15 +45,20 @@ export default function SearchPage({ query }) {
   }
 
   if (!isLoading && isError) {
-    content = <ErrorMsg msg="There was an error" />;
+    content = <ErrorMsg msg="Search is unavailable right now. Please try again soon." />;
   }
 
   if (!isLoading && !isError && products?.data?.length === 0) {
     content = (
       <div className="text-center pt-80 pb-80">
-        <h3>
-          Sorry, nothing matched <span style={{ color: "#811a49" }}>{searchText}</span>.
-        </h3>
+        <EmptyState
+          title="No matching jewellery found"
+          message={searchText ? `Nothing matched "${searchText}". Try another word or browse popular categories.` : "Start a new search or browse the collection."}
+          actionHref="/shop"
+          actionLabel="Browse Jewellery"
+          secondaryHref="/contact"
+          secondaryLabel="Ask For Help"
+        />
         {categories?.result?.length > 0 && (
           <div className="mt-25">
             <p>Try a popular category:</p>

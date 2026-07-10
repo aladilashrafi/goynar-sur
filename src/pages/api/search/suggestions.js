@@ -1,4 +1,5 @@
 import { getProducts } from "@/lib/woocommerce";
+import { sendApiError } from "@/lib/api-error";
 import { mapWooProducts } from "@/utils/mapWooProduct";
 
 export default async function handler(req, res) {
@@ -26,9 +27,6 @@ export default async function handler(req, res) {
       suggestions: mapWooProducts(result.products),
     });
   } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: error.message || "Search suggestions could not be loaded.",
-    });
+    return sendApiError(res, error, "Search suggestions are unavailable right now.");
   }
 }

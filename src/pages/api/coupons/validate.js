@@ -1,4 +1,5 @@
 import { wcFetch } from "@/lib/woocommerce";
+import { sendApiError } from "@/lib/api-error";
 
 function cartSubtotal(cart = []) {
   return cart.reduce((sum, item) => {
@@ -97,9 +98,6 @@ export default async function handler(req, res) {
       },
     });
   } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: error.message || "Coupon could not be validated.",
-    });
+    return sendApiError(res, error, "Coupon could not be validated right now.");
   }
 }

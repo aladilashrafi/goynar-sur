@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "validate:env": "node scripts/validate-env.js",
+    "build": "node scripts/validate-env.js && next build",
+    "scan:client-secrets": "node scripts/scan-client-secrets.js",
     "start": "next start",
     "lint": "eslint . --ext .js,.jsx"
   },

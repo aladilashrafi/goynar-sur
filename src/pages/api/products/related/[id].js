@@ -1,4 +1,5 @@
 import { getProductById, getProducts, getProductsByIds } from "@/lib/woocommerce";
+import { sendApiError } from "@/lib/api-error";
 import { mapWooProducts } from "@/utils/mapWooProduct";
 
 export default async function handler(req, res) {
@@ -31,9 +32,6 @@ export default async function handler(req, res) {
       count: related.length,
     });
   } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: error.message || "Failed to fetch related products",
-    });
+    return sendApiError(res, error, "Related products are unavailable right now.");
   }
 }

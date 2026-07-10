@@ -28,7 +28,11 @@ const CheckoutBillingArea = ({ register, errors, watch }) => {
                 </label>
                 <input
                   {...register("firstName", {
-                    required: `firstName is required!`,
+                    required: "First name is required.",
+                    minLength: {
+                      value: 2,
+                      message: "First name must be at least 2 characters.",
+                    },
                   })}
                   name="firstName"
                   id="firstName"
@@ -73,7 +77,7 @@ const CheckoutBillingArea = ({ register, errors, watch }) => {
                   District <span>*</span>
                 </label>
                 <select
-                  {...register("district", { required: `District is required!` })}
+                  {...register("district", { required: "District is required." })}
                   name="district"
                   id="district"
                 >
@@ -93,9 +97,10 @@ const CheckoutBillingArea = ({ register, errors, watch }) => {
                   Upazila / Area <span>*</span>
                 </label>
                 <select
-                  {...register("upazila", { required: `Upazila or area is required!` })}
+                  {...register("upazila", { required: "Upazila or area is required." })}
                   name="upazila"
                   id="upazila"
+                  disabled={!selectedDistrict}
                 >
                   <option value="">Select upazila / area</option>
                   {upazilas.map((item) => (
@@ -114,7 +119,11 @@ const CheckoutBillingArea = ({ register, errors, watch }) => {
                 </label>
                 <input
                   {...register("contactNo", {
-                    required: `ContactNumber is required!`,
+                    required: "Phone number is required.",
+                    pattern: {
+                      value: /^(?:\+?88)?01[3-9]\d{8}$/,
+                      message: "Enter a valid Bangladesh mobile number.",
+                    },
                   })}
                   name="contactNo"
                   id="contactNo"
@@ -128,7 +137,12 @@ const CheckoutBillingArea = ({ register, errors, watch }) => {
               <div className="tp-checkout-input">
                 <label>Email address</label>
                 <input
-                  {...register("email")}
+                  {...register("email", {
+                    pattern: {
+                      value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                      message: "Enter a valid email address.",
+                    },
+                  })}
                   name="email"
                   id="email"
                   type="email"

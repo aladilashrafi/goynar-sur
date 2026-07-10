@@ -4,6 +4,7 @@ import {
   removeCustomerWishlistProduct,
   setCustomerWishlistProducts,
 } from "@/lib/customer-auth";
+import { sendApiError } from "@/lib/api-error";
 import { getProductsByIds } from "@/lib/woocommerce";
 import { mapWooProducts } from "@/utils/mapWooProduct";
 
@@ -66,9 +67,6 @@ export default async function handler(req, res) {
     res.setHeader("Allow", "GET,POST,DELETE");
     return res.status(405).json({ success: false, message: "Method not allowed" });
   } catch (error) {
-    return res.status(error.status || 500).json({
-      success: false,
-      message: error.message || "Wishlist could not be updated.",
-    });
+    return sendApiError(res, error, "Wishlist could not be updated right now.");
   }
 }

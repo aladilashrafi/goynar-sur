@@ -1,4 +1,5 @@
 import { wcFetch } from "@/lib/woocommerce";
+import { sendApiError } from "@/lib/api-error";
 import { getStateCodeByName } from "@/lib/bd-states";
 
 function normalizeLineItems(cart = []) {
@@ -28,6 +29,10 @@ function validate(body) {
   if (!body.address?.trim()) return "Address is required";
   if (!body.district?.trim() && !body.city?.trim()) return "District is required";
   if (!body.upazila?.trim() && !body.address_2?.trim()) return "Upazila or area is required";
+  const phone = String(body.phone || body.contactNo || "").trim();
+  if (!/^(?:\+?88)?01[3-9]\d{8}$/.test(phone)) return "A valid Bangladesh phone number is required";
+  const email = String(body.email || "").trim();
+  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return "A valid email address is required";
   return null;
 }
 
@@ -126,9 +131,6 @@ export default async function handler(req, res) {
 
     return res.status(200).json({ success: true, order: data });
   } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: error.message || "Failed to create order",
-    });
+    return sendApiError(res, error, "We could not place the order right now. Please try again or contact us.");
   }
 }

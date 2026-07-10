@@ -1,4 +1,7 @@
+import { apiError } from "./api-error";
+
 const STORE_URL = process.env.NEXT_PUBLIC_WORDPRESS_URL || process.env.WOOCOMMERCE_URL;
+const REQUEST_TIMEOUT_MS = 12000;
 
 function cleanBaseUrl(url) {
   return url.replace(/\/+$/, "");
@@ -6,7 +9,7 @@ function cleanBaseUrl(url) {
 
 function assertStoreConfig() {
   if (!STORE_URL) {
-    throw new Error("NEXT_PUBLIC_WORDPRESS_URL or WOOCOMMERCE_URL is required for WooCommerce Store API calls.");
+    throw apiError("WooCommerce Store API URL is not configured.", 503, "missing_env");
   }
 }
 
@@ -29,10 +32,20 @@ function responseSessionHeaders(response, fallback = {}) {
 
 async function parseStoreResponse(response, endpoint) {
   const text = await response.text();
-  const data = text ? JSON.parse(text) : null;
+  let data = null;
+
+  try {
+    data = text ? JSON.parse(text) : null;
+  } catch (error) {
+    throw apiError(`WooCommerce Store API returned invalid JSON for ${endpoint}.`, 502, "invalid_upstream_json");
+  }
 
   if (!response.ok) {
-    throw new Error(data?.message || `WooCommerce Store API ${response.status} on ${endpoint}`);
+    throw apiError(
+      data?.message || `WooCommerce Store API ${response.status} on ${endpoint}`,
+      response.status,
+      data?.code || (response.status === 429 ? "rate_limited" : "store_api_error")
+    );
   }
 
   return data;
@@ -41,6 +54,8 @@ async function parseStoreResponse(response, endpoint) {
 export async function storeFetch(path, options = {}) {
   const { method = "GET", body, session = {} } = options;
   const endpoint = path.startsWith("/") ? path : `/${path}`;
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
   const headers = {
     "Content-Type": "application/json",
   };
@@ -48,12 +63,25 @@ export async function storeFetch(path, options = {}) {
   if (session.cartToken) headers["Cart-Token"] = session.cartToken;
   if (session.nonce) headers.Nonce = session.nonce;
 
-  const response = await fetch(storeApiUrl(endpoint), {
-    method,
-    headers,
-    body: body ? JSON.stringify(body) : undefined,
-    cache: "no-store",
-  });
+  let response;
+
+  try {
+    response = await fetch(storeApiUrl(endpoint), {
+      method,
+      headers,
+      body: body ? JSON.stringify(body) : undefined,
+      cache: "no-store",
+      signal: controller.signal,
+    });
+  } catch (error) {
+    throw apiError(
+      `Unable to reach WooCommerce Store API: ${error.message}`,
+      503,
+      "upstream_unreachable"
+    );
+  } finally {
+    clearTimeout(timeout);
+  }
 
   const data = await parseStoreResponse(response, endpoint);
 

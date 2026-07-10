@@ -187,8 +187,26 @@ const useCheckoutSubmit = () => {
       return;
     }
 
+    if (isShippingLoading) {
+      notifyError("Please wait while shipping options are calculated.");
+      return;
+    }
+
     if (!selectedShippingRate) {
       notifyError("Please select a shipping method.");
+      return;
+    }
+
+    const firstName = String(data.firstName || "").trim();
+    const lastName = String(data.lastName || "").trim();
+    const phone = String(data.contactNo || "").trim();
+    const email = String(data.email || "").trim();
+    const districtValue = String(data.district || "").trim();
+    const upazilaValue = String(data.upazila || "").trim();
+    const addressValue = String(data.address || "").trim();
+
+    if (!firstName || !phone || !districtValue || !upazilaValue || !addressValue) {
+      notifyError("Please complete the required checkout fields.");
       return;
     }
 
@@ -196,19 +214,19 @@ const useCheckoutSubmit = () => {
     setIsCheckoutSubmit(true);
 
     const orderPayload = {
-      firstName: data.firstName,
-      lastName: data.lastName,
-      phone: data.contactNo,
-      contactNo: data.contactNo,
-      email: data.email,
-      address: data.address,
-      district: data.district,
-      city: data.district,
-      upazila: data.upazila,
-      address_2: data.upazila,
+      firstName,
+      lastName,
+      phone,
+      contactNo: phone,
+      email,
+      address: addressValue,
+      district: districtValue,
+      city: districtValue,
+      upazila: upazilaValue,
+      address_2: upazilaValue,
       country: "Bangladesh",
-      zipCode: data.zipCode || "",
-      orderNote: data.orderNote,
+      zipCode: String(data.zipCode || "").trim(),
+      orderNote: String(data.orderNote || "").trim(),
       cart: cart_products,
       subTotal: total,
       shippingCost,
@@ -238,28 +256,28 @@ const useCheckoutSubmit = () => {
           },
           body: JSON.stringify({
             name: [data.firstName, data.lastName].filter(Boolean).join(" "),
-            email: data.email,
-            phone: data.contactNo,
+            email,
+            phone,
             billing: {
-              first_name: data.firstName,
-              last_name: data.lastName || data.firstName,
-              email: data.email,
-              phone: data.contactNo,
-              address_1: data.address,
-              address_2: data.upazila,
-              city: data.district,
-              state: data.district,
-              postcode: data.zipCode || "",
+              first_name: firstName,
+              last_name: lastName || firstName,
+              email,
+              phone,
+              address_1: addressValue,
+              address_2: upazilaValue,
+              city: districtValue,
+              state: districtValue,
+              postcode: String(data.zipCode || "").trim(),
               country: "BD",
             },
             shipping: {
-              first_name: data.firstName,
-              last_name: data.lastName || data.firstName,
-              address_1: data.address,
-              address_2: data.upazila,
-              city: data.district,
-              state: data.district,
-              postcode: data.zipCode || "",
+              first_name: firstName,
+              last_name: lastName || firstName,
+              address_1: addressValue,
+              address_2: upazilaValue,
+              city: districtValue,
+              state: districtValue,
+              postcode: String(data.zipCode || "").trim(),
               country: "BD",
             },
           }),

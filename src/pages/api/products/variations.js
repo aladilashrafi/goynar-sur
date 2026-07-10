@@ -1,4 +1,5 @@
 import { getProductAttributeTerms, getProductVariations } from "@/lib/woocommerce";
+import { sendApiError } from "@/lib/api-error";
 
 function mapVariation(variation = {}) {
   const price = Number(variation.price || variation.sale_price || variation.regular_price || 0);
@@ -63,9 +64,6 @@ export default async function handler(req, res) {
       attributeTermSlugs,
     });
   } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: error.message || "Failed to fetch product variations",
-    });
+    return sendApiError(res, error, "Product options are unavailable right now.");
   }
 }

@@ -1,4 +1,5 @@
 import { customerHasPurchasedProduct } from "@/lib/customer-auth";
+import { sendApiError } from "@/lib/api-error";
 import { createProductReview, getProductReviews } from "@/lib/woocommerce";
 import { mapWooReview, mapWooReviews } from "@/utils/mapWooReview";
 
@@ -83,9 +84,6 @@ export default async function handler(req, res) {
     res.setHeader("Allow", "GET,POST");
     return res.status(405).json({ success: false, message: "Method not allowed" });
   } catch (error) {
-    return res.status(error.status || 500).json({
-      success: false,
-      message: error.message || "Product reviews could not be processed.",
-    });
+    return sendApiError(res, error, "Product reviews could not be processed right now.");
   }
 }

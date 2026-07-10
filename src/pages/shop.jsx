@@ -10,6 +10,7 @@ import ErrorMsg from "@/components/common/error-msg";
 import Footer from "@/layout/footers/footer";
 import ShopFilterOffCanvas from "@/components/common/shop-filter-offcanvas";
 import ShopLoader from "@/components/loader/shop/shop-loader";
+import EmptyState from "@/components/common/empty-state";
 
 const SORT_MAP = {
   "Default Sorting": {},
@@ -113,13 +114,20 @@ const ShopPage = ({ query }) => {
   if (!isLoading && isError) {
     content = (
       <div className="pb-80 text-center">
-        <ErrorMsg msg="There was an error" />
+        <ErrorMsg msg="Products are unavailable right now. Please refresh or try again soon." />
       </div>
     );
   }
 
   if (!isLoading && !isError && products?.data?.length === 0) {
-    content = <ErrorMsg msg="No Products found!" />;
+    content = (
+      <EmptyState
+        title="No jewellery found"
+        message="Try a different category, remove filters, or contact us for a custom handmade piece."
+        actionHref="/shop"
+        actionLabel="Reset Shop"
+      />
+    );
   }
 
   if (!isLoading && !isError && products?.data?.length > 0) {

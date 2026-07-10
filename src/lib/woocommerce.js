@@ -1,6 +1,10 @@
+import { apiError } from "./api-error";
+
 const WOO_URL = process.env.WOOCOMMERCE_URL || process.env.NEXT_PUBLIC_WORDPRESS_URL;
 const WOO_KEY = process.env.WOOCOMMERCE_CONSUMER_KEY;
 const WOO_SECRET = process.env.WOOCOMMERCE_CONSUMER_SECRET;
+const REQUEST_TIMEOUT_MS = 12000;
+const RETRYABLE_STATUS = new Set([408, 429, 500, 502, 503, 504]);
 
 function assertWooConfig() {
   const missing = [];
@@ -9,7 +13,11 @@ function assertWooConfig() {
   if (!WOO_SECRET) missing.push("WOOCOMMERCE_CONSUMER_SECRET");
 
   if (missing.length) {
-    throw new Error(`Missing WooCommerce environment variables: ${missing.join(", ")}`);
+    throw apiError(
+      `Missing WooCommerce environment variables: ${missing.join(", ")}`,
+      503,
+      "missing_env"
+    );
   }
 }
 
@@ -37,36 +45,86 @@ function authHeader() {
   return `Basic ${Buffer.from(`${WOO_KEY}:${WOO_SECRET}`).toString("base64")}`;
 }
 
+function retryDelay(response, attempt) {
+  const retryAfter = Number(response?.headers?.get("Retry-After") || 0);
+  if (retryAfter > 0) return Math.min(retryAfter * 1000, 2500);
+  return 350 * (attempt + 1);
+}
+
+function wait(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function parseJson(text, endpoint) {
+  if (!text) return null;
+
+  try {
+    return JSON.parse(text);
+  } catch (error) {
+    throw apiError(`WooCommerce returned invalid JSON for ${endpoint}.`, 502, "invalid_upstream_json");
+  }
+}
+
 export async function wcFetch(path, options = {}) {
   assertWooConfig();
 
   const { method = "GET", params = {}, body, headers = {} } = options;
   const endpoint = path.startsWith("/") ? path : `/${path}`;
   const url = `${cleanBaseUrl(WOO_URL)}/wp-json/wc/v3${endpoint}${buildQuery(params)}`;
+  const maxAttempts = method === "GET" ? 2 : 1;
 
   let response;
+  let lastError;
 
-  try {
-    response = await fetch(url, {
-      method,
-      headers: {
-        Authorization: authHeader(),
-        "Content-Type": "application/json",
-        ...headers,
-      },
-      body: body ? JSON.stringify(body) : undefined,
-    });
-  } catch (error) {
+  for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+
+    try {
+      response = await fetch(url, {
+        method,
+        headers: {
+          Authorization: authHeader(),
+          "Content-Type": "application/json",
+          ...headers,
+        },
+        body: body ? JSON.stringify(body) : undefined,
+        signal: controller.signal,
+      });
+    } catch (error) {
+      lastError = error;
+      if (attempt < maxAttempts - 1) {
+        await wait(350 * (attempt + 1));
+        continue;
+      }
+    } finally {
+      clearTimeout(timeout);
+    }
+
+    if (response && RETRYABLE_STATUS.has(response.status) && attempt < maxAttempts - 1) {
+      await wait(retryDelay(response, attempt));
+      continue;
+    }
+
+    break;
+  }
+
+  if (!response) {
     const origin = new URL(url).origin;
-    throw new Error(`Unable to reach WooCommerce at ${origin}: ${error.message}`);
+    throw apiError(
+      `Unable to reach WooCommerce at ${origin}: ${lastError?.message || "request failed"}`,
+      503,
+      "upstream_unreachable"
+    );
   }
 
   const text = await response.text();
-  const data = text ? JSON.parse(text) : null;
+  const data = await parseJson(text, endpoint);
 
   if (!response.ok) {
     const detail = data?.message || text || response.statusText;
-    throw new Error(`WooCommerce ${response.status} ${response.statusText} on ${endpoint}: ${detail}`);
+    const code = data?.code || (response.status === 429 ? "rate_limited" : "upstream_error");
+    throw apiError(`WooCommerce ${response.status} ${response.statusText} on ${endpoint}: ${detail}`, response.status, code);
   }
 
   return {

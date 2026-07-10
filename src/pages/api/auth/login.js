@@ -1,4 +1,5 @@
 import { CustomerAuthError, loginCustomer } from "@/lib/customer-auth";
+import { sendApiError } from "@/lib/api-error";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -17,9 +18,10 @@ export default async function handler(req, res) {
     const session = await loginCustomer(email, password);
     return res.status(200).json({ success: true, ...session });
   } catch (error) {
-    return res.status(error instanceof CustomerAuthError ? error.status : 401).json({
-      success: false,
-      message: error.message || "Unable to sign in.",
-    });
+    return sendApiError(
+      res,
+      error instanceof CustomerAuthError ? error : { ...error, status: 401 },
+      "Unable to sign in."
+    );
   }
 }

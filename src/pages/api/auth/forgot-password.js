@@ -1,4 +1,5 @@
 import { CustomerAuthError, requestCustomerPasswordReset } from "@/lib/customer-auth";
+import { sendApiError } from "@/lib/api-error";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -15,9 +16,10 @@ export default async function handler(req, res) {
     const message = await requestCustomerPasswordReset(email.trim());
     return res.status(200).json({ success: true, message });
   } catch (error) {
-    return res.status(error instanceof CustomerAuthError ? error.status : 400).json({
-      success: false,
-      message: error.message || "Unable to start password reset.",
-    });
+    return sendApiError(
+      res,
+      error instanceof CustomerAuthError ? error : { ...error, status: 400 },
+      "Unable to start password reset."
+    );
   }
 }

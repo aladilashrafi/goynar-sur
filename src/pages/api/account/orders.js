@@ -1,4 +1,5 @@
 import { CustomerAuthError, getCustomerOrders } from "@/lib/customer-auth";
+import { sendApiError } from "@/lib/api-error";
 
 function bearerToken(req) {
   const header = req.headers.authorization || "";
@@ -20,9 +21,10 @@ export default async function handler(req, res) {
     const data = await getCustomerOrders(token);
     return res.status(200).json({ success: true, ...data });
   } catch (error) {
-    return res.status(error instanceof CustomerAuthError ? error.status : 400).json({
-      success: false,
-      message: error.message || "Unable to load your orders.",
-    });
+    return sendApiError(
+      res,
+      error instanceof CustomerAuthError ? error : { ...error, status: 400 },
+      "Unable to load your orders."
+    );
   }
 }

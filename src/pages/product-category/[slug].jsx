@@ -9,6 +9,7 @@ import ErrorMsg from "@/components/common/error-msg";
 import Footer from "@/layout/footers/footer";
 import ShopFilterOffCanvas from "@/components/common/shop-filter-offcanvas";
 import ShopLoader from "@/components/loader/shop/shop-loader";
+import EmptyState from "@/components/common/empty-state";
 import { useGetShowCategoryQuery } from "@/redux/features/categoryApi";
 import { useGetAllProductsQuery } from "@/redux/features/productApi";
 
@@ -56,11 +57,25 @@ const ProductCategoryPage = ({ slug }) => {
   if (isCategoryLoading || isLoading) {
     content = <ShopLoader loading={true} />;
   } else if (isCategoryError || isError) {
-    content = <ErrorMsg msg="There was an error" />;
+    content = <ErrorMsg msg="This category is unavailable right now. Please try again soon." />;
   } else if (!category) {
-    content = <ErrorMsg msg="Category not found" />;
+    content = (
+      <EmptyState
+        title="Category not found"
+        message="This jewellery category is unavailable or has moved."
+        actionHref="/shop"
+        actionLabel="Browse All Jewellery"
+      />
+    );
   } else if (!filteredProducts.length) {
-    content = <ErrorMsg msg="No products found in this category." />;
+    content = (
+      <EmptyState
+        title="No jewellery in this category yet"
+        message="Please check back soon or browse the full collection."
+        actionHref="/shop"
+        actionLabel="Browse All Jewellery"
+      />
+    );
   } else {
     content = (
       <>

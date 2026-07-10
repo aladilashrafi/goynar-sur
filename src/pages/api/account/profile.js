@@ -3,6 +3,7 @@ import {
   getCustomerFromToken,
   updateCustomerProfile,
 } from "@/lib/customer-auth";
+import { sendApiError } from "@/lib/api-error";
 
 function bearerToken(req) {
   const header = req.headers.authorization || "";
@@ -116,9 +117,10 @@ export default async function handler(req, res) {
       user,
     });
   } catch (error) {
-    return res.status(error instanceof CustomerAuthError ? error.status : 400).json({
-      success: false,
-      message: error.message || "Unable to update profile.",
-    });
+    return sendApiError(
+      res,
+      error instanceof CustomerAuthError ? error : { ...error, status: 400 },
+      "Unable to update profile."
+    );
   }
 }

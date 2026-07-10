@@ -1,4 +1,5 @@
 import { CustomerAuthError, registerCustomer } from "@/lib/customer-auth";
+import { sendApiError } from "@/lib/api-error";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -20,9 +21,10 @@ export default async function handler(req, res) {
       ...session,
     });
   } catch (error) {
-    return res.status(error instanceof CustomerAuthError ? error.status : 400).json({
-      success: false,
-      message: error.message || "Unable to create account.",
-    });
+    return sendApiError(
+      res,
+      error instanceof CustomerAuthError ? error : { ...error, status: 400 },
+      "Unable to create account."
+    );
   }
 }

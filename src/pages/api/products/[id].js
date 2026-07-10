@@ -1,4 +1,5 @@
 import { getProductById, getProductBySlug } from "@/lib/woocommerce";
+import { sendApiError } from "@/lib/api-error";
 import { mapWooProduct } from "@/utils/mapWooProduct";
 
 export default async function handler(req, res) {
@@ -19,9 +20,10 @@ export default async function handler(req, res) {
 
     return res.status(200).json({ success: true, product: mapWooProduct(product) });
   } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: error.message || "Failed to fetch product",
-    });
+    return sendApiError(
+      res,
+      error,
+      Number(error?.status) === 404 ? "Product not found." : "This product is unavailable right now."
+    );
   }
 }

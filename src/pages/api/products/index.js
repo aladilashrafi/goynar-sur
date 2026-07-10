@@ -1,4 +1,5 @@
 import { getProducts } from "@/lib/woocommerce";
+import { sendApiError } from "@/lib/api-error";
 import { mapWooProducts } from "@/utils/mapWooProduct";
 
 const ALLOWED_PARAMS = [
@@ -40,9 +41,6 @@ export default async function handler(req, res) {
       totalPages: result.totalPages,
     });
   } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: error.message || "Failed to fetch products",
-    });
+    return sendApiError(res, error, "Products are unavailable right now. Please try again soon.");
   }
 }

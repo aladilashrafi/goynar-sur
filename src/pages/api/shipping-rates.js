@@ -1,4 +1,5 @@
 import { getStateCodeByName } from "@/lib/bd-states";
+import { sendApiError } from "@/lib/api-error";
 import { createStoreCartSession, storeFetch } from "@/lib/store-api";
 
 function moneyToNumber(value, minorUnit = 2) {
@@ -103,9 +104,6 @@ export default async function handler(req, res) {
       },
     });
   } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: error.message || "Failed to calculate shipping",
-    });
+    return sendApiError(res, error, "Shipping options are unavailable right now. Please try again.");
   }
 }

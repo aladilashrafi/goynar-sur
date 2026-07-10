@@ -1,4 +1,5 @@
 import { wcFetch } from "@/lib/woocommerce";
+import { sendApiError } from "@/lib/api-error";
 
 const FALLBACK_IMAGE = "/assets/img/logo/goynar-sur-logo.png";
 
@@ -30,9 +31,6 @@ export default async function handler(req, res) {
 
     return res.status(200).json({ success: true, categories });
   } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: error.message || "Failed to fetch categories",
-    });
+    return sendApiError(res, error, "Categories are unavailable right now. Please try again soon.");
   }
 }

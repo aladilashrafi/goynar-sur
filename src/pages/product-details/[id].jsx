@@ -20,7 +20,7 @@ import {
   productSeoDescription,
 } from '@/utils/seo';
 
-const ProductDetailsPage = ({ query, initialProduct }) => {
+const ProductDetailsPage = ({ query, initialProduct, productLoadFailed }) => {
   const router = useRouter();
   const { data: product, isLoading, isError } = useGetProductQuery(query.id);
   const activeProduct = product || initialProduct;
@@ -37,7 +37,10 @@ const ProductDetailsPage = ({ query, initialProduct }) => {
     content = <PrdDetailsLoader loading={isLoading}/>;
   }
   if (!isLoading && isError && !initialProduct) {
-    content = <ErrorMsg msg="There was an error" />;
+    content = <ErrorMsg msg="This product is unavailable right now. Please try again soon." />;
+  }
+  if (!isLoading && productLoadFailed && !activeProduct) {
+    content = <ErrorMsg msg="This product is unavailable right now. Please try again soon." />;
   }
   if (activeProduct) {
     content = (
@@ -69,21 +72,26 @@ export default ProductDetailsPage;
 export const getServerSideProps = async (context) => {
   const { query } = context;
   let initialProduct = null;
+  let productLoadFailed = false;
 
   try {
     const identifier = String(query.id || "");
     const product = /^\d+$/.test(identifier)
       ? await getProductById(identifier)
       : await getProductBySlug(identifier);
-    initialProduct = product ? mapWooProduct(product) : null;
+    if (!product) {
+      return { notFound: true };
+    }
+    initialProduct = mapWooProduct(product);
   } catch (error) {
-    initialProduct = null;
+    productLoadFailed = true;
   }
 
   return {
     props: {
       query,
       initialProduct,
+      productLoadFailed,
     },
   };
 };
