@@ -10,9 +10,10 @@ import { add_to_wishlist } from "@/redux/features/wishlist-slice";
 import { formatPrice } from "@/utils/formatPrice";
 import { productUrl } from "@/utils/routes";
 import { notifyWarning } from "@/utils/toast";
+import ProductRating from "@/components/common/product-rating";
 
 const ProductItem = ({ product }) => {
-  const { _id, img, title, price, tags,status, isVariable } = product || {};
+  const { _id, img, title, price, tags, status, isVariable, averageRating, ratingCount } = product || {};
   const { cart_products } = useSelector((state) => state.cart);
   const { wishlist } = useSelector((state) => state.wishlist);
   const isAddedToCart = cart_products.some((prd) => prd._id === _id);
@@ -46,9 +47,9 @@ const ProductItem = ({ product }) => {
           <Image
             src={img}
             alt={title || "Goynar Sur product"}
-            width={284}
-            height={284}
+            fill
             sizes="(max-width: 575px) 92vw, (max-width: 991px) 46vw, (max-width: 1199px) 30vw, 284px"
+            style={{ objectFit: "cover" }}
           />
         </Link>
         <div className="tp-product-badge">
@@ -109,6 +110,7 @@ const ProductItem = ({ product }) => {
         <h3 className="tp-product-title-4">
           <Link href={productUrl(product)}>{title}</Link>
         </h3>
+        <ProductRating averageRating={averageRating} ratingCount={ratingCount} className="mb-5" />
         <div className="tp-product-info-4">
           <p>{tags?.[0]}</p>
         </div>

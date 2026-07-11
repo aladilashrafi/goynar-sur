@@ -1,6 +1,5 @@
 import React from 'react';
 import Image from 'next/image';
-import { Rating } from 'react-simple-star-rating';
 import Link from 'next/link';
 // internal
 import ErrorMsg from '@/components/common/error-msg';
@@ -8,6 +7,7 @@ import { useGetTopRatedProductsQuery } from '@/redux/features/productApi';
 import ShopTopRatedLoader from '@/components/loader/shop/top-rated-prd-loader';
 import { formatPrice } from '@/utils/formatPrice';
 import { productUrl } from '@/utils/routes';
+import ProductRating from '@/components/common/product-rating';
 
 const TopRatedProducts = () => {
   const { data: products, isError, isLoading } = useGetTopRatedProductsQuery();
@@ -35,14 +35,11 @@ const TopRatedProducts = () => {
           </Link>
         </div>
         <div className="tp-shop-widget-product-content">
-          <div className="tp-shop-widget-product-rating-wrapper d-flex align-items-center">
-            <div className="tp-shop-widget-product-rating">
-              <Rating allowFraction size={16} initialValue={item.rating} readonly={true} />
-            </div>
-            <div className="tp-shop-widget-product-rating-number">
-              <span>({item.rating})</span>
-            </div>
-          </div>
+          <ProductRating
+            averageRating={item.averageRating}
+            ratingCount={item.ratingCount}
+            className="tp-shop-widget-product-rating-wrapper"
+          />
           <h4 className="tp-shop-widget-product-title">
             <Link href={productUrl(item)}>{item.title.substring(0,20)}...</Link>
           </h4>

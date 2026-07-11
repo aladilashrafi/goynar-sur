@@ -1,4 +1,4 @@
-import { getProductById, getProducts, getProductsByIds } from "@/lib/woocommerce";
+import { getProductById, getProductReviewSummaries, getProducts, getProductsByIds } from "@/lib/woocommerce";
 import { sendApiError } from "@/lib/api-error";
 import { mapWooProducts } from "@/utils/mapWooProduct";
 
@@ -26,9 +26,11 @@ export default async function handler(req, res) {
       related = result.products;
     }
 
+    const reviewSummaries = await getProductReviewSummaries();
+
     return res.status(200).json({
       success: true,
-      products: mapWooProducts(related).filter((item) => item.id !== Number(req.query.id)),
+      products: mapWooProducts(related, reviewSummaries).filter((item) => item.id !== Number(req.query.id)),
       count: related.length,
     });
   } catch (error) {

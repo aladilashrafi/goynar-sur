@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import Image from "next/image";
-import { Rating } from "react-simple-star-rating";
 import Link from "next/link";
 // internal
 import { Cart, CompareThree, QuickView, Wishlist } from "@/svg";
@@ -12,21 +11,23 @@ import { add_to_compare } from "@/redux/features/compareSlice";
 import { formatPrice } from "@/utils/formatPrice";
 import { productUrl } from "@/utils/routes";
 import { notifyWarning } from "@/utils/toast";
+import ProductRating from "@/components/common/product-rating";
 
 const ShopListItem = ({ product }) => {
-  const { _id, img, category, title, reviews, price, regularPrice, discount, tags, description } = product || {};
+  const {
+    _id,
+    img,
+    category,
+    title,
+    averageRating = 0,
+    ratingCount = 0,
+    price,
+    regularPrice,
+    discount,
+    tags,
+    description,
+  } = product || {};
   const dispatch = useDispatch()
-  const [ratingVal, setRatingVal] = useState(0);
-  useEffect(() => {
-    if (reviews && reviews.length > 0) {
-      const rating =
-        reviews.reduce((acc, review) => acc + review.rating, 0) /
-        reviews.length;
-      setRatingVal(rating);
-    } else {
-      setRatingVal(0);
-    }
-  }, [reviews]);
 
   // handle add product
   const handleAddProduct = (prd) => {
@@ -105,9 +106,11 @@ const ShopListItem = ({ product }) => {
           <h3 className="tp-product-title-2">
             <Link href={productUrl(product)}>{title}</Link>
           </h3>
-          <div className="tp-product-rating-icon tp-product-rating-icon-2">
-            <Rating allowFraction size={16} initialValue={ratingVal} readonly={true} />
-          </div>
+          <ProductRating
+            averageRating={averageRating}
+            ratingCount={ratingCount}
+            className="tp-product-rating-icon tp-product-rating-icon-2"
+          />
           <div className="tp-product-price-wrapper-2">
             {discount > 0 ? (
               <>

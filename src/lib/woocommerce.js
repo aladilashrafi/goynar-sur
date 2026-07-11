@@ -5,6 +5,9 @@ const WOO_KEY = process.env.WOOCOMMERCE_CONSUMER_KEY;
 const WOO_SECRET = process.env.WOOCOMMERCE_CONSUMER_SECRET;
 const REQUEST_TIMEOUT_MS = 12000;
 const RETRYABLE_STATUS = new Set([408, 429, 500, 502, 503, 504]);
+const REVIEW_SUMMARY_TTL_MS = 60_000;
+let reviewSummaryCache = null;
+let reviewSummaryCacheExpiresAt = 0;
 
 function assertWooConfig() {
   const missing = [];
@@ -178,12 +181,65 @@ export async function getProductReviews(productId, params = {}) {
   return { reviews: Array.isArray(data) ? data : [], count: total || data?.length || 0, totalPages };
 }
 
+export async function getProductReviewSummaries() {
+  if (reviewSummaryCache && Date.now() < reviewSummaryCacheExpiresAt) {
+    return reviewSummaryCache;
+  }
+
+  const firstPage = await wcFetch("/products/reviews", {
+    params: {
+      status: "approved",
+      per_page: 100,
+      page: 1,
+      order: "desc",
+      orderby: "date_gmt",
+    },
+  });
+  const remainingPages = Array.from(
+    { length: Math.max(0, firstPage.totalPages - 1) },
+    (_, index) => index + 2
+  );
+  const pageResults = await Promise.all(
+    remainingPages.map((page) =>
+      wcFetch("/products/reviews", {
+        params: { status: "approved", per_page: 100, page },
+      })
+    )
+  );
+  const reviews = [
+    ...(Array.isArray(firstPage.data) ? firstPage.data : []),
+    ...pageResults.flatMap((result) => (Array.isArray(result.data) ? result.data : [])),
+  ];
+  const summaries = {};
+
+  reviews.forEach((review) => {
+    const productId = Number(review.product_id);
+    const rating = Number(review.rating) || 0;
+    if (!productId || rating <= 0) return;
+
+    const current = summaries[productId] || { ratingTotal: 0, ratingCount: 0 };
+    current.ratingTotal += rating;
+    current.ratingCount += 1;
+    summaries[productId] = current;
+  });
+
+  Object.values(summaries).forEach((summary) => {
+    summary.averageRating = summary.ratingTotal / summary.ratingCount;
+  });
+
+  reviewSummaryCache = summaries;
+  reviewSummaryCacheExpiresAt = Date.now() + REVIEW_SUMMARY_TTL_MS;
+  return summaries;
+}
+
 export async function createProductReview(input = {}) {
   const { data } = await wcFetch("/products/reviews", {
     method: "POST",
     body: input,
   });
 
+  reviewSummaryCache = null;
+  reviewSummaryCacheExpiresAt = 0;
   return data;
 }
 

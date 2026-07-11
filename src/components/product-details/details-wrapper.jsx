@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Rating } from 'react-simple-star-rating';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -13,6 +12,8 @@ import { add_to_wishlist } from '@/redux/features/wishlist-slice';
 import { add_to_compare } from '@/redux/features/compareSlice';
 import { handleModalClose } from '@/redux/features/productModalSlice';
 import { formatPrice } from '@/utils/formatPrice';
+import ProductRating from '@/components/common/product-rating';
+import { useGetProductReviewsQuery } from '@/redux/features/reviewApi';
 
 function normalizeAttrName(name = "") {
   return String(name).replace(/^attribute_/, "").replace(/^pa_/, "").toLowerCase();
@@ -57,7 +58,8 @@ const DetailsWrapper = ({
     price,
     regularPrice,
     status,
-    reviews,
+    averageRating = 0,
+    ratingCount = 0,
     tags = [],
     offerDate,
     attributes = [],
@@ -69,10 +71,30 @@ const DetailsWrapper = ({
     [attributes]
   );
   const [selectedAttributes, setSelectedAttributes] = useState({});
-  const [ratingVal, setRatingVal] = useState(0);
   const [cartError, setCartError] = useState("");
   const dispatch = useDispatch();
   const router = useRouter();
+  const reviewProductId = productItem?.id || productItem?._id;
+  const { data: reviewData } = useGetProductReviewsQuery(reviewProductId, {
+    skip: !reviewProductId,
+  });
+  const liveRating = useMemo(() => {
+    const liveReviews = reviewData?.reviews || [];
+
+    if (!liveReviews.length) {
+      return { averageRating, ratingCount };
+    }
+
+    const ratingTotal = liveReviews.reduce(
+      (total, review) => total + (Number(review.rating) || 0),
+      0
+    );
+
+    return {
+      averageRating: ratingTotal / liveReviews.length,
+      ratingCount: Number(reviewData?.count) || liveReviews.length,
+    };
+  }, [averageRating, ratingCount, reviewData]);
 
   useEffect(() => {
     if (!variableAttributes.length) return;
@@ -87,17 +109,6 @@ const DetailsWrapper = ({
     });
     setSelectedAttributes(initial);
   }, [defaultAttributes, variableAttributes]);
-
-  useEffect(() => {
-    if (reviews && reviews.length > 0) {
-      const rating =
-        reviews.reduce((acc, review) => acc + review.rating, 0) /
-        reviews.length;
-      setRatingVal(rating);
-    } else {
-      setRatingVal(0);
-    }
-  }, [reviews]);
 
   const matchedVariation = useMemo(() => {
     if (!isVariable || !variations.length) return null;
@@ -253,14 +264,11 @@ const DetailsWrapper = ({
         <div className="tp-product-details-stock mb-10">
             <span>{selectedStatus}</span>
         </div>
-        <div className="tp-product-details-rating-wrapper d-flex align-items-center mb-10">
-          <div className="tp-product-details-rating">
-            <Rating allowFraction size={16} initialValue={ratingVal} readonly={true} />
-          </div>
-          <div className="tp-product-details-reviews">
-            <span>({reviews && reviews.length > 0 ? reviews.length : 0} Review)</span>
-          </div>
-        </div>
+        <ProductRating
+          averageRating={liveRating.averageRating}
+          ratingCount={liveRating.ratingCount}
+          className="tp-product-details-rating-wrapper mb-10"
+        />
       </div>
       {(shortDescription || description) && (
         <div

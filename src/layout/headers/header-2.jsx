@@ -62,7 +62,13 @@ const HeaderTwo = ({ style_2 = false }) => {
                   <div className="col-xl-2 col-lg-5 col-md-5 col-sm-4 col-6">
                     <div className="logo">
                       <Link href="/">
-                        <Image src={logo} alt="Goynar Sur" priority />
+                        <Image
+                          src={logo}
+                          alt="Goynar Sur"
+                          priority
+                          loading="eager"
+                          style={{ height: "auto" }}
+                        />
                       </Link>
                     </div>
                   </div>

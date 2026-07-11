@@ -1,4 +1,4 @@
-import { getProducts } from "@/lib/woocommerce";
+import { getProductReviewSummaries, getProducts } from "@/lib/woocommerce";
 import { sendApiError } from "@/lib/api-error";
 import { mapWooProducts } from "@/utils/mapWooProduct";
 
@@ -32,11 +32,23 @@ export default async function handler(req, res) {
       }
     });
 
-    const result = await getProducts(params);
+    const [result, reviewSummaries] = await Promise.all([
+      getProducts(params),
+      getProductReviewSummaries(),
+    ]);
+    const products = mapWooProducts(result.products, reviewSummaries);
+
+    if (params.orderby === "rating") {
+      products.sort(
+        (left, right) =>
+          right.averageRating - left.averageRating ||
+          right.ratingCount - left.ratingCount
+      );
+    }
 
     return res.status(200).json({
       success: true,
-      products: mapWooProducts(result.products),
+      products,
       count: result.count,
       totalPages: result.totalPages,
     });

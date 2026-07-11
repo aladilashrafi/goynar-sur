@@ -2,12 +2,12 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
-import { Rating } from "react-simple-star-rating";
 // internal
 import { add_cart_product } from "@/redux/features/cartSlice";
 import { remove_compare_product } from "@/redux/features/compareSlice";
 import { formatPrice } from "@/utils/formatPrice";
 import { productUrl } from "@/utils/routes";
+import ProductRating from "@/components/common/product-rating";
 
 const CompareArea = () => {
   const { compareItems } = useSelector((state) => state.compare);
@@ -104,11 +104,10 @@ const CompareArea = () => {
                         {compareItems.map(item => (
                           <td key={item._id}>
                             <div className="tp-compare-rating">
-                              <Rating
-                                allowFraction
-                                size={16}
-                                initialValue={item.reviews.length > 0 ? item.reviews.reduce((acc, review) => acc + review.rating, 0) / item.reviews.length : 0}
-                                readonly={true}
+                              <ProductRating
+                                averageRating={item.averageRating}
+                                ratingCount={item.ratingCount}
+                                className="justify-content-center"
                               />
                             </div>
                           </td>

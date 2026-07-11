@@ -10,9 +10,10 @@ import { add_to_wishlist } from "@/redux/features/wishlist-slice";
 import { notifyError, notifyWarning } from "@/utils/toast";
 import { formatPrice } from "@/utils/formatPrice";
 import { productUrl } from "@/utils/routes";
+import ProductRating from "@/components/common/product-rating";
 
 const ProductSliderItem = ({ product }) => {
-  const { _id, title, price, img,status, isVariable } = product || {};
+  const { _id, title, price, img, status, isVariable, averageRating, ratingCount } = product || {};
   const { cart_products } = useSelector((state) => state.cart);
   const { wishlist } = useSelector((state) => state.wishlist);
   const isAddedToCart = cart_products.some((prd) => prd._id === _id);
@@ -108,6 +109,11 @@ const ProductSliderItem = ({ product }) => {
         <h3 className="tp-category-title-4">
           <Link href={productUrl(product)}>{title}</Link>
         </h3>
+        <ProductRating
+          averageRating={averageRating}
+          ratingCount={ratingCount}
+          className="justify-content-center mb-5"
+        />
         <div className="tp-category-price-wrapper-4">
           <span className="tp-category-price-4">{formatPrice(price)}</span>
           <div className="tp-category-add-to-cart">

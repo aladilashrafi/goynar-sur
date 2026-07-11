@@ -19,7 +19,6 @@ const ProductModal = dynamic(() => import("@/components/common/product-modal"), 
 });
 
 const Wrapper = ({ children }) => {
-  const { productItem } = useSelector((state) => state.productModal);
   const { accessToken } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const authChecked = useAuthCheck();
@@ -51,7 +50,7 @@ const Wrapper = ({ children }) => {
       <BackToTopCom />
       <ToastContainer />
       {/* product modal start */}
-      {productItem && <ProductModal />}
+      <ProductModal />
       {/* product modal end */}
     </div>
   );

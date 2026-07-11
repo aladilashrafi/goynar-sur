@@ -23,15 +23,15 @@ function mapImages(images = []) {
   }));
 }
 
-export function mapWooProduct(product = {}) {
+export function mapWooProduct(product = {}, reviewSummary = null) {
   const images = mapImages(product.images);
   const firstCategory = product.categories?.[0] || {};
   const secondCategory = product.categories?.[1] || {};
   const price = Number(product.price || product.sale_price || product.regular_price || 0);
   const regularPrice = Number(product.regular_price || price || 0);
   const salePrice = Number(product.sale_price || 0);
-  const rating = Number(product.average_rating || 0);
-  const reviewCount = Number(product.rating_count || 0);
+  const averageRating = Number(reviewSummary?.averageRating ?? product.average_rating ?? 0);
+  const ratingCount = Number(reviewSummary?.ratingCount ?? product.rating_count ?? 0);
   const totalSales = Number(product.total_sales || 0);
 
   return {
@@ -45,6 +45,8 @@ export function mapWooProduct(product = {}) {
     price,
     regularPrice,
     salePrice,
+    averageRating,
+    ratingCount,
     totalSales,
     discount: calcDiscountPercent(regularPrice, salePrice),
     img: images[0]?.img || FALLBACK_IMAGE,
@@ -63,9 +65,7 @@ export function mapWooProduct(product = {}) {
     plainDescription: stripHtml(product.short_description || product.description),
     quantity: getAvailableQuantity(product),
     status: product.stock_status === "instock" ? "in-stock" : "out-of-stock",
-    reviews: reviewCount
-      ? Array.from({ length: reviewCount }, (_, index) => ({ _id: index, rating }))
-      : [],
+    reviews: [],
     brand: { name: "Goynar Sur" },
     attributes: (product.attributes || []).map((attribute) => ({
       id: attribute.id || 0,
@@ -85,6 +85,6 @@ export function mapWooProduct(product = {}) {
   };
 }
 
-export function mapWooProducts(products = []) {
-  return products.map(mapWooProduct);
+export function mapWooProducts(products = [], reviewSummaries = {}) {
+  return products.map((product) => mapWooProduct(product, reviewSummaries[product.id]));
 }
