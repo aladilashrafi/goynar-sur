@@ -2,8 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 // internal
-import about_img from '@assets/img/goynar-home/red-festival-backdrop.jpg';
-import about_thumb from '@assets/img/goynar-home/blue-ring-close.jpg';
+import about_img from '@assets/img/goynar-home/red-bangle-detail.jpg';
+import about_thumb from '@assets/img/goynar-home/blue-ring-portrait.jpg';
 import { ArrowRightLong } from '@/svg';
 
 const JewelryAbout = () => {

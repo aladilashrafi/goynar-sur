@@ -36,7 +36,7 @@ const Header = () => {
                     <span>
                       <ShippingCar />
                     </span>
-                    <p>COD delivery across Bangladesh</p>
+                    <p>Cash on Delivery</p>
                   </div>
                 </div>
                 <div className="col-md-6">
@@ -111,7 +111,7 @@ const Header = () => {
                       <div className="tp-header-contact-content">
                         <h5>Hotline:</h5>
                         <p>
-                          <a href="tel:+8801700000000">+880 1700 000000</a>
+                          <a href="tel:+8801940861467">+880 1940-861467</a>
                         </p>
                       </div>
                     </div>

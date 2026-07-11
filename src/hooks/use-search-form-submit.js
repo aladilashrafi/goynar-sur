@@ -13,32 +13,45 @@ const useSearchFormSubmit = () => {
     const query = searchText.trim();
     if (query.length < 2) {
       setSuggestions([]);
+      setIsSuggestionsLoading(false);
       return;
     }
 
     const controller = new AbortController();
+    let isActive = true;
+    let requestStarted = false;
     const timer = setTimeout(async () => {
-      setIsSuggestionsLoading(true);
+      requestStarted = true;
+      if (isActive) setIsSuggestionsLoading(true);
       try {
         const response = await fetch(`/api/search/suggestions?search=${encodeURIComponent(query)}`, {
           signal: controller.signal,
         });
         const data = await response.json();
-        setSuggestions(response.ok && data.success ? data.suggestions || [] : []);
+        if (isActive) {
+          setSuggestions(response.ok && data.success ? data.suggestions || [] : []);
+        }
       } catch (error) {
-        if (error.name !== "AbortError") {
+        if (isActive && error.name !== "AbortError") {
           setSuggestions([]);
         }
       } finally {
-        if (!controller.signal.aborted) {
+        if (isActive && !controller.signal.aborted) {
           setIsSuggestionsLoading(false);
         }
       }
     }, 250);
 
     return () => {
-      controller.abort();
+      isActive = false;
       clearTimeout(timer);
+      if (requestStarted && !controller.signal.aborted) {
+        const reason =
+          typeof DOMException === "function"
+            ? new DOMException("Search suggestion request cancelled.", "AbortError")
+            : "Search suggestion request cancelled.";
+        controller.abort(reason);
+      }
     };
   }, [searchText]);
 

@@ -730,7 +730,7 @@
             text-align: center;
             border: 2px solid rgba($color: $white, $alpha: 0);
             position: absolute;
-            bottom: 50px;
+            bottom: 2px;
             right: 255px;
             color: rgba($color: $white, $alpha: .7);
             @extend %translateY1_2;
@@ -834,8 +834,8 @@
     }
     &-nav{
         position: absolute;
-        bottom: 10%;
-        left: 25.3%;
+        bottom: 08%;
+        left: 30%;
         z-index: 1;
         width: 150px;
         height: 180px;

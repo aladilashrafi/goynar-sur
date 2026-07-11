@@ -68,7 +68,7 @@ const Footer = ({ style_2 = false, style_3 = false,primary_style=false }) => {
                   <div className="tp-footer-widget-content">
                     <div className="tp-footer-talk mb-20">
                       <span>Got Questions? Call us</span>
-                      <h4><a href="tel:+8801700000000">+880 1700 000000</a></h4>
+                      <h4><a href="tel:+8801940861467">+880 1940-861467</a></h4>
                     </div>
                     <div className="tp-footer-contact">
                       <div className="tp-footer-contact-item d-flex align-items-start">

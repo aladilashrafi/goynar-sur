@@ -2,9 +2,9 @@ import React from 'react';
 import Link from 'next/link';
 // internal
 import { ArrowRightLong } from '@/svg';
-import banner_bg_1 from '@assets/img/goynar-home/colorful-bangles-wide.jpg';
-import banner_bg_2 from '@assets/img/goynar-home/red-bangle-detail.jpg';
-import banner_bg_3 from '@assets/img/goynar-home/red-flower-lake.jpg';
+import banner_bg_1 from '@assets/img/goynar-home/blue-ring-close.jpg';
+import banner_bg_2 from '@assets/img/goynar-home/colorful-bangles-wide.jpg';
+import banner_bg_3 from '@assets/img/goynar-home/red-festival-backdrop.jpg';
 import banner_bg_4 from '@assets/img/goynar-home/bangles-product-square.jpg';
 
 // BannerItem

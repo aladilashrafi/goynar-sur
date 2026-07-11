@@ -104,6 +104,20 @@ WOOCOMMERCE_CONSUMER_SECRET=cs_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 ---
 
+## Project Skills
+
+Load the relevant project-local skill before auditing or changing these areas:
+
+- `skills/integrate-woocommerce-nextjs/SKILL.md` — secure WooCommerce and Next.js API architecture
+- `skills/optimize-wc-data-cro/SKILL.md` — CRO recommendations backed by available WooCommerce evidence
+- `skills/optimize-nextjs-store-performance/SKILL.md` — Core Web Vitals, images, bundles, rendering, and caching
+- `skills/improve-storefront-a11y-responsive/SKILL.md` — responsive ecommerce UI and WCAG 2.2 AA checks
+- `skills/optimize-ecommerce-seo-aeo/SKILL.md` — ecommerce SEO, structured data, crawlability, and AEO
+
+For cross-cutting work, apply them in this order: API/data truth, CRO, responsive accessibility, performance, then SEO/AEO validation.
+
+---
+
 ## Installation
 
 Clone the repository:

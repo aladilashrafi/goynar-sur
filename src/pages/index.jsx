@@ -38,9 +38,7 @@ export default function Home() {
         <LazySection minHeight={520}>
           <BestSellerPrd/>
         </LazySection>
-        <LazySection minHeight={180}>
-          <JewelryBrands/>
-        </LazySection>
+
         <LazySection minHeight={320}>
           <InstagramAreaFour/>
         </LazySection>
@@ -50,4 +48,7 @@ export default function Home() {
   )
 }
 
-//       <PopularProducts/> //* */
+//       <PopularProducts/> 
+//       <LazySection minHeight={180}>
+//        <JewelryBrands/>
+//       </LazySection>

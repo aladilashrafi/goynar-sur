@@ -4,23 +4,23 @@ import { Delivery, Discount, Refund, Support } from '@/svg';
 export const feature_data = [
   {
     icon: <Delivery />,
-    title: 'COD Nationwide',
+    title: 'Cash on Delivery',
     subtitle: 'Pay after delivery'
   },
   {
     icon: <Refund />,
-    title: 'Handmade Care',
-    subtitle: 'Checked before dispatch'
+    title: 'Affordable Prices',
+    subtitle: 'Budget-friendly pricing for all'
   },
   {
     icon: <Discount />,
-    title: 'BDT Pricing',
-    subtitle: 'Clear local prices'
+    title: 'Loyalty Discounts',
+    subtitle: 'Save more with our offers'
   },
   {
     icon: <Support />,
-    title: 'Order Support',
-    subtitle: 'Call or message us'
+    title: '24/7 Order Support',
+    subtitle: 'Call or message us anytime'
   },
 ]
 
