@@ -4,7 +4,7 @@ import { formatPrice } from "@/utils/formatPrice";
 
 const RenderCartProgress = () => {
   const { total } = useCartInfo();
-  const freeShippingThreshold = 200;
+  const freeShippingThreshold = 1000;
   const progress = (total / freeShippingThreshold) * 100;
   if (total < freeShippingThreshold) {
     const remainingAmount = freeShippingThreshold - total;

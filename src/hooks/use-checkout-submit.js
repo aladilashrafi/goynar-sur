@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
@@ -10,6 +10,44 @@ import { notifyError, notifySuccess } from "@/utils/toast";
 import { useSaveOrderMutation } from "@/redux/features/order/orderApi";
 import { useValidateCouponMutation } from "@/redux/features/coupon/couponApi";
 import { clear_coupon, set_coupon } from "@/redux/features/coupon/couponSlice";
+import { normalizeAccountCheckout } from "@/utils/normalizeAccountCheckout";
+import { BD_DISTRICTS } from "@/lib/bd-regions";
+
+const checkoutDefaults = {
+  firstName: "",
+  lastName: "",
+  country: "Bangladesh",
+  address: "",
+  district: "",
+  upazila: "",
+  zipCode: "",
+  contactNo: "",
+  email: "",
+  orderNote: "",
+  payment: "COD",
+  shippingOption: "",
+  shippingRateId: "",
+  saveToAccount: false,
+};
+
+function buildCheckoutDefaults(shippingInfo = {}, user) {
+  const saved = normalizeAccountCheckout(user);
+
+  return {
+    ...checkoutDefaults,
+    firstName: shippingInfo.firstName || saved.firstName,
+    lastName: shippingInfo.lastName || saved.lastName,
+    address: shippingInfo.address || saved.address,
+    district: shippingInfo.district || shippingInfo.city || saved.district,
+    upazila: shippingInfo.upazila || saved.upazila,
+    zipCode: shippingInfo.zipCode || saved.postcode,
+    contactNo: shippingInfo.contactNo || saved.phone,
+    email: shippingInfo.email || saved.email,
+    orderNote: shippingInfo.orderNote || "",
+    shippingOption: shippingInfo.shippingOption || "",
+    shippingRateId: shippingInfo.shippingRateId || "",
+  };
+}
 
 const useCheckoutSubmit = () => {
   const [saveOrder] = useSaveOrderMutation();
@@ -27,6 +65,7 @@ const useCheckoutSubmit = () => {
   const [isCheckoutSubmit, setIsCheckoutSubmit] = useState(false);
   const [couponApplyMsg, setCouponApplyMsg] = useState("");
   const couponRef = useRef(null);
+  const hydratedFormSignatureRef = useRef("");
   const discountAmount = Number(coupon_info?.discountAmount || 0);
 
   const dispatch = useDispatch();
@@ -36,17 +75,11 @@ const useCheckoutSubmit = () => {
     register,
     handleSubmit,
     setValue,
+    reset,
     watch,
-    formState: { errors },
+    formState: { errors, dirtyFields },
   } = useForm({
-    defaultValues: {
-      country: "Bangladesh",
-      zipCode: "",
-      payment: "COD",
-      shippingOption: "",
-      shippingRateId: "",
-      saveToAccount: false,
-    },
+    defaultValues: checkoutDefaults,
   });
 
   const finalShippingCost = coupon_info?.freeShipping ? 0 : shippingCost;
@@ -68,30 +101,75 @@ const useCheckoutSubmit = () => {
     }));
   }, [dispatch, setValue]);
 
-  useEffect(() => {
-    const billing = user?.customer?.billing || {};
-    const savedFirstName = billing.first_name || user?.customer?.first_name || "";
-    const savedLastName = billing.last_name || user?.customer?.last_name || "";
-    const savedDistrict = billing.city || billing.state || "";
+  const userKey = user?.id || user?._id || user?.customer?.id || user?.email || "guest";
+  const savedAccountCheckout = useMemo(() => normalizeAccountCheckout(user), [user]);
+  const checkoutHydrationSignature = useMemo(
+    () => JSON.stringify({
+      userKey,
+      savedFirstName: savedAccountCheckout.firstName,
+      savedLastName: savedAccountCheckout.lastName,
+      savedAddress: savedAccountCheckout.address,
+      savedDistrict: savedAccountCheckout.district,
+      savedUpazila: savedAccountCheckout.upazila,
+      savedPostcode: savedAccountCheckout.postcode,
+      savedPhone: savedAccountCheckout.phone,
+      savedEmail: savedAccountCheckout.email,
+      firstName: shipping_info.firstName || "",
+      lastName: shipping_info.lastName || "",
+      address: shipping_info.address || "",
+      district: shipping_info.district || shipping_info.city || "",
+      upazila: shipping_info.upazila || "",
+      zipCode: shipping_info.zipCode || "",
+      contactNo: shipping_info.contactNo || "",
+      email: shipping_info.email || "",
+      orderNote: shipping_info.orderNote || "",
+    }),
+    [
+      userKey,
+      savedAccountCheckout,
+      shipping_info.firstName,
+      shipping_info.lastName,
+      shipping_info.address,
+      shipping_info.district,
+      shipping_info.city,
+      shipping_info.upazila,
+      shipping_info.zipCode,
+      shipping_info.contactNo,
+      shipping_info.email,
+      shipping_info.orderNote,
+    ]
+  );
+  const hasDirtyFields = Object.keys(dirtyFields || {}).length > 0;
 
-    setValue("firstName", shipping_info.firstName || savedFirstName || "");
-    setValue("lastName", shipping_info.lastName || savedLastName || "");
-    setValue("country", "Bangladesh");
-    setValue("address", shipping_info.address || billing.address_1 || "");
-    setValue("district", shipping_info.district || shipping_info.city || savedDistrict || "");
-    setValue("upazila", shipping_info.upazila || billing.address_2 || "");
-    setValue("zipCode", shipping_info.zipCode || billing.postcode || "");
-    setValue("contactNo", shipping_info.contactNo || billing.phone || user?.phone || "");
-    setValue("email", shipping_info.email || billing.email || user?.email || "");
-    setValue("orderNote", shipping_info.orderNote || "");
-    setValue("payment", "COD");
-    setValue("shippingOption", shipping_info.shippingOption || "");
-    setValue("shippingRateId", shipping_info.shippingRateId || "");
-  }, [setValue, shipping_info, user]);
+  useEffect(() => {
+    if (hydratedFormSignatureRef.current === checkoutHydrationSignature) {
+      return;
+    }
+
+    hydratedFormSignatureRef.current = checkoutHydrationSignature;
+    reset(buildCheckoutDefaults(shipping_info, user), {
+      keepDirtyValues: hasDirtyFields,
+      keepErrors: true,
+    });
+  }, [checkoutHydrationSignature, hasDirtyFields, reset, shipping_info, user]);
 
   const district = watch("district");
   const upazila = watch("upazila");
   const address = watch("address");
+  const contactNo = watch("contactNo");
+  const firstName = watch("firstName");
+  const isCheckoutReady = Boolean(
+    firstName && contactNo && address && district && upazila && selectedShippingRate && !isShippingLoading
+  );
+
+  useEffect(() => {
+    if (!district || !upazila) return;
+
+    const selectedDistrict = BD_DISTRICTS.find((item) => item.name === district);
+    if (selectedDistrict && !selectedDistrict.upazilas.includes(upazila)) {
+      setValue("upazila", "", { shouldDirty: true, shouldValidate: true });
+    }
+  }, [district, setValue, upazila]);
 
   useEffect(() => {
     if (!cart_products.length || !district) {
@@ -101,9 +179,11 @@ const useCheckoutSubmit = () => {
       return;
     }
 
-    dispatch(patch_shipping({ district, city: district }));
+    if (shipping_info.district !== district || shipping_info.city !== district) {
+      dispatch(patch_shipping({ district, city: district }));
+    }
 
-    const controller = new AbortController();
+    let cancelled = false;
     const timer = setTimeout(async () => {
       setIsShippingLoading(true);
       setShippingError("");
@@ -119,9 +199,12 @@ const useCheckoutSubmit = () => {
             address,
             zipCode: "",
           }),
-          signal: controller.signal,
         });
         const data = await response.json();
+
+        if (cancelled) {
+          return;
+        }
 
         if (!response.ok || !data.success) {
           throw new Error(data.message || "Unable to calculate shipping.");
@@ -143,24 +226,34 @@ const useCheckoutSubmit = () => {
           setShippingError("No shipping method is available for this address.");
         }
       } catch (error) {
-        if (error.name !== "AbortError") {
+        if (!cancelled) {
           setShippingRates([]);
           setSelectedShippingRateId("");
           setShippingCost(0);
           setShippingError(error.message || "Unable to calculate shipping.");
         }
       } finally {
-        if (!controller.signal.aborted) {
+        if (!cancelled) {
           setIsShippingLoading(false);
         }
       }
     }, 350);
 
     return () => {
-      controller.abort();
+      cancelled = true;
       clearTimeout(timer);
     };
-  }, [address, cart_products, dispatch, district, handleShippingRateSelect, shipping_info.shippingRateId, upazila]);
+  }, [
+    address,
+    cart_products,
+    dispatch,
+    district,
+    handleShippingRateSelect,
+    shipping_info.city,
+    shipping_info.district,
+    shipping_info.shippingRateId,
+    upazila,
+  ]);
 
   useEffect(() => {
     if (coupon_info && !cart_products.length) {
@@ -345,6 +438,7 @@ const useCheckoutSubmit = () => {
     shippingError,
     isShippingLoading,
     accessToken,
+    isCheckoutReady,
   };
 };
 

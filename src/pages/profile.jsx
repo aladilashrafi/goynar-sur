@@ -25,8 +25,10 @@ const ProfilePage = () => {
     <Wrapper>
       <SEO pageTitle="Account" />
       <HeaderTwo style_2={true} />
-      <CommonBreadcrumb title="My Account" subtitle="Account" center={true} />
-      {accessToken && <ProfileArea />}
+      <main id="main-content" tabIndex="-1">
+        <CommonBreadcrumb title="My Account" subtitle="Account" center={true} />
+        {accessToken && <ProfileArea />}
+      </main>
       <Footer primary_style={true} />
     </Wrapper>
   );

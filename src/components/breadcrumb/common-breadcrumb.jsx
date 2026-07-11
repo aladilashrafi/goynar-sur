@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 const CommonBreadcrumb = ({
   title,
@@ -17,10 +18,10 @@ const CommonBreadcrumb = ({
         <div className="row">
           <div className="col-xxl-12">
             <div className="breadcrumb__content p-relative z-index-1">
-              <h3 className="breadcrumb__title">{title}</h3>
+              <h1 className="breadcrumb__title">{title}</h1>
               <div className="breadcrumb__list">
                 <span>
-                  <a href="#">Home</a>
+                  <Link href="/">Home</Link>
                 </span>
                 <span>{subtitle}</span>
               </div>

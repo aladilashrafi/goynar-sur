@@ -1,8 +1,9 @@
 import React from "react";
 
 
-const ErrorMsg = ({ msg }) => {
-  return <div style={{ color: "red" }}>{msg}</div>;
+const ErrorMsg = ({ id, msg }) => {
+  if (!msg) return null;
+  return <div id={id} className="form-field-error" role="alert">{msg}</div>;
 };
 
 export default ErrorMsg;

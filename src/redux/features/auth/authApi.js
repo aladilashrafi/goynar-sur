@@ -2,7 +2,7 @@ import { apiSlice } from "@/redux/api/apiSlice";
 import Cookies from "js-cookie";
 import { userLoggedIn } from "./authSlice";
 
-function persistSession(dispatch, session) {
+function persistSession(dispatch, session, remember = false) {
   if (!session?.accessToken || !session?.user) return;
 
   const userInfo = {
@@ -11,7 +11,7 @@ function persistSession(dispatch, session) {
   };
 
   Cookies.set("userInfo", JSON.stringify(userInfo), {
-    expires: 7,
+    ...(remember ? { expires: 30 } : {}),
     sameSite: "lax",
   });
 
@@ -48,7 +48,7 @@ export const authApi = apiSlice.injectEndpoints({
       }),
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         const { data } = await queryFulfilled;
-        persistSession(dispatch, data);
+        persistSession(dispatch, data, Boolean(arg.remember));
       },
     }),
     getUser: builder.query({

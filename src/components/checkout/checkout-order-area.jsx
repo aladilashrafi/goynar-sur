@@ -18,6 +18,7 @@ const CheckoutOrderArea = ({ checkoutData }) => {
     shippingError,
     isShippingLoading,
     watch,
+    isCheckoutReady,
   } = checkoutData;
   const { cart_products } = useSelector((state) => state.cart);
   const { total } = useCartInfo();
@@ -90,7 +91,7 @@ const CheckoutOrderArea = ({ checkoutData }) => {
            {/*  shipping cost */}
            <li className="tp-order-info-list-subtotal">
             <span>Shipping Cost</span>
-            <span>{formatPrice(shippingCost)}</span>
+            <span>{selectedShippingRateId ? formatPrice(shippingCost) : "Calculated after district and area"}</span>
           </li>
 
            {/* discount */}
@@ -126,10 +127,10 @@ const CheckoutOrderArea = ({ checkoutData }) => {
       <div className="tp-checkout-btn-wrapper">
         <button
           type="submit"
-          disabled={isCheckoutSubmit}
+          disabled={isCheckoutSubmit || !isCheckoutReady}
           className="tp-checkout-btn w-100"
         >
-          {isCheckoutSubmit ? "Placing Order..." : "Place Order"}
+          {isCheckoutSubmit ? "Placing Order..." : isCheckoutReady ? "Place Order" : "Complete delivery details"}
         </button>
       </div>
     </div>

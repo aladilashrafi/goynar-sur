@@ -20,7 +20,8 @@ export default function Home() {
     <Wrapper>
       <SEO pageTitle='Handmade Jewellery in Bangladesh'/>
       <HeaderFour/>
-      <main className="goynar-home">
+      <main id="main-content" tabIndex="-1" className="goynar-home">
+        <h1 className="visually-hidden">Goynar Sur handmade jewellery in Bangladesh</h1>
         <JewelryBanner/>
         <FeatureAreaThree />
         <LazySection minHeight={580}>

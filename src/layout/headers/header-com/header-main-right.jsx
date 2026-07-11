@@ -14,7 +14,7 @@ const HeaderMainRight = ({ setIsCanvasOpen }) => {
     <div className="tp-header-main-right d-flex align-items-center justify-content-end">
       <div className="tp-header-action d-flex align-items-center">
         <div className="tp-header-action-item d-none d-lg-block">
-          <Link href="/wishlist" className="tp-header-action-btn">
+          <Link href="/wishlist" className="tp-header-action-btn" aria-label={`Wishlist with ${wishlist.length} items`}>
             <Wishlist />
             <span className="tp-header-action-badge">{wishlist.length}</span>
           </Link>
@@ -24,6 +24,7 @@ const HeaderMainRight = ({ setIsCanvasOpen }) => {
             onClick={() => dispatch(openCartMini())}
             type="button"
             className="tp-header-action-btn cartmini-open-btn"
+            aria-label={`Open cart with ${quantity} items`}
           >
             <CartTwo />
             <span className="tp-header-action-badge">{quantity}</span>
@@ -34,6 +35,7 @@ const HeaderMainRight = ({ setIsCanvasOpen }) => {
             onClick={() => setIsCanvasOpen(true)}
             type="button"
             className="tp-header-action-btn tp-offcanvas-open-btn"
+            aria-label="Open navigation menu"
           >
             <Menu />
           </button>

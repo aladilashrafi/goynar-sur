@@ -132,6 +132,10 @@ const DetailsWrapper = ({
     : status;
   const selectedQuantity = matchedVariation ? Number(matchedVariation.quantity || 0) : productItem?.quantity;
   const needsVariationSelection = Boolean(isVariable && (!variations.length || !matchedVariation));
+  const categoryName =
+    typeof category === "string"
+      ? category
+      : category?.name || productItem?.parent || productItem?.children || "Jewellery";
 
   useEffect(() => {
     if (matchedVariation?.image?.src) {
@@ -256,7 +260,7 @@ const DetailsWrapper = ({
   return (
     <div className="tp-product-details-wrapper">
       <div className="tp-product-details-category">
-        <span>{category.name}</span>
+        <span>{categoryName}</span>
       </div>
       <h1 className="tp-product-details-title">{title}</h1>
 

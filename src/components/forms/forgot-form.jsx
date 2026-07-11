@@ -40,6 +40,7 @@ const ForgotForm = () => {
               name="email"
               id="email"
               type="email"
+              autoComplete="email"
               placeholder="you@example.com"
             />
           </div>

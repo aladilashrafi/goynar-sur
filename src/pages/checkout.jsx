@@ -13,8 +13,10 @@ const CheckoutPage = () => {
     <Wrapper>
       <SEO pageTitle="Checkout" />
       <HeaderTwo style_2={true} />
-      <CommonBreadcrumb title="Checkout" subtitle="Checkout" bg_clr={true} />
-      <CheckoutArea/>
+      <main id="main-content" tabIndex="-1">
+        <CommonBreadcrumb title="Checkout" subtitle="Checkout" bg_clr={true} />
+        <CheckoutArea/>
+      </main>
       <Footer style_2={true} />
     </Wrapper>
   );

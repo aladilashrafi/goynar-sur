@@ -19,7 +19,7 @@ const MyOrders = ({ orderData, isLoading = false, isError = false }) => {
         style={{ height: "210px" }}
         className="d-flex align-items-center justify-content-center"
       >
-        <p>Loading your orders...</p>
+        <p role="status" aria-live="polite">Loading your orders...</p>
       </div>
     );
   }
@@ -38,7 +38,8 @@ const MyOrders = ({ orderData, isLoading = false, isError = false }) => {
   }
 
   return (
-    <div className="profile__ticket table-responsive">
+    <div className="profile__ticket">
+      <h3 className="profile__info-title">Order History</h3>
       {orderItems.length === 0 && (
         <div
           style={{ height: "210px" }}
@@ -54,7 +55,26 @@ const MyOrders = ({ orderData, isLoading = false, isError = false }) => {
         </div>
       )}
       {orderItems.length > 0 && (
+        <>
+        <div className="account-order-cards d-md-none">
+          {orderItems.map((item) => {
+            const number = item.number || item.id;
+            return (
+              <article className="account-order-card" key={item.id}>
+                <div><strong>Order #{number}</strong><span className={`status ${statusClass(item.status)}`}>{item.statusLabel || item.status}</span></div>
+                <dl>
+                  <div><dt>Date</dt><dd>{item.createdAt ? dayjs(item.createdAt).format("MMMM D, YYYY") : "N/A"}</dd></div>
+                  <div><dt>Total</dt><dd>{formatPrice(item.total)}</dd></div>
+                  <div><dt>Items</dt><dd>{item.lineItems?.length || item.items?.length || 0}</dd></div>
+                </dl>
+                <Link href={`/order/${item.id}`} className="tp-logout-btn" aria-label={`View order ${number}`}>View order</Link>
+              </article>
+            );
+          })}
+        </div>
+        <div className="table-responsive d-none d-md-block">
         <table className="table">
+          <caption className="visually-hidden">Your WooCommerce order history</caption>
           <thead>
             <tr>
               <th scope="col">Order ID</th>
@@ -80,13 +100,15 @@ const MyOrders = ({ orderData, isLoading = false, isError = false }) => {
                 </td>
                 <td>
                   <Link href={`/order/${item.id}`} className="tp-logout-btn">
-                    View
+                    <span aria-hidden="true">View</span><span className="visually-hidden">View order {item.number || item.id}</span>
                   </Link>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+        </div>
+        </>
       )}
     </div>
   );

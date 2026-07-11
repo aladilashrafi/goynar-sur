@@ -5,14 +5,19 @@ import Footer from '@/layout/footers/footer';
 import Wrapper from '@/layout/wrapper';
 import CommonBreadcrumb from '@/components/breadcrumb/common-breadcrumb';
 import LoginArea from '@/components/login-register/login-area';
+import useRedirectAuthenticated from '@/hooks/use-redirect-authenticated';
 
 const LoginPage = () => {
+  const isAuthenticated = useRedirectAuthenticated();
+  if (isAuthenticated) return null;
   return (
     <Wrapper>
       <SEO pageTitle="Login" />
       <HeaderTwo style_2={true} />
-      <CommonBreadcrumb title="Login" subtitle="Account" center={true} />
-      <LoginArea />
+      <main id="main-content" tabIndex="-1">
+        <CommonBreadcrumb title="Login" subtitle="Account" center={true} />
+        <LoginArea />
+      </main>
       <Footer primary_style={true} />
     </Wrapper>
   );

@@ -52,6 +52,7 @@ const ProductModal = () => {
         style={customStyles}
         contentLabel="Product Modal"
       >
+        {productItem && (
         <div className="tp-product-modal">
           <div className="tp-product-modal-content d-lg-flex">
             <button
@@ -85,6 +86,7 @@ const ProductModal = () => {
             {/* product-details-wrapper end */}
           </div>
         </div>
+        )}
       </ReactModal>
     </div>
   );

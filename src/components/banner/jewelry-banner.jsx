@@ -88,10 +88,10 @@ const JewelryBanner = () => {
 
         {/* arrow start */}
         <div className="tp-slider-arrow-4">
-          <button className="tp-slider-3-button-prev slick-arrow" onClick={() => slider1?.slickPrev()}>
+          <button type="button" className="tp-slider-3-button-prev slick-arrow" onClick={() => slider1?.slickPrev()} aria-label="Previous featured collection">
             <ArrowPrevTwo/>
           </button>
-          <button className="tp-slider-3-button-next slick-arrow" onClick={() => slider1?.slickNext()}>
+          <button type="button" className="tp-slider-3-button-next slick-arrow" onClick={() => slider1?.slickNext()} aria-label="Next featured collection">
             <ArrowNextTwo/>
           </button>
           </div>

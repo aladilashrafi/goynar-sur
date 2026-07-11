@@ -48,6 +48,9 @@ const Wrapper = ({ children }) => {
     </div>
   ) : (
     <div id="wrapper">
+      <a className="skip-link" href="#main-content">
+        Skip to main content
+      </a>
       {children}
       <BackToTopCom />
       <ToastContainer />

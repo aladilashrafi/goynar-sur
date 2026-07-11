@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useRouter } from "next/router";
 import ProfileNavTab from "./profile-nav-tab";
 import ProfileShape from "./profile-shape";
 import NavProfileTab from "./nav-profile-tab";
@@ -8,11 +9,21 @@ import MyOrders from "./my-orders";
 import { useGetUserOrdersQuery } from "@/redux/features/order/orderApi";
 
 const ProfileArea = () => {
+  const router = useRouter();
   const {
     data: orderData,
     isLoading: isOrderLoading,
     isError: isOrderError,
   } = useGetUserOrdersQuery();
+
+  useEffect(() => {
+    if (!router.isReady) return;
+    const section = typeof router.query.section === "string" ? router.query.section : "profile";
+    const allowed = new Set(["profile", "information", "order", "orders", "password"]);
+    if (!allowed.has(section)) return;
+    const target = section === "orders" ? "order" : section;
+    document.getElementById(`nav-${target}-tab`)?.click();
+  }, [router.isReady, router.query.section]);
 
   return (
     <>

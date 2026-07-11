@@ -27,6 +27,7 @@ const LoginForm = ({ redirectTo }) => {
     handleSubmit,
     formState: { errors },
     reset,
+    setFocus,
   } = useForm({
     resolver: yupResolver(schema),
   });
@@ -36,6 +37,7 @@ const LoginForm = ({ redirectTo }) => {
       await loginUser({
         email: data.email,
         password: data.password,
+        remember: data.remember,
       }).unwrap();
       notifySuccess("Login successful");
       reset();
@@ -44,17 +46,26 @@ const LoginForm = ({ redirectTo }) => {
       notifyError(error?.data?.message || "Unable to login");
     }
   };
+  const onInvalid = (fieldErrors) => {
+    const firstField = Object.keys(fieldErrors)[0];
+    if (firstField) setFocus(firstField);
+  };
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit, onInvalid)} noValidate>
+      {Object.keys(errors).length > 0 && (
+        <div className="form-error-summary" role="alert" tabIndex="-1">
+          Please correct the highlighted fields and try again.
+        </div>
+      )}
       <div className="tp-login-input-wrapper">
         <div className="tp-login-input-box">
           <div className="tp-login-input">
-            <input {...register("email", { required: `Email is required!` })} name="email" id="email" type="email" placeholder="you@example.com" />
+            <input {...register("email")} name="email" id="email" type="email" autoComplete="email" aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? "login-email-error" : undefined} placeholder="you@example.com" />
           </div>
           <div className="tp-login-input-title">
             <label htmlFor="email">Your Email</label>
           </div>
-          <ErrorMsg msg={errors.email?.message} />
+          <ErrorMsg id="login-email-error" msg={errors.email?.message} />
         </div>
         <div className="tp-login-input-box">
           <div className="p-relative">
@@ -63,25 +74,28 @@ const LoginForm = ({ redirectTo }) => {
                 {...register("password", { required: `Password is required!` })}
                 id="password"
                 type={showPass ? "text" : "password"}
+                autoComplete="current-password"
+                aria-invalid={Boolean(errors.password)}
+                aria-describedby={errors.password ? "login-password-error" : undefined}
                 placeholder="Min. 6 character"
               />
             </div>
             <div className="tp-login-input-eye" id="password-show-toggle">
-              <span className="open-eye" onClick={() => setShowPass(!showPass)}>
+              <button type="button" className="open-eye password-toggle" onClick={() => setShowPass(!showPass)} aria-label={showPass ? "Hide password" : "Show password"} aria-pressed={showPass}>
                 {showPass ? <CloseEye /> : <OpenEye />}
-              </span>
+              </button>
             </div>
             <div className="tp-login-input-title">
               <label htmlFor="password">Password</label>
             </div>
           </div>
-          <ErrorMsg msg={errors.password?.message}/>
+          <ErrorMsg id="login-password-error" msg={errors.password?.message}/>
         </div>
       </div>
       <div className="tp-login-suggetions d-sm-flex align-items-center justify-content-between mb-20">
         <div className="tp-login-remeber">
-          <input id="remeber" type="checkbox" />
-          <label htmlFor="remeber">Remember me</label>
+          <input {...register("remember")} id="remember" type="checkbox" />
+          <label htmlFor="remember">Remember me for 30 days</label>
         </div>
         <div className="tp-login-forgot">
           <Link href="/forgot">Forgot Password?</Link>

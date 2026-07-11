@@ -2,19 +2,28 @@ import React from "react";
 import ErrorMsg from "../common/error-msg";
 import { useSelector } from "react-redux";
 import { BD_DISTRICTS } from "@/lib/bd-regions";
+import Link from "next/link";
+import { normalizeAccountCheckout } from "@/utils/normalizeAccountCheckout";
 
 const CheckoutBillingArea = ({ register, errors, watch }) => {
   const { user } = useSelector((state) => state.auth);
   const selectedDistrict = watch?.("district");
   const district = BD_DISTRICTS.find((item) => item.name === selectedDistrict);
   const upazilas = district?.upazilas || [];
+  const saved = normalizeAccountCheckout(user);
+  const accountMessage = saved.completeness === "complete"
+    ? "Delivery details prefilled from your account."
+    : saved.completeness === "partial"
+      ? "Some saved details were added—complete the remaining fields."
+      : "No saved delivery address—add one for this order.";
 
   return (
     <div className="tp-checkout-bill-area">
       <h3 className="tp-checkout-bill-title">Billing Details</h3>
       {user && (
         <p className="alert alert-success mb-25">
-          Using your saved account details. You can edit these fields for this order.
+          {accountMessage} You can edit these fields for this order.{" "}
+          <Link href="/profile?section=information">Manage saved address</Link>
         </p>
       )}
 
@@ -23,7 +32,7 @@ const CheckoutBillingArea = ({ register, errors, watch }) => {
           <div className="row">
             <div className="col-md-6">
               <div className="tp-checkout-input">
-                <label>
+                <label htmlFor="firstName">
                   First Name <span>*</span>
                 </label>
                 <input
@@ -37,20 +46,21 @@ const CheckoutBillingArea = ({ register, errors, watch }) => {
                   name="firstName"
                   id="firstName"
                   type="text"
+                  autoComplete="given-name"
                   placeholder="First Name"
-                  defaultValue={user?.firstName}
                 />
                 <ErrorMsg msg={errors?.firstName?.message} />
               </div>
             </div>
             <div className="col-md-6">
               <div className="tp-checkout-input">
-                <label>Last Name</label>
+                <label htmlFor="lastName">Last Name</label>
                 <input
                   {...register("lastName")}
                   name="lastName"
                   id="lastName"
                   type="text"
+                  autoComplete="family-name"
                   placeholder="Last Name"
                 />
                 <ErrorMsg msg={errors?.lastName?.message} />
@@ -58,7 +68,7 @@ const CheckoutBillingArea = ({ register, errors, watch }) => {
             </div>
             <div className="col-md-12">
               <div className="tp-checkout-input">
-                <label>
+                <label htmlFor="address">
                   Address <span>*</span>
                 </label>
                 <input
@@ -66,6 +76,7 @@ const CheckoutBillingArea = ({ register, errors, watch }) => {
                   name="address"
                   id="address"
                   type="text"
+                  autoComplete="street-address"
                   placeholder="House, road, village or street"
                 />
                 <ErrorMsg msg={errors?.address?.message} />
@@ -73,7 +84,7 @@ const CheckoutBillingArea = ({ register, errors, watch }) => {
             </div>
             <div className="col-md-6">
               <div className="tp-checkout-input">
-                <label>
+                <label htmlFor="district">
                   District <span>*</span>
                 </label>
                 <select
@@ -93,7 +104,7 @@ const CheckoutBillingArea = ({ register, errors, watch }) => {
             </div>
             <div className="col-md-6">
               <div className="tp-checkout-input">
-                <label>
+                <label htmlFor="upazila">
                   Upazila / Area <span>*</span>
                 </label>
                 <select
@@ -114,7 +125,7 @@ const CheckoutBillingArea = ({ register, errors, watch }) => {
             </div>
             <div className="col-md-12">
               <div className="tp-checkout-input">
-                <label>
+                <label htmlFor="contactNo">
                   Phone <span>*</span>
                 </label>
                 <input
@@ -127,7 +138,9 @@ const CheckoutBillingArea = ({ register, errors, watch }) => {
                   })}
                   name="contactNo"
                   id="contactNo"
-                  type="text"
+                  type="tel"
+                  inputMode="tel"
+                  autoComplete="tel"
                   placeholder="Phone"
                 />
                 <ErrorMsg msg={errors?.contactNo?.message} />
@@ -135,7 +148,7 @@ const CheckoutBillingArea = ({ register, errors, watch }) => {
             </div>
             <div className="col-md-12">
               <div className="tp-checkout-input">
-                <label>Email address</label>
+                <label htmlFor="email">Email address</label>
                 <input
                   {...register("email", {
                     pattern: {
@@ -146,20 +159,21 @@ const CheckoutBillingArea = ({ register, errors, watch }) => {
                   name="email"
                   id="email"
                   type="email"
+                  autoComplete="email"
                   placeholder="Email"
-                  defaultValue={user?.email}
                 />
                 <ErrorMsg msg={errors?.email?.message} />
               </div>
             </div>
             <div className="col-md-12">
               <div className="tp-checkout-input">
-                <label>Postcode (optional)</label>
+                <label htmlFor="zipCode">Postcode (optional)</label>
                 <input
                   {...register("zipCode")}
                   name="zipCode"
                   id="zipCode"
                   type="text"
+                  autoComplete="postal-code"
                   placeholder="Postcode"
                 />
                 <ErrorMsg msg={errors?.zipCode?.message} />
@@ -174,13 +188,13 @@ const CheckoutBillingArea = ({ register, errors, watch }) => {
                     id="saveToAccount"
                     type="checkbox"
                   />
-                  <label htmlFor="saveToAccount">Save these details to my account</label>
+                  <label htmlFor="saveToAccount">Save these details to my account after this order succeeds</label>
                 </div>
               </div>
             )}
             <div className="col-md-12">
               <div className="tp-checkout-input">
-                <label>Order notes (optional)</label>
+                <label htmlFor="orderNote">Order notes (optional)</label>
                 <textarea
                   {...register("orderNote", { required: false })}
                   name="orderNote"
