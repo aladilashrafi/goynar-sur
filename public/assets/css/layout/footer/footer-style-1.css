@@ -1,0 +1,138 @@
+/*----------------------------------------*/
+/*  6.1 Footer Style 1
+/*----------------------------------------*/
+.tp-footer-widget-title {
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--tp-common-black);
+  margin-bottom: 10px;
+}
+.tp-footer-widget-content ul li {
+  list-style: none;
+}
+.tp-footer-widget-content ul li:not(:last-child) {
+  margin-bottom: 7px;
+}
+.tp-footer-widget-content ul li a {
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--tp-text-2);
+  position: relative;
+  padding-left: 10px;
+}
+.tp-footer-widget-content ul li a::after {
+  position: absolute;
+  content: "";
+  left: 0;
+  top: 6px;
+  width: 3px;
+  height: 3px;
+  background-color: var(--tp-text-2);
+  border-radius: 50%;
+}
+.tp-footer-widget-content ul li a:hover {
+  color: var(--tp-theme-primary);
+}
+.tp-footer-widget-content ul li a:hover::after {
+  background-color: var(--tp-theme-primary);
+}
+
+.tp-footer-logo {
+  margin-bottom: 22px;
+}
+.tp-footer-desc {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.44;
+  color: var(--tp-common-black);
+  margin-bottom: 22px;
+}
+.tp-footer-social a {
+  display: inline-block;
+  width: 38px;
+  height: 38px;
+  line-height: 38px;
+  text-align: center;
+  background: #FFFFFF;
+  box-shadow: 0px 1px 1px rgba(1, 15, 28, 0.2);
+  border-radius: 6px;
+  margin-right: 5px;
+}
+.tp-footer-social a:hover {
+  background-color: var(--tp-theme-primary);
+  color: var(--tp-common-white);
+  box-shadow: none;
+}
+.tp-footer-talk span {
+  font-size: 14px;
+  color: var(--tp-text-2);
+  display: inline-block;
+}
+.tp-footer-talk h4 {
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--tp-common-black);
+}
+.tp-footer-talk h4 a:hover {
+  color: var(--tp-theme-primary);
+}
+.tp-footer-contact-icon span {
+  display: inline-block;
+  width: 16px;
+  font-size: 16px;
+  color: var(--tp-common-black);
+  margin-right: 10px;
+}
+.tp-footer-contact-content p {
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--tp-text-2);
+}
+.tp-footer-contact-content p a:hover {
+  color: var(--tp-theme-primary);
+}
+@media only screen and (min-width: 576px) and (max-width: 767px), (max-width: 575px) {
+  .tp-footer-copyright {
+    margin-bottom: 15px;
+  }
+}
+.tp-footer-copyright p {
+  font-size: 14px;
+  color: var(--tp-text-5);
+  margin-bottom: 0;
+}
+.tp-footer-copyright p a {
+  color: var(--tp-theme-primary);
+}
+.tp-footer-payment p {
+  margin-bottom: 0;
+}
+
+.tp-footer-bottom-wrapper {
+  padding-top: 18px;
+  padding-bottom: 40px;
+  border-top: 1px solid rgba(1, 15, 28, 0.1);
+}
+
+/* footer col design for home 1 */
+.footer-col-1 {
+  padding-right: 95px;
+}
+@media only screen and (min-width: 992px) and (max-width: 1199px), only screen and (min-width: 768px) and (max-width: 991px), only screen and (min-width: 576px) and (max-width: 767px), (max-width: 575px) {
+  .footer-col-1 {
+    padding-right: 0;
+  }
+}
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .footer-col-2 {
+    padding-left: 25px;
+  }
+}
+.footer-col-3 {
+  padding-left: 35px;
+}
+@media only screen and (min-width: 576px) and (max-width: 767px), (max-width: 575px) {
+  .footer-col-3 {
+    padding-left: 0;
+  }
+}

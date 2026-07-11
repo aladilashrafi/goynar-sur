@@ -1,0 +1,224 @@
+/*----------------------------------------*/
+/*  4.3 Mobilemenu css
+/*----------------------------------------*/
+.tp-mobile-menu {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background-color: var(--tp-common-white);
+  padding: 13px 0 5px;
+  z-index: 999;
+  border-top: 1px solid var(--tp-border-primary);
+}
+.tp-mobile-menu.is-sticky {
+  bottom: -120px;
+  visibility: hidden;
+  opacity: 0;
+}
+.tp-mobile-menu.is-sticky.bottom-menu-sticky {
+  visibility: visible;
+  opacity: 1;
+  bottom: 0;
+}
+.tp-mobile-item-btn {
+  font-size: 28px;
+  text-align: center;
+}
+.tp-mobile-item-btn span {
+  display: block;
+  line-height: 1;
+  font-size: 13px;
+  margin-top: 3px;
+}
+.tp-mobile-item-btn:hover {
+  color: var(--tp-common-black);
+}
+
+.tp-main-menu-mobile .tp-submenu {
+  display: none;
+}
+.tp-main-menu-mobile .tp-submenu.active {
+  display: block;
+}
+.tp-main-menu-mobile .tp-mega-menu .shop-mega-menu-title {
+  margin: 0;
+  padding-top: 7px;
+}
+.tp-main-menu-mobile .tp-mega-menu.shop-mega-menu {
+  padding: 0 !important;
+  padding-left: 19px !important;
+  padding-top: 10px !important;
+}
+.tp-main-menu-mobile .tp-mega-menu .shop-mega-menu-img {
+  margin: 7px 0;
+}
+.tp-main-menu-mobile ul {
+  position: static;
+  display: block;
+  box-shadow: none;
+}
+.tp-main-menu-mobile ul li {
+  list-style: none;
+  position: relative;
+  width: 100%;
+  padding: 0;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.tp-main-menu-mobile ul li:not(:last-child) a {
+  border-bottom: 1px solid rgba(1, 15, 28, 0.1);
+}
+.tp-main-menu-mobile ul li.has-dropdown > a .dropdown-toggle-btn {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  font-size: 16px;
+  color: #7F8387;
+  z-index: 1;
+  width: 30px;
+  height: 30px;
+  line-height: 28px;
+  text-align: center;
+  border: 1px solid rgba(1, 15, 28, 0.12);
+  -webkit-transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, color 0.3s ease-in-out;
+  -moz-transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, color 0.3s ease-in-out;
+  -ms-transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, color 0.3s ease-in-out;
+  -o-transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, color 0.3s ease-in-out;
+  transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+.tp-main-menu-mobile ul li.has-dropdown > a .dropdown-toggle-btn.dropdown-opened i {
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+.tp-main-menu-mobile ul li.has-dropdown > a .dropdown-toggle-btn:hover {
+  background-color: var(--tp-theme-primary);
+  border-color: var(--tp-theme-primary);
+  color: var(--tp-common-white);
+}
+.tp-main-menu-mobile ul li.has-dropdown > a .dropdown-toggle-btn:hover i {
+  color: var(--tp-common-white);
+}
+.tp-main-menu-mobile ul li.has-dropdown > a.expanded {
+  color: var(--tp-theme-primary);
+}
+.tp-main-menu-mobile ul li.has-dropdown > a.expanded .dropdown-toggle-btn.dropdown-opened {
+  background-color: var(--tp-theme-primary);
+  border-color: var(--tp-theme-primary);
+  color: var(--tp-common-white);
+}
+.tp-main-menu-mobile ul li.has-dropdown > a.expanded .dropdown-toggle-btn.dropdown-opened i {
+  color: var(--tp-common-white);
+}
+.tp-main-menu-mobile ul li.has-dropdown:hover > a::after {
+  color: var(--tp-theme-green);
+}
+.tp-main-menu-mobile ul li:last-child a span {
+  border-bottom: 0;
+}
+.tp-main-menu-mobile ul li > a {
+  display: block;
+  font-size: 16px;
+  color: var(--tp-common-black);
+  position: relative;
+  padding: 10px 0;
+  padding-right: 20px;
+}
+.tp-main-menu-mobile ul li > a > i {
+  display: inline-block;
+  width: 11%;
+  margin-right: 13px;
+  -webkit-transform: translateY(4px);
+  -moz-transform: translateY(4px);
+  -ms-transform: translateY(4px);
+  -o-transform: translateY(4px);
+  transform: translateY(4px);
+  font-size: 21px;
+  line-height: 1;
+}
+.tp-main-menu-mobile ul li > a .menu-text {
+  font-size: 16px;
+  line-height: 11px;
+  border-bottom: 1px solid #EAEBED;
+  width: 82%;
+  display: inline-block;
+  padding: 19px 0 17px;
+}
+.tp-main-menu-mobile ul li img {
+  width: 100%;
+}
+.tp-main-menu-mobile ul li ul {
+  padding: 0;
+}
+.tp-main-menu-mobile ul li ul li {
+  padding: 0;
+}
+.tp-main-menu-mobile ul li ul li a {
+  margin-left: auto;
+  width: 93%;
+  padding: 10px 5%;
+  text-shadow: none !important;
+  visibility: visible;
+  padding-left: 0;
+  padding-right: 20px;
+}
+.tp-main-menu-mobile ul li ul li li a {
+  width: 88%;
+  padding: 10px 7%;
+  padding-left: 0;
+  padding-right: 20px;
+}
+.tp-main-menu-mobile ul li ul li li li a {
+  width: 83%;
+  padding: 10px 9%;
+  padding-left: 0;
+  padding-right: 20px;
+}
+.tp-main-menu-mobile ul li ul li li li li a {
+  width: 68%;
+  padding: 10px 11%;
+  padding-left: 0;
+  padding-right: 20px;
+}
+.tp-main-menu-mobile ul li:hover > a {
+  color: var(--tp-theme-primary);
+}
+.tp-main-menu-mobile ul li:hover > a::after {
+  color: var(--tp-theme-primary);
+}
+.tp-main-menu-mobile ul li:hover > a .dropdown-toggle-btn i {
+  color: var(--tp-theme-primary);
+}
+.tp-main-menu-mobile ul li:hover .mega-menu {
+  visibility: visible;
+  opacity: 1;
+  top: 0;
+}
+.tp-main-menu-mobile ul li .mega-menu, .tp-main-menu-mobile ul li .submenu {
+  position: static;
+  min-width: 100%;
+  padding: 0;
+  box-shadow: none;
+  visibility: visible;
+  opacity: 1;
+  display: none;
+}
+.tp-main-menu-mobile ul li .mega-menu li, .tp-main-menu-mobile ul li .submenu li {
+  float: none;
+  display: block;
+  width: 100%;
+  padding: 0;
+}
+.tp-main-menu-mobile ul li .mega-menu li:hover a .dropdown-toggle-btn, .tp-main-menu-mobile ul li .submenu li:hover a .dropdown-toggle-btn {
+  color: var(--tp-theme-primary);
+}
+.tp-main-menu-mobile .tp-main-menu-content ul li:not(:last-child) .home-menu-title a {
+  border-bottom: none;
+}
+.tp-main-menu-mobile * ul, .tp-main-menu-mobile * li {
+  transition: none !important;
+}

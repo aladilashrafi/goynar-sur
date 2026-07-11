@@ -1,0 +1,103 @@
+/*----------------------------------------*/
+/*  6.4 Footer Style 4
+/*----------------------------------------*/
+.tp-footer-style-4 .tp-footer-widget ul li a:hover {
+  color: var(--tp-common-black);
+}
+.tp-footer-style-4 .tp-footer-widget ul li a:hover::after {
+  background-color: var(--tp-common-black);
+}
+.tp-footer-style-4 .tp-footer-logo {
+  margin-bottom: 13px;
+}
+.tp-footer-style-4 .tp-footer-social-4 .tp-footer-social-title-4 {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 12px;
+  margin-bottom: 12px;
+}
+.tp-footer-style-4 .tp-footer-social-4 a {
+  border-color: var(--tp-common-white);
+  box-shadow: 0px 1px 2px rgba(1, 15, 28, 0.1);
+}
+.tp-footer-style-4 .tp-footer-social-4 a:hover {
+  color: var(--tp-common-white);
+  background-color: var(--tp-common-black);
+  border-color: var(--tp-common-black);
+  box-shadow: none;
+}
+.tp-footer-subscribe p {
+  font-size: 15px;
+}
+.tp-footer-subscribe-input {
+  position: relative;
+}
+.tp-footer-subscribe-input input {
+  height: 54px;
+  background-color: var(--tp-common-white);
+  border-color: var(--tp-common-white);
+  box-shadow: 0px 1px 2px rgba(1, 15, 28, 0.1);
+  padding-right: 130px;
+}
+.tp-footer-subscribe-input input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #7D7F82;
+}
+.tp-footer-subscribe-input input::-moz-placeholder { /* Firefox 19+ */
+  color: #7D7F82;
+}
+.tp-footer-subscribe-input input:-moz-placeholder { /* Firefox 4-18 */
+  color: #7D7F82;
+}
+.tp-footer-subscribe-input input:-ms-input-placeholder { /* IE 10+  Edge*/
+  color: #7D7F82;
+}
+.tp-footer-subscribe-input input::placeholder { /* MODERN BROWSER */
+  color: #7D7F82;
+}
+.tp-footer-subscribe-input input:focus {
+  border-color: var(--tp-common-white);
+}
+.tp-footer-subscribe-input button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 23px;
+  color: var(--tp-common-white);
+  color: var(--tp-common-white);
+  background-color: var(--tp-common-black);
+  box-shadow: 0px 1px 2px rgba(1, 15, 28, 0.1);
+  padding: 16px 30px;
+  height: 54px;
+}
+.tp-footer-subscribe-input button:hover {
+  background-color: var(--tp-theme-brown);
+}
+
+/* footer col design for home 4 */
+.footer-col-4-2 {
+  padding-left: 23px;
+}
+@media (max-width: 575px) {
+  .footer-col-4-2 {
+    padding-left: 0;
+  }
+}
+.footer-col-4-3 {
+  padding-left: 85px;
+}
+@media only screen and (min-width: 992px) and (max-width: 1199px), only screen and (min-width: 768px) and (max-width: 991px), only screen and (min-width: 576px) and (max-width: 767px), (max-width: 575px) {
+  .footer-col-4-3 {
+    padding-left: 0;
+  }
+}
+.footer-col-4-4 {
+  padding-left: 48px;
+}
+@media only screen and (min-width: 992px) and (max-width: 1199px), only screen and (min-width: 768px) and (max-width: 991px), only screen and (min-width: 576px) and (max-width: 767px), (max-width: 575px) {
+  .footer-col-4-4 {
+    padding-left: 0;
+  }
+}

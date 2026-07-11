@@ -4,8 +4,8 @@ import ReactModal from "react-modal";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "slick-carousel/slick/slick.css";
 import "swiper/css/bundle";
-import "react-modal-video/scss/modal-video.scss";
-import '../styles/index.scss';
+import "react-modal-video/css/modal-video.css";
+import "../styles/index.css";
 if (typeof window !== "undefined") {
   require("bootstrap/dist/js/bootstrap");
 }

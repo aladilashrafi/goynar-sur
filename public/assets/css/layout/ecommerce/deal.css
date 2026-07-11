@@ -1,0 +1,167 @@
+/*----------------------------------------*/
+/*  8.24 Deal CSS
+/*----------------------------------------*/
+.tp-deal-title {
+  font-weight: 500;
+  font-size: 60px;
+  line-height: 1.17;
+  margin-bottom: 35px;
+}
+@media (max-width: 575px) {
+  .tp-deal-title {
+    font-size: 45px;
+  }
+}
+.tp-deal-title-pre {
+  font-weight: 400;
+  font-size: 18px;
+  color: var(--tp-theme-green);
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  margin-bottom: 7px;
+}
+.tp-deal-title-pre svg {
+  position: absolute;
+  bottom: -8px;
+  left: 26px;
+  z-index: -1;
+}
+.tp-deal-countdown .tp-product-countdown-inner ul li {
+  padding-top: 13px;
+  width: 76px;
+  height: 80px;
+  font-weight: 400;
+  font-size: 15px;
+  color: var(--tp-text-2);
+  text-transform: capitalize;
+  box-shadow: 0px 1px 2px rgba(1, 15, 28, 0.1);
+  border-radius: 8px;
+  position: relative;
+  border: none;
+}
+@media (max-width: 575px) {
+  .tp-deal-countdown .tp-product-countdown-inner ul li {
+    margin-bottom: 15px;
+  }
+}
+.tp-deal-countdown .tp-product-countdown-inner ul li span {
+  font-weight: 500;
+  font-size: 34px;
+  letter-spacing: -0.04em;
+  color: var(--tp-theme-green);
+}
+.tp-deal-countdown .tp-product-countdown-inner ul li:not(:last-child) {
+  margin-right: 13px;
+}
+.tp-deal-countdown .tp-product-countdown-inner ul li:not(:last-child)::after, .tp-deal-countdown .tp-product-countdown-inner ul li:not(:last-child)::before {
+  position: absolute;
+  content: "";
+  right: -10px;
+  top: 28px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: rgba(1, 15, 28, 0.2);
+}
+.tp-deal-countdown .tp-product-countdown-inner ul li:not(:last-child)::before {
+  top: 42px;
+}
+.tp-deal-shape-1 {
+  position: absolute;
+  top: 8%;
+  left: 0;
+  z-index: -1;
+}
+.tp-deal-shape-2 {
+  position: absolute;
+  top: 10%;
+  left: 2%;
+  z-index: -1;
+}
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {
+  .tp-deal-shape-2 {
+    left: -12%;
+  }
+}
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  .tp-deal-shape-2 {
+    left: -16%;
+  }
+}
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .tp-deal-shape-2 {
+    top: -4%;
+    left: -32%;
+  }
+}
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+  .tp-deal-shape-2 {
+    left: -47%;
+  }
+}
+@media (max-width: 575px) {
+  .tp-deal-shape-2 {
+    left: -100%;
+  }
+}
+.tp-deal-shape-3 {
+  position: absolute;
+  top: 29%;
+  right: 6%;
+  z-index: -1;
+}
+.tp-deal-shape-4 {
+  position: absolute;
+  top: 11%;
+  right: 33%;
+  z-index: -1;
+}
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {
+  .tp-deal-shape-4 {
+    right: -10%;
+  }
+}
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  .tp-deal-shape-4 {
+    right: -16%;
+  }
+}
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .tp-deal-shape-4 {
+    right: -38%;
+  }
+}
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+  .tp-deal-shape-4 {
+    right: -49%;
+  }
+}
+@media (max-width: 575px) {
+  .tp-deal-shape-4 {
+    right: -111%;
+  }
+}
+.tp-deal-shape-5 {
+  position: absolute;
+  top: 3%;
+  right: 28%;
+  z-index: -1;
+}
+.tp-deal-shape-6 {
+  position: absolute;
+  bottom: 77px;
+  left: 35%;
+  z-index: -1;
+}
+.tp-deal-shape-7 {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
+  transform: translateX(-50%);
+  z-index: -1;
+}

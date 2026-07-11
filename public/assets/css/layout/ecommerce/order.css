@@ -1,0 +1,194 @@
+/*----------------------------------------*/
+/*  8.20 Order CSS
+/*----------------------------------------*/
+.tp-order-details {
+  padding: 70px 100px 55px;
+}
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {
+  .tp-order-details {
+    padding: 70px 70px 55px;
+  }
+}
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  .tp-order-details {
+    padding: 70px 30px 55px;
+  }
+}
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+  .tp-order-details {
+    padding: 70px 50px 55px;
+  }
+}
+@media (max-width: 575px) {
+  .tp-order-details {
+    padding: 40px 30px 45px;
+  }
+}
+.tp-order-details-icon {
+  margin-bottom: 22px;
+}
+.tp-order-details-icon span {
+  display: inline-block;
+  width: 120px;
+  height: 120px;
+  line-height: 118px;
+  text-align: center;
+  font-size: 55px;
+  color: var(--tp-common-white);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+}
+.tp-order-details-title {
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--tp-common-white);
+  margin-bottom: 7px;
+}
+.tp-order-details-content p {
+  font-size: 16px;
+  color: var(--tp-common-white);
+  line-height: 1.38;
+}
+.tp-order-details-item {
+  margin-bottom: 38px;
+}
+.tp-order-details-item-wrapper .row [class*=col-]:nth-child(2n) .tp-order-details-item {
+  padding-left: 40px;
+}
+@media (max-width: 575px) {
+  .tp-order-details-item-wrapper .row [class*=col-]:nth-child(2n) .tp-order-details-item {
+    padding-left: 0;
+  }
+}
+.tp-order-details-item h4 {
+  font-size: 18px;
+  color: var(--tp-common-white);
+  margin-bottom: 0;
+  font-weight: 400;
+}
+.tp-order-details-item p {
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--tp-common-white);
+  margin-bottom: 0;
+}
+.tp-order-info-wrapper {
+  padding: 42px 50px;
+}
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  .tp-order-info-wrapper {
+    padding: 42px 40px;
+  }
+}
+@media (max-width: 575px) {
+  .tp-order-info-wrapper {
+    padding: 42px 30px;
+  }
+}
+.tp-order-info-title {
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 40px;
+}
+.tp-order-info-list ul li {
+  list-style: none;
+  padding: 15px 0;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.tp-order-info-list ul li:not(:last-child) {
+  border-bottom: 1px solid #E0E2E3;
+}
+.tp-order-info-list ul li span {
+  font-size: 15px;
+  color: var(--tp-common-black);
+}
+.tp-order-info-list ul li.tp-order-info-list-header {
+  padding-top: 0;
+  padding-bottom: 12px;
+}
+.tp-order-info-list ul li.tp-order-info-list-header h4 {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 0;
+}
+.tp-order-info-list ul li.tp-order-info-list-desc p {
+  font-size: 15px;
+  margin-bottom: 0;
+}
+.tp-order-info-list ul li.tp-order-info-list-desc p span {
+  font-size: 15px;
+  font-weight: 500;
+}
+.tp-order-info-list ul li.tp-order-info-list-subtotal span:last-child {
+  color: var(--tp-theme-primary);
+}
+.tp-order-info-list ul li.tp-order-info-list-shipping span input {
+  display: none;
+}
+.tp-order-info-list ul li.tp-order-info-list-shipping span input:checked ~ label::after {
+  border-color: var(--tp-theme-primary);
+}
+.tp-order-info-list ul li.tp-order-info-list-shipping span input:checked ~ label::before {
+  opacity: 1;
+  visibility: visible;
+}
+.tp-order-info-list ul li.tp-order-info-list-shipping span label {
+  font-size: 14px;
+  position: relative;
+  padding-right: 27px;
+}
+.tp-order-info-list ul li.tp-order-info-list-shipping span label span {
+  color: var(--tp-theme-primary);
+}
+.tp-order-info-list ul li.tp-order-info-list-shipping span label:hover {
+  cursor: pointer;
+}
+.tp-order-info-list ul li.tp-order-info-list-shipping span label::after {
+  position: absolute;
+  content: "";
+  right: 0;
+  top: 5px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid #BCBCBC;
+  -webkit-transition: all 0.2s 0s ease-out;
+  -moz-transition: all 0.2s 0s ease-out;
+  -ms-transition: all 0.2s 0s ease-out;
+  -o-transition: all 0.2s 0s ease-out;
+  transition: all 0.2s 0s ease-out;
+}
+.tp-order-info-list ul li.tp-order-info-list-shipping span label::before {
+  position: absolute;
+  content: "";
+  right: 4px;
+  top: 9px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--tp-theme-primary);
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transition: all 0.2s 0s ease-out;
+  -moz-transition: all 0.2s 0s ease-out;
+  -ms-transition: all 0.2s 0s ease-out;
+  -o-transition: all 0.2s 0s ease-out;
+  transition: all 0.2s 0s ease-out;
+}
+.tp-order-info-list ul li.tp-order-info-list-total {
+  padding: 14px 0;
+}
+.tp-order-info-list ul li.tp-order-info-list-total span {
+  font-size: 16px;
+  font-weight: 500;
+}
+.tp-order-inner {
+  background-color: var(--tp-common-white);
+  box-shadow: 0px 30px 70px rgba(1, 15, 28, 0.1);
+}

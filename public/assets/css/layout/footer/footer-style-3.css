@@ -1,0 +1,25 @@
+/*----------------------------------------*/
+/*  6.3 Footer Style 3
+/*----------------------------------------*/
+.tp-footer-style-3 .tp-footer-social a:hover {
+  background-color: var(--tp-theme-brown);
+  border-color: var(--tp-theme-brown);
+}
+.tp-footer-style-3 .tp-footer-widget-title {
+  margin-bottom: 15px;
+}
+.tp-footer-style-3 .tp-footer-widget ul li a:hover {
+  color: var(--tp-theme-brown);
+}
+.tp-footer-style-3 .tp-footer-widget ul li a:hover::after {
+  background-color: var(--tp-theme-brown);
+}
+.tp-footer-style-3 .tp-footer-talk h4 a:hover {
+  color: var(--tp-theme-brown);
+}
+.tp-footer-style-3 .tp-footer-contact-content p a:hover {
+  color: var(--tp-theme-brown);
+}
+.tp-footer-style-3 .tp-footer-copyright p a {
+  color: var(--tp-theme-brown);
+}

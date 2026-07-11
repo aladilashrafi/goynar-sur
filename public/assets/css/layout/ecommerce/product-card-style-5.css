@@ -1,0 +1,250 @@
+/*----------------------------------------*/
+/*  8.13 Product Card Style 5 CSS
+/*----------------------------------------*/
+.tp-product-item-5:hover .tp-product-thumb-5 img {
+  -webkit-transform: scale(1.1);
+  -moz-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  -o-transform: scale(1.1);
+  transform: scale(1.1);
+}
+.tp-product-item-5:hover .tp-product-action-5 {
+  left: 24px;
+  visibility: visible;
+  opacity: 1;
+}
+.tp-product-tag-5 span {
+  font-size: 16px;
+}
+.tp-product-tag-5 span a:hover {
+  color: var(--tp-theme-green);
+}
+.tp-product-title-5 {
+  font-weight: 400;
+  font-size: 20px;
+  margin-bottom: 1px;
+}
+.tp-product-title-5 a:hover {
+  color: var(--tp-theme-green);
+}
+.tp-product-rating-5 {
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+}
+.tp-product-rating-5 span {
+  color: var(--tp-yellow-3);
+  font-size: 12px;
+}
+.tp-product-rating-5 span:not(:last-child) {
+  margin-right: 2px;
+}
+.tp-product-thumb-5 {
+  border-radius: 16px;
+}
+.tp-product-thumb-5 img {
+  -webkit-transition: all 0.2s 0s ease-out;
+  -moz-transition: all 0.2s 0s ease-out;
+  -ms-transition: all 0.2s 0s ease-out;
+  -o-transition: all 0.2s 0s ease-out;
+  transition: all 0.2s 0s ease-out;
+}
+.tp-product-action-greenStyle .tp-product-action-btn-2:hover {
+  background-color: var(--tp-theme-green);
+}
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+  .tp-product-action-5 {
+    top: 30px;
+  }
+}
+.tp-product-price-5 {
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--tp-common-black);
+}
+.tp-product-price-5.new-price {
+  color: var(--tp-common-black);
+}
+.tp-product-price-5.old-price {
+  font-weight: 400;
+  font-size: 14px;
+  text-decoration-line: line-through;
+  color: var(--tp-text-1);
+}
+.tp-product-sm-item-wrapper-5.is-translate-24 {
+  margin-left: -24px;
+}
+@media (max-width: 575px) {
+  .tp-product-sm-item-wrapper-5.is-translate-24 {
+    margin-left: 0;
+  }
+}
+.tp-product-sm-section-title {
+  position: relative;
+  z-index: 1;
+  font-size: 26px;
+  font-weight: 500;
+  margin-bottom: 32px;
+  display: inline-block;
+}
+.tp-product-sm-section-title svg {
+  position: absolute;
+  bottom: -8px;
+  left: 26px;
+  z-index: -1;
+}
+.tp-product-sm-item-5 {
+  padding: 11px;
+  border: 1px solid rgba(1, 15, 28, 0.1);
+  border-radius: 16px;
+}
+.tp-product-sm-item-5:hover {
+  border-color: var(--tp-theme-green);
+}
+.tp-product-sm-item-5:hover .tp-product-sm-thumb-5 img {
+  -webkit-transform: scale(1.1);
+  -moz-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  -o-transform: scale(1.1);
+  transform: scale(1.1);
+}
+.tp-product-sm-item-5:not(:last-child) {
+  margin-bottom: 12px;
+}
+.tp-product-sm-thumb-5 {
+  flex: 0 0 auto;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-right: 24px;
+}
+.tp-product-sm-thumb-5 img {
+  width: 140px;
+  height: 140px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+@media (max-width: 575px) {
+  .tp-product-sm-thumb-5 img {
+    margin-right: 15px;
+  }
+}
+.tp-product-sm-tag-5 {
+  line-height: 1;
+  margin-bottom: 2px;
+}
+.tp-product-sm-tag-5 span {
+  font-size: 14px;
+  color: var(--tp-text-2);
+}
+.tp-product-sm-tag-5 span a:hover {
+  color: var(--tp-theme-green);
+}
+.tp-product-sm-title-5 {
+  font-weight: 400;
+  font-size: 16px;
+  margin-bottom: 14px;
+}
+.tp-product-sm-title-5 a:Hover {
+  color: var(--tp-theme-green);
+}
+.tp-product-sm-rating-5 {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  line-height: 1;
+}
+.tp-product-sm-rating-5 span {
+  color: var(--tp-yellow-3);
+  font-size: 12px;
+}
+.tp-product-sm-rating-5 span:not(:last-child) {
+  margin-right: 2px;
+}
+.tp-product-sm-price-5 {
+  font-weight: 500;
+  font-size: 15px;
+  color: var(--tp-common-black);
+  letter-spacing: -0.02em;
+}
+.tp-product-sm-price-5.new-price {
+  color: var(--tp-common-black);
+}
+.tp-product-sm-price-5.old-price {
+  font-weight: 400;
+  font-size: 13px;
+  text-decoration-line: line-through;
+  color: var(--tp-text-1);
+}
+
+.tp-best-slider-5:hover .tp-best-slider-arrow-5 button {
+  visibility: visible;
+  opacity: 1;
+  left: 0;
+}
+.tp-best-slider-5:hover .tp-best-slider-arrow-5 button.tp-best-slider-5-button-next {
+  left: auto;
+  right: 0;
+}
+.tp-best-slider-arrow-5 button {
+  position: absolute;
+  top: 28%;
+  z-index: 1;
+  left: 20px;
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
+  transform: translateX(-50%);
+  width: 56px;
+  height: 56px;
+  line-height: 50px;
+  text-align: center;
+  font-size: 18px;
+  color: var(--tp-text-2);
+  background-color: var(--tp-common-white);
+  border: 3px solid #F7F7F7;
+  border-radius: 50%;
+  visibility: hidden;
+  opacity: 0;
+}
+.tp-best-slider-arrow-5 button svg {
+  -webkit-transform: translate(-1px, -2px);
+  -moz-transform: translate(-1px, -2px);
+  -ms-transform: translate(-1px, -2px);
+  -o-transform: translate(-1px, -2px);
+  transform: translate(-1px, -2px);
+}
+.tp-best-slider-arrow-5 button:hover {
+  background-color: var(--tp-theme-green);
+  color: var(--tp-common-white);
+  border-color: var(--tp-common-white);
+}
+.tp-best-slider-arrow-5 button.tp-best-slider-5-button-next {
+  left: auto;
+  right: 20px;
+  -webkit-transform: translateX(50%);
+  -moz-transform: translateX(50%);
+  -ms-transform: translateX(50%);
+  -o-transform: translateX(50%);
+  transform: translateX(50%);
+}
+.tp-best-slider-arrow-5 button.tp-best-slider-5-button-next svg {
+  -webkit-transform: translate(1px, -2px);
+  -moz-transform: translate(1px, -2px);
+  -ms-transform: translate(1px, -2px);
+  -o-transform: translate(1px, -2px);
+  transform: translate(1px, -2px);
+}
+@media only screen and (min-width: 576px) and (max-width: 767px), (max-width: 575px) {
+  .tp-best-slider-wrapper-5 {
+    margin-top: 50px;
+  }
+}
+.tp-best-slider-dot-5 .swiper-pagination-bullet.swiper-pagination-bullet-active {
+  background-color: var(--tp-theme-green);
+}
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .tp-best-item-5 .tp-product-action-5 {
+    top: 15px;
+  }
+}

@@ -1,0 +1,139 @@
+.tp-coupon-info-details span, .tp-collection-hotspot-content, .tp-return-customer-forgot a::after, .tp-cart-checkout-shipping-option label::after, .tp-cart-checkout-shipping-option label::before, .tp-cart-plus,
+.tp-cart-minus, .tp-shop-widget-categories ul li a::after, .tp-shop-widget-categories ul li a span, .tp-shop-widget-checkbox-circle-number, .tp-product-details-thumb-wrapper .nav-tabs .nav-link::after, .tp-product-details-review-input-eye span, .tp-product-details-tab-line, .tp-product-sm-item-5, .tp-product-sm-thumb-5 img, .tp-product-action-4, .tp-product-thumb-4 img, .tp-product-price-4, .tp-product-add-to-cart-4, .tp-product-price-wrapper-4, .tp-best-add-to-cart-btn, .tp-product-tag-3 span, .tp-product-thumb-3 img, .tp-product-action-3, .tp-special-hotspot-content, .tp-product-tag-2 a::after, .tp-product-action-2, .tp-product-thumb-2 img, .tp-product-thumb img, .tp-product-tab-line, .tp-product-action, .tp-product-add-cart-btn-large-wrapper, .tp-product-list-thumb a img, .tp-product-tooltip, .tp-product-category-thumb a img, .tp-category-title-2, .tp-category-btn-2, .tp-category-content-2 span, .tp-category-content-2::after, .tp-category-thumb-3::after, .tp-category-thumb-3::before, .tp-category-btn-3, .tp-category-price-4, .tp-category-thumb-5, .profile__tab .tp-tab-line, .profile__main-thumb-edit label, .tp-profile-input-eye span, .tp-contact-input-eye span, .tp-contact-btn, .tp-login-top p a::after, .tp-login-mail::after, .tp-login-input-eye span, .tp-login-forgot a::after, .tp-cta-thumb img, .tp-brand-item img, .tp-instagram-item::after, .tp-instagram-item-2::after, .tp-instagram-icon, .tp-instagram-icon-2, .tp-slider-nav-item, .tp-footer-widget-content ul li a::after, .tp-blog-grid-thumb img, .tp-blog-list-thumb img, .tp-blog-thumb-2 img, .tp-blog-meta-2 a::after, .tp-postbox-details-input-eye span, .tp-category-menu nav ul li::after, .tp-category-menu nav ul li.has-dropdown > a:not(.mega-menu-title)::after, .tp-category-menu nav ul li a span, .tp-category-mobile-menu ul li.has-dropdown > a .dropdown-toggle-btn, .tp-category-mobile-menu ul li.has-dropdown > a .dropdown-toggle-btn i, .tp-mobile-menu, .tp-main-menu-mobile ul li.has-dropdown > a .dropdown-toggle-btn, .tp-main-menu-mobile ul li.has-dropdown > a .dropdown-toggle-btn i, .main-menu > nav > ul > li.has-dropdown > a::after, .main-menu > nav > ul > li > .tp-submenu li.has-dropdown > a::after, .home-menu-thumb, .home-menu-thumb::after, .shop-mega-menu-img img, .tp-header-side-menu ul li.has-dropdown > a::after, .tp-header-side-menu ul li .mega-menu, .tp-header-side-menu ul li .mega-menu .mega-menu-brand a img, .tp-menu-line {
+  -webkit-transition: all 0.3s 0s ease-out;
+  -moz-transition: all 0.3s 0s ease-out;
+  -ms-transition: all 0.3s 0s ease-out;
+  -o-transition: all 0.3s 0s ease-out;
+  transition: all 0.3s 0s ease-out;
+}
+
+.mean-container .mean-nav ul li > a.mean-expand i, .main-menu > nav > ul > li > .tp-submenu {
+  -webkit-transition: all 0.3s 0s ease-out;
+  -moz-transition: all 0.3s 0s ease-out;
+  -ms-transition: all 0.3s 0s ease-out;
+  -o-transition: all 0.3s 0s ease-out;
+  transition: all 0.3s 0s ease-out;
+}
+
+.tp-collection-btn .tp-btn, .tp-product-details-views > span svg, .tp-product-action-btn-2 svg, .tp-header-welcome span svg {
+  -webkit-transform: translateY(-1px);
+  -moz-transform: translateY(-1px);
+  -ms-transform: translateY(-1px);
+  -o-transform: translateY(-1px);
+  transform: translateY(-1px);
+}
+
+.tp-order-details-icon span svg, .tp-cart-list tr td .tp-cart-action-btn svg, .tp-shop-top-tab .nav-tabs .nav-item .nav-link svg, .tp-product-details-thumb-wrapper .nav-tabs .nav-link .nav-video-btn svg, .tp-product-details-thumb-arrow button svg, .tp-product-details-action-sm-btn svg, .tp-product-details-wishlist-btn svg, .tp-product-action-btn-3 svg, .tp-special-arrow button svg, .tp-product-action-btn svg, .tp-product-add-cart-btn-large svg, .tp-app-btn .app-icon span svg, .tp-brand-slider-arrow button svg, .tp-testimonial-arrow button svg, .tp-feature-icon span svg, .tp-feature-icon-5 span svg, .tp-slider-feature-icon-3 span svg, .tp-slider-arrow-4 button svg, .tp-blog-grid-meta span span svg, .tp-blog-grid-tab .nav-tabs .nav-link svg, .tp-blog-meta-2 span svg, .tp-sidebar-search-input button svg, .tp-postbox-details-meta span svg, .tp-postbox-details-navigation-icon span svg, .tp-category-menu nav ul li a span svg, .tp-category-mobile-menu ul li a svg, .tp-main-menu-mobile ul li > a svg, .tp-header-search-input-5 span svg, .tp-header-action-5 button svg, .tp-header-action-5 a svg, .tp-header-info-item a span svg, .tp-header-search-btn button svg, .tp-header-login-icon span svg, .tp-header-contact-icon span svg {
+  -webkit-transform: translateY(-2px);
+  -moz-transform: translateY(-2px);
+  -ms-transform: translateY(-2px);
+  -o-transform: translateY(-2px);
+  transform: translateY(-2px);
+}
+
+.tp-product-add-to-cart-4 svg, .tp-best-add-to-cart-btn svg, .tp-category-add-to-cart-4 svg, .tp-footer-contact-icon span svg, .tp-header-search-2 button svg {
+  -webkit-transform: translateY(-3px);
+  -moz-transform: translateY(-3px);
+  -ms-transform: translateY(-3px);
+  -o-transform: translateY(-3px);
+  transform: translateY(-3px);
+}
+
+.tp-product-badge span, .tp-product-category > a, .tp-product-title, .tp-product-rating-text span, .tp-product-price, .tp-product-tab .nav-tabs .nav-item .nav-link, .tp-product-countdown-inner ul li, .tp-product-countdown-inner ul li span, .tp-product-add-cart-btn-large, .tp-product-gadget-categories-title, .tp-product-gadget-categories-list ul li a, .tp-product-gadget-btn .tp-link-btn, .tp-product-gadget-banner-price, .tp-product-gadget-banner-title, .tp-product-tooltip, .tp-banner-btn .tp-link-btn, .tp-banner-content span, .tp-banner-content p, .tp-banner-title, .tp-product-banner-bg-text, .tp-product-banner-subtitle, .tp-product-banner-title, .tp-product-banner-price span, .tp-product-banner-price p, .tp-product-category-content p, .tp-product-category-title, .tp-feature-title, .tp-feature-content p, .tp-slider-title, .tp-slider-content > span, .tp-footer-widget-title, .tp-footer-widget-content ul li a, .tp-footer-desc, .tp-footer-talk span, .tp-footer-talk h4, .tp-footer-contact-content p, .tp-footer-copyright p, .tp-blog-meta-date span, .tp-blog-tag > span, .tp-blog-tag a, .tp-blog-title, .tp-blog-content p, .tp-category-menu-btn, .tp-category-menu nav ul li a, .main-menu.menu-style-1 > nav > ul > li > a, .tp-header-welcome p, .tp-header-top-menu-item > span, .tp-header-top-menu-item ul li a, .tp-header-search-box input, .tp-header-search-category .nice-select, .tp-header-login-content span, .tp-header-login-title, .tp-header-action-badge, .tp-header-contact-content h5, .tp-header-contact-content p {
+  font-family: var(--tp-ff-roboto);
+}
+
+.tp-collection-countdown .tp-product-countdown ul li, .tp-collection-countdown .tp-product-countdown ul li span, .tp-product-item-3 .tp-product-add-cart-btn-large-wrapper .tp-product-add-cart-btn-large, .tp-product-action-btn-3 .tp-product-tooltip, .tp-product-action-btn-2 .tp-product-tooltip, .tp-footer-style-2 .tp-footer-desc, .tp-footer-style-2 .tp-footer-widget-title, .tp-footer-style-2 .tp-footer-widget ul li a, .tp-footer-style-2 .tp-footer-talk span, .tp-footer-style-2 .tp-footer-talk h4, .tp-footer-style-2 .tp-footer-contact-content p, .tp-footer-style-2 .tp-footer-copyright p, .tp-header-top-black .tp-header-top-menu-item > span {
+  font-family: var(--tp-ff-jost);
+}
+
+.tp-collection-countdown .tp-product-countdown ul li:not(:last-child)::after, .tp-category-mobile-menu ul li.has-dropdown > a .dropdown-toggle-btn, .tp-main-menu-mobile ul li.has-dropdown > a .dropdown-toggle-btn, .tp-header-side-menu ul li.has-dropdown > a::after {
+  font-family: var(--tp-ff-fontawesome);
+}
+
+/* transform */
+.tp-collection-countdown .tp-product-countdown ul li:not(:last-child)::after, .tp-special-arrow button, .tp-featured-slider-arrow button:not(:last-child)::after, .tp-testimonial-arrow button, .tp-testimonial-arrow-5 button:not(:last-child)::after, .tp-feature-border-2 .row [class*=col-] .tp-feature-item-2::after, .tp-feature-border-3 .tp-feature-item-2:not(:last-child)::after, .tp-feature-border-5 .row [class*=col-] .tp-feature-item-5::after, .tp-slider-2-dot.tp-swiper-dot, .tp-slider-3-dot.tp-swiper-dot, .tp-slider-feature-item-3:not(:last-child)::after, .tp-slider-arrow-3 button, .tp-slider-4-dot.tp-swiper-dot, .tp-slider-arrow-4 button, .tp-sidebar-search-input button, .tp-postbox-details-meta span:not(:last-child)::after, .tp-category-mobile-menu ul li.has-dropdown > a .dropdown-toggle-btn, .tp-main-menu-mobile ul li.has-dropdown > a .dropdown-toggle-btn, .tp-header-search-input-box-5 button, .tp-header-search-input-5 span, .tp-header-side-menu ul li.has-dropdown > a::after {
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.tp-best-banner-slider-dot-5, .tp-category-add-to-cart-4, .tp-testimonial-shape-gradient {
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+
+.tp-collection-thumb, .tp-collection-thumb-4, .tp-special-thumb img, .tp-trending-banner-thumb, .tp-featured-thumb, .tp-banner-thumb, .tp-banner-thumb-2, .tp-banner-thumb-4, .tp-banner-full-thumb, .tp-best-banner-thumb-5, .tp-category-thumb-3, .tp-category-thumb-4, .tp-category-thumb-5 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+:root {
+  /**
+  @font family declaration
+  */
+  --tp-ff-body: 'Jost', sans-serif;
+  --tp-ff-heading: 'Jost', sans-serif;
+  --tp-ff-p: 'Jost', sans-serif;
+  --tp-ff-jost: 'Jost', sans-serif;
+  --tp-ff-fontawesome: "Font Awesome 6 Pro";
+  --tp-ff-roboto: 'Roboto', sans-serif;
+  --tp-ff-oregano: 'Oregano', cursive;
+  --tp-ff-charm: 'Charm', cursive;
+  /**
+  @color declaration
+  */
+  --tp-common-white: #ffffff;
+  --tp-common-black-solid: #000;
+  --tp-common-black: #010F1C;
+  --tp-yellow-1: #FFB342;
+  --tp-yellow-2: #FFD43A;
+  --tp-yellow-3: #FFB21D;
+  --tp-pink-1: #FD4B6B;
+  --tp-pink-2: #FD2D6C;
+  --tp-pink-3: #FF296A;
+  --tp-pink-4: #FF3494;
+  --tp-green-dark: #115061;
+  --tp-green-1: #31B757;
+  --tp-khaki-1: #AB9774;
+  --tp-blue-1: #38767d;
+  --tp-orange-1: #FF6736;
+  --tp-heading-primary: #2b1b2f;
+  --tp-heading-secondary: #811a49;
+  --tp-grey-1: #F6F7F9;
+  --tp-grey-2: #ECF2F7;
+  --tp-grey-3: #CAD4DB;
+  --tp-grey-4: #F8F8F8;
+  --tp-grey-5: #EFF0ED;
+  --tp-grey-6: #EFF1F5;
+  --tp-grey-7: #F6F6F6;
+  --tp-grey-8: #EAE4DE;
+  --tp-grey-9: #E5E9F2;
+  --tp-text-body: #55585B;
+  --tp-text-1: #767A7D;
+  --tp-text-2: #55585B;
+  --tp-text-3: #A0A2A4;
+  --tp-text-4: #7D7F82;
+  --tp-text-5: #888A8C;
+  --tp-text-6: #90969B;
+  --tp-theme-primary: #811a49;
+  --tp-theme-secondary: #38767d;
+  --tp-theme-brown: #933a44;
+  --tp-theme-green: #38767d;
+  --tp-theme-rose: #b8778c;
+  --tp-theme-blush: #e1ccd3;
+  --tp-theme-plum: #6a526b;
+  --tp-footer-grey-1: #F4F7F9;
+  --tp-border-primary: #EAEBED;
+  --tp-border-secondary: #F0F2F4;
+  --tp-border-3: #E4E5E9;
+  --tp-border-4: #E6E7E8;
+}

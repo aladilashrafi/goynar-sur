@@ -1,0 +1,247 @@
+/*----------------------------------------*/
+/*  8.19 Cart CSS
+/*----------------------------------------*/
+.tp-cart-header-product {
+  padding-left: 30px !important;
+}
+@media only screen and (min-width: 992px) and (max-width: 1199px), only screen and (min-width: 768px) and (max-width: 991px), only screen and (min-width: 576px) and (max-width: 767px), (max-width: 575px) {
+  .tp-cart-list {
+    overflow-x: scroll;
+  }
+}
+.tp-cart-list .table > :not(caption) > * > * {
+  padding: 20px 0;
+  box-shadow: none;
+  vertical-align: middle;
+}
+@media only screen and (min-width: 992px) and (max-width: 1199px), only screen and (min-width: 768px) and (max-width: 991px), only screen and (min-width: 576px) and (max-width: 767px), (max-width: 575px) {
+  .tp-cart-list table {
+    width: 840px;
+  }
+}
+.tp-cart-list thead {
+  background-color: #F1F3F4;
+}
+.tp-cart-list thead th {
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--tp-common-black);
+  border: 0 !important;
+  padding-top: 9px !important;
+  padding-bottom: 9px !important;
+}
+.tp-cart-list tr td {
+  border-color: #E0E2E3;
+}
+.tp-cart-list tr td .tp-cart-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 12px;
+  font-weight: 400;
+  font-size: 14px;
+  color: #818487;
+}
+.tp-cart-list tr td .tp-cart-action-btn svg {
+  margin-right: 4px;
+}
+.tp-cart-list tr td .tp-cart-action-btn:hover {
+  color: #FF1826;
+}
+.tp-cart-list tr td.tp-cart-add-to-cart .tp-btn {
+  border-radius: 0;
+}
+.tp-cart-list tbody tr:first-child td {
+  padding-top: 30px !important;
+}
+.tp-cart-img {
+  width: 78px;
+  margin-right: 20px;
+}
+.tp-cart-img a {
+  background-color: #F2F3F5;
+  display: inline-block;
+}
+.tp-cart-img img {
+  width: 78px;
+  height: 100px;
+  object-fit: cover;
+}
+.tp-cart-title a {
+  margin-left: 20px;
+  font-weight: 400;
+  font-size: 16px;
+  color: var(--tp-common-black);
+}
+.tp-cart-title a:hover {
+  color: var(--tp-theme-primary);
+}
+.tp-cart-price {
+  width: 126px;
+}
+.tp-cart-price span {
+  font-size: 16px;
+  color: var(--tp-common-black);
+}
+.tp-cart-quantity {
+  width: 180px;
+}
+@media only screen and (min-width: 576px) and (max-width: 767px), (max-width: 575px) {
+  .tp-cart-coupon {
+    margin-bottom: 20px;
+  }
+}
+.tp-cart-coupon-input-box label {
+  font-size: 14px;
+  color: var(--tp-common-black);
+  margin-bottom: 7px;
+}
+.tp-cart-coupon-input input {
+  background: #FFFFFF;
+  border: 1px solid #D6D9DC;
+  height: 46px;
+  line-height: 46px;
+  margin-right: 4px;
+  max-width: 282px;
+}
+.tp-cart-coupon-input input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #818487;
+}
+.tp-cart-coupon-input input::-moz-placeholder { /* Firefox 19+ */
+  color: #818487;
+}
+.tp-cart-coupon-input input:-moz-placeholder { /* Firefox 4-18 */
+  color: #818487;
+}
+.tp-cart-coupon-input input:-ms-input-placeholder { /* IE 10+  Edge*/
+  color: #818487;
+}
+.tp-cart-coupon-input input::placeholder { /* MODERN BROWSER */
+  color: #818487;
+}
+.tp-cart-coupon-input button {
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--tp-common-white);
+  background-color: var(--tp-common-black);
+  padding: 10px 30px;
+}
+.tp-cart-coupon-input button:hover {
+  color: var(--tp-common-white);
+  background-color: var(--tp-theme-primary);
+}
+.tp-cart-update-btn {
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--tp-common-black);
+  background-color: var(--tp-common-white);
+  padding: 9px 29px;
+  border: 1px solid rgba(1, 15, 28, 0.1);
+}
+.tp-cart-update-btn:hover {
+  background-color: var(--tp-theme-primary);
+  border-color: var(--tp-theme-primary);
+  color: var(--tp-common-white);
+}
+.tp-cart-checkout-wrapper {
+  background: var(--tp-common-white);
+  box-shadow: 0px 30px 70px rgba(1, 15, 28, 0.1);
+  padding: 36px 24px 28px;
+  margin-left: -24px;
+}
+@media only screen and (min-width: 768px) and (max-width: 991px), only screen and (min-width: 576px) and (max-width: 767px), (max-width: 575px) {
+  .tp-cart-checkout-wrapper {
+    margin-top: 50px;
+    margin-left: 0;
+  }
+}
+.tp-cart-checkout-top {
+  padding-bottom: 13px;
+  margin-bottom: 19px;
+  border-bottom: 1px solid #E0E2E3;
+}
+.tp-cart-checkout-top span {
+  font-size: 20px;
+  color: var(--tp-common-black);
+  font-weight: 500;
+}
+.tp-cart-checkout-shipping {
+  padding-bottom: 16px;
+  border-bottom: 1px solid #E0E2E3;
+  margin-bottom: 15px;
+}
+.tp-cart-checkout-shipping-title {
+  font-weight: 500;
+  font-size: 15px;
+  margin-bottom: 7px;
+}
+.tp-cart-checkout-shipping-option:not(:last-child) {
+  margin-bottom: 4px;
+}
+.tp-cart-checkout-shipping-option input {
+  display: none;
+}
+.tp-cart-checkout-shipping-option input:checked + label::after {
+  border-color: var(--tp-theme-primary);
+}
+.tp-cart-checkout-shipping-option input:checked + label::before {
+  opacity: 1;
+  visibility: visible;
+}
+.tp-cart-checkout-shipping-option label {
+  font-weight: 400;
+  font-size: 14px;
+  color: #161C2D;
+  position: relative;
+  padding-left: 25px;
+}
+.tp-cart-checkout-shipping-option label:hover {
+  cursor: pointer;
+}
+.tp-cart-checkout-shipping-option label span {
+  color: var(--tp-theme-primary);
+}
+.tp-cart-checkout-shipping-option label::after {
+  position: absolute;
+  content: "";
+  left: 0;
+  top: 5px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid #BCBCBC;
+}
+.tp-cart-checkout-shipping-option label::before {
+  position: absolute;
+  content: "";
+  left: 4px;
+  top: 9px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--tp-theme-primary);
+  visibility: hidden;
+  opacity: 0;
+}
+.tp-cart-checkout-total {
+  margin-bottom: 25px;
+}
+.tp-cart-checkout-total span {
+  font-weight: 500;
+  font-size: 18px;
+  color: var(--tp-common-black);
+}
+.tp-cart-checkout-btn {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--tp-common-white);
+  background-color: var(--tp-common-black);
+  display: inline-block;
+  padding: 10px 30px;
+  text-align: center;
+}
+.tp-cart-checkout-btn:hover {
+  background-color: var(--tp-theme-primary);
+  color: var(--tp-common-white);
+}

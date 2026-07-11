@@ -1,0 +1,39 @@
+/*----------------------------------------*/
+/*  7.11 Error CSS
+/*----------------------------------------*/
+.tp-error-title {
+  font-size: 50px;
+  font-weight: 500;
+}
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+  .tp-error-title {
+    font-size: 40px;
+  }
+}
+@media (max-width: 575px) {
+  .tp-error-title {
+    font-size: 30px;
+  }
+}
+.tp-error-content p {
+  font-size: 16px;
+  line-height: 1.6;
+  padding: 0 70px;
+  margin-bottom: 27px;
+}
+@media (max-width: 575px) {
+  .tp-error-content p {
+    padding: 0;
+  }
+}
+.tp-error-btn {
+  font-size: 16px;
+  color: var(--tp-common-white);
+  font-weight: 500;
+  background-color: var(--tp-theme-primary);
+  padding: 11px 30px;
+}
+.tp-error-btn:hover {
+  background-color: var(--tp-common-black);
+  color: var(--tp-common-white);
+}

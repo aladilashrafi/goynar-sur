@@ -1,0 +1,216 @@
+/*----------------------------------------*/
+/*  2.15 Section Title
+/*----------------------------------------*/
+.tp-section-title {
+  font-size: 36px;
+  color: var(--tp-heading-secondary);
+  position: relative;
+  z-index: 1;
+}
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {
+  .tp-section-title {
+    font-size: 45px;
+  }
+}
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  .tp-section-title {
+    font-size: 35px;
+  }
+}
+@media only screen and (min-width: 768px) and (max-width: 991px), only screen and (min-width: 576px) and (max-width: 767px), (max-width: 575px) {
+  .tp-section-title {
+    font-size: 30px;
+  }
+}
+.tp-section-title svg {
+  position: absolute;
+  left: 0;
+  bottom: -12px;
+  z-index: -1;
+}
+.tp-section-title svg path {
+  stroke: var(--tp-pink-3);
+}
+.tp-section-title-sm {
+  font-size: 24px;
+}
+.tp-section-title-sm svg {
+  left: -3px;
+  bottom: -3px;
+}
+.tp-section-title-pre {
+  font-size: 14px;
+  font-weight: var(--tp-fw-bold);
+  color: var(--tp-theme-primary);
+  display: inline-block;
+  text-transform: uppercase;
+}
+
+.tp-section-title-2 {
+  font-weight: 500;
+  font-size: 44px;
+}
+@media (max-width: 575px) {
+  .tp-section-title-2 {
+    font-size: 35px;
+  }
+}
+.tp-section-title-pre-2 {
+  font-weight: 400;
+  font-size: 18px;
+  color: var(--tp-theme-secondary);
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+}
+.tp-section-title-pre-2 svg {
+  position: absolute;
+  bottom: -8px;
+  left: 26px;
+  z-index: -1;
+}
+
+.tp-section-title-3 {
+  font-weight: 500;
+  font-size: 44px;
+}
+@media (max-width: 575px) {
+  .tp-section-title-3 {
+    font-size: 35px;
+  }
+}
+.tp-section-title-pre-3 {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 14px;
+  color: var(--tp-theme-brown);
+  display: inline-block;
+}
+
+.tp-section-title-wrapper-4 p {
+  font-size: 18px;
+}
+.tp-section-title-4 {
+  font-weight: 500;
+  font-size: 44px;
+  line-height: 1.12;
+  margin-bottom: 5px;
+}
+@media (max-width: 575px) {
+  .tp-section-title-4 {
+    font-size: 35px;
+  }
+}
+.tp-section-title-4.fz-50 {
+  font-size: 50px;
+}
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  .tp-section-title-4.fz-50 {
+    font-size: 33px;
+  }
+}
+@media (max-width: 575px) {
+  .tp-section-title-4.fz-50 {
+    font-size: 41px;
+  }
+}
+.tp-section-title-pre-4 {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 14px;
+  color: var(--tp-theme-brown);
+  display: inline-block;
+  margin-bottom: 11px;
+}
+
+.tp-section-title-5 {
+  font-weight: 500;
+  font-size: 44px;
+}
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+  .tp-section-title-5 {
+    font-size: 40px;
+  }
+}
+@media (max-width: 575px) {
+  .tp-section-title-5 {
+    font-size: 35px;
+  }
+}
+.tp-section-title-pre-5 {
+  font-weight: 400;
+  font-size: 18px;
+  color: var(--tp-theme-green);
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  margin-bottom: 12px;
+}
+.tp-section-title-pre-5 svg {
+  position: absolute;
+  bottom: -8px;
+  left: 26px;
+  z-index: -1;
+}
+.tp-section-title-pre-5.has-mb-0 {
+  margin-bottom: 0;
+}
+
+.tp-section-title-6 {
+  font-size: 44px;
+  font-weight: 500;
+  position: relative;
+  z-index: 1;
+}
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {
+  .tp-section-title-6 {
+    font-size: 45px;
+  }
+}
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  .tp-section-title-6 {
+    font-size: 35px;
+  }
+}
+@media only screen and (min-width: 768px) and (max-width: 991px), only screen and (min-width: 576px) and (max-width: 767px), (max-width: 575px) {
+  .tp-section-title-6 {
+    font-size: 30px;
+  }
+}
+.tp-section-title-pre-6 {
+  font-size: 18px;
+  color: var(--tp-theme-primary);
+  display: inline-block;
+  text-transform: capitalize;
+}
+
+.tp-section-title-7 {
+  font-size: 50px;
+  font-weight: 500;
+  line-height: 1.07;
+  position: relative;
+  z-index: 1;
+}
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {
+  .tp-section-title-7 {
+    font-size: 45px;
+  }
+}
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  .tp-section-title-7 {
+    font-size: 35px;
+  }
+}
+@media only screen and (min-width: 768px) and (max-width: 991px), only screen and (min-width: 576px) and (max-width: 767px), (max-width: 575px) {
+  .tp-section-title-7 {
+    font-size: 30px;
+  }
+}
+.tp-section-title-pre-7 {
+  font-size: 20px;
+  color: var(--tp-theme-primary);
+  display: inline-block;
+  text-transform: capitalize;
+  font-weight: 400;
+  margin-bottom: 10px;
+}

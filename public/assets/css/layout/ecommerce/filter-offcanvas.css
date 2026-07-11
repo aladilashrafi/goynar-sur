@@ -1,0 +1,61 @@
+/*----------------------------------------*/
+/*  8.17 Filter Offcanvas CSS
+/*----------------------------------------*/
+.tp-filter-offcanvas-area {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 340px;
+  height: 100%;
+  -webkit-transform: translateX(calc(-100% - 80px));
+  -moz-transform: translateX(calc(-100% - 80px));
+  -ms-transform: translateX(calc(-100% - 80px));
+  -o-transform: translateX(calc(-100% - 80px));
+  transform: translateX(calc(-100% - 80px));
+  background: var(--tp-common-white) none repeat scroll 0 0;
+  -webkit-transition: all 0.3s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  -moz-transition: all 0.3s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  -ms-transition: all 0.3s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  -o-transition: all 0.3s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  transition: all 0.3s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  z-index: 99999;
+  overflow-y: scroll;
+  overscroll-behavior-y: contain;
+  scrollbar-width: none;
+}
+.tp-filter-offcanvas-area::-webkit-scrollbar {
+  display: none; /* for Chrome, Safari, and Opera */
+}
+.tp-filter-offcanvas-area.offcanvas-opened {
+  -webkit-transform: translateX(0);
+  -moz-transform: translateX(0);
+  -ms-transform: translateX(0);
+  -o-transform: translateX(0);
+  transform: translateX(0);
+  opacity: 1;
+}
+@media (max-width: 380px) {
+  .tp-filter-offcanvas-area {
+    width: 100%;
+  }
+}
+.tp-filter-offcanvas-wrapper {
+  position: relative;
+  padding: 120px 30px 35px;
+  z-index: 1;
+  min-height: 100%;
+}
+.tp-filter-offcanvas-close-btn {
+  background: #151515;
+  padding: 25px 30px;
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.7);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+}
+.tp-filter-offcanvas-close-btn:hover {
+  color: var(--tp-common-white);
+}

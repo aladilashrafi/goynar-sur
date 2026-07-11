@@ -1,0 +1,27 @@
+/*----------------------------------------*/
+/*  6.5 Footer Style 5
+/*----------------------------------------*/
+.tp-footer-style-5 .tp-footer-social a {
+  border-radius: 50%;
+  color: #010F1C;
+}
+.tp-footer-style-5 .tp-footer-social a:hover {
+  background-color: var(--tp-theme-green);
+  border-color: var(--tp-theme-green);
+  color: var(--tp-common-white);
+}
+.tp-footer-style-5 .tp-footer-widget ul li a:hover {
+  color: var(--tp-theme-green);
+}
+.tp-footer-style-5 .tp-footer-widget ul li a:hover::after {
+  background-color: var(--tp-theme-green);
+}
+.tp-footer-style-5 .tp-footer-talk h4 a:hover {
+  color: var(--tp-theme-green);
+}
+.tp-footer-style-5 .tp-footer-contact-content p a:hover {
+  color: var(--tp-theme-green);
+}
+.tp-footer-style-5 .tp-footer-copyright p a {
+  color: var(--tp-theme-green);
+}

@@ -1,0 +1,336 @@
+/*----------------------------------------*/
+/*  8.15 Product Widget CSS
+/*----------------------------------------*/
+.tp-shop-widget-title {
+  font-weight: 500;
+  font-size: 18px;
+  border-bottom: 1px solid #EEEEEE;
+  padding-bottom: 5px;
+  margin-bottom: 25px;
+}
+.tp-shop-widget-title.no-border {
+  border: 0;
+  padding-bottom: 0;
+  margin-bottom: 14px;
+}
+.tp-shop-widget-filter .ui-widget.ui-widget-content {
+  height: 3px;
+  background-color: #EDEDED;
+  border: 0;
+}
+.tp-shop-widget-filter .ui-slider-horizontal .ui-slider-range {
+  background-color: var(--tp-theme-primary);
+}
+.tp-shop-widget-filter .ui-slider .ui-slider-handle {
+  top: -7px;
+  width: 5px;
+  height: 17px;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  border-radius: 0;
+  background-color: var(--tp-theme-primary);
+}
+.tp-shop-widget-filter-info .input-range input {
+  width: auto;
+  height: auto;
+  background-color: transparent;
+  color: var(--tp-common-black);
+  padding: 0;
+  border: 0;
+  font-weight: 500;
+  font-size: 14px;
+}
+.tp-shop-widget-filter-info .tp-shop-widget-filter-btn {
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--tp-common-black);
+  background-color: #F5F5F5;
+  padding: 2px 21px;
+}
+.tp-shop-widget-filter-info .tp-shop-widget-filter-btn:hover {
+  color: var(--tp-common-white);
+  background-color: var(--tp-common-black);
+}
+.tp-shop-widget-checkbox ul li {
+  list-style: none;
+}
+.tp-shop-widget-checkbox ul li:not(:last-child) {
+  margin-bottom: 4px;
+}
+.tp-shop-widget-checkbox ul li input {
+  display: none;
+}
+.tp-shop-widget-checkbox ul li input .single-widget-category input:checked + label::after {
+  opacity: 1;
+  visibility: visible;
+}
+.tp-shop-widget-checkbox ul li input:checked ~ label::after {
+  background-color: var(--tp-theme-primary);
+  border-color: var(--tp-theme-primary);
+}
+.tp-shop-widget-checkbox ul li input:checked ~ label::before {
+  visibility: visible;
+  opacity: 1;
+}
+.tp-shop-widget-checkbox ul li label {
+  font-size: 16px;
+  color: #55585B;
+  position: relative;
+  padding-left: 26px;
+}
+.tp-shop-widget-checkbox ul li label::after {
+  position: absolute;
+  content: "";
+  top: 5px;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  line-height: 12px;
+  text-align: center;
+  border: 2px solid #DADADA;
+  z-index: -1;
+  -webkit-transition: all 0.2s 0s ease-out;
+  -moz-transition: all 0.2s 0s ease-out;
+  -ms-transition: all 0.2s 0s ease-out;
+  -o-transition: all 0.2s 0s ease-out;
+  transition: all 0.2s 0s ease-out;
+}
+.tp-shop-widget-checkbox ul li label::before {
+  position: absolute;
+  content: url("../../../img/product/icons/check.svg");
+  top: 6px;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  line-height: 12px;
+  text-align: center;
+  visibility: hidden;
+  opacity: 0;
+  color: var(--tp-common-white);
+  -webkit-transition: all 0.2s 0s ease-out;
+  -moz-transition: all 0.2s 0s ease-out;
+  -ms-transition: all 0.2s 0s ease-out;
+  -o-transition: all 0.2s 0s ease-out;
+  transition: all 0.2s 0s ease-out;
+}
+.tp-shop-widget-checkbox ul li label:hover {
+  cursor: pointer;
+}
+.tp-shop-widget-categories {
+  height: 288px;
+  overflow-y: scroll;
+  overflow-y: scroll;
+  overscroll-behavior-y: contain;
+  scrollbar-width: thin;
+  padding-right: 10px;
+}
+.tp-shop-widget-categories ul li {
+  list-style: none;
+  width: 100%;
+}
+.tp-shop-widget-categories ul li:not(:last-child) {
+  margin-bottom: 10px;
+}
+.tp-shop-widget-categories ul li a {
+  font-weight: 400;
+  font-size: 15px;
+  color: var(--tp-text-body);
+  position: relative;
+  padding-left: 16px;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.tp-shop-widget-categories ul li a::after {
+  position: absolute;
+  content: "";
+  top: 10px;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  text-align: center;
+  background-color: #E7E7E7;
+  border-radius: 50%;
+}
+.tp-shop-widget-categories ul li a.active {
+  color: var(--tp-theme-primary);
+}
+.tp-shop-widget-categories ul li a.active::after {
+  background-color: var(--tp-theme-primary);
+}
+.tp-shop-widget-categories ul li a.active span {
+  background-color: var(--tp-theme-primary);
+  border-color: var(--tp-theme-primary);
+  color: var(--tp-common-white);
+}
+.tp-shop-widget-categories ul li a:hover {
+  color: var(--tp-theme-primary);
+}
+.tp-shop-widget-categories ul li a:hover::after {
+  background-color: var(--tp-theme-primary);
+}
+.tp-shop-widget-categories ul li a:hover span {
+  background-color: var(--tp-theme-primary);
+  border-color: var(--tp-theme-primary);
+  color: var(--tp-common-white);
+}
+.tp-shop-widget-categories ul li a span {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1;
+  border: 1px solid #EAEAEA;
+  border-radius: 8px;
+  padding: 5px 6px 3px;
+}
+.tp-shop-widget-checkbox-circle {
+  position: relative;
+}
+.tp-shop-widget-checkbox-circle-list ul li {
+  list-style: none;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.tp-shop-widget-checkbox-circle-list ul li:not(:last-child) {
+  margin-bottom: 5px;
+}
+.tp-shop-widget-checkbox-circle-list ul li:hover .tp-shop-widget-checkbox-circle-number {
+  background-color: var(--tp-theme-primary);
+  border-color: var(--tp-theme-primary);
+  color: var(--tp-common-white);
+}
+.tp-shop-widget-checkbox-circle-number {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1;
+  border: 1px solid #EAEAEA;
+  border-radius: 8px;
+  padding: 5px 6px 3px;
+}
+.tp-shop-widget-checkbox-circle .tp-shop-widget-checkbox-circle-self {
+  position: absolute;
+  content: "";
+  top: 4px;
+  left: 0;
+  width: 18px;
+  height: 18px;
+  line-height: 18px;
+  text-align: center;
+  z-index: -1;
+  border-radius: 50%;
+  -webkit-transition: all 0.2s 0s ease-out;
+  -moz-transition: all 0.2s 0s ease-out;
+  -ms-transition: all 0.2s 0s ease-out;
+  -o-transition: all 0.2s 0s ease-out;
+  transition: all 0.2s 0s ease-out;
+}
+.tp-shop-widget-checkbox-circle input {
+  display: none;
+}
+.tp-shop-widget-checkbox-circle input .single-widget-category input:checked + label::after {
+  opacity: 1;
+  visibility: visible;
+}
+.tp-shop-widget-checkbox-circle input:checked ~ label::before {
+  visibility: visible;
+  opacity: 1;
+}
+.tp-shop-widget-checkbox-circle label {
+  font-size: 16px;
+  color: #55585B;
+  position: relative;
+  padding-left: 26px;
+}
+.tp-shop-widget-checkbox-circle label::before {
+  position: absolute;
+  content: url("../../../img/product/icons/check-2.svg");
+  top: 3px;
+  left: 0;
+  width: 18px;
+  height: 18px;
+  line-height: 18px;
+  text-align: center;
+  visibility: hidden;
+  opacity: 0;
+  color: var(--tp-common-white);
+  -webkit-transition: all 0.1s 0s ease-out;
+  -moz-transition: all 0.1s 0s ease-out;
+  -ms-transition: all 0.1s 0s ease-out;
+  -o-transition: all 0.1s 0s ease-out;
+  transition: all 0.1s 0s ease-out;
+}
+.tp-shop-widget-checkbox-circle label:hover {
+  cursor: pointer;
+}
+.tp-shop-widget-product-item:not(:last-child) {
+  margin-bottom: 20px;
+}
+.tp-shop-widget-product-rating {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  margin-right: 4px;
+}
+.tp-shop-widget-product-rating span {
+  font-size: 12px;
+  color: #FFB21D;
+  margin-right: 1px;
+}
+.tp-shop-widget-product-rating-number span {
+  font-weight: 500;
+  font-size: 12px;
+  color: #818487;
+}
+.tp-shop-widget-product-thumb {
+  flex: 0 0 auto;
+}
+.tp-shop-widget-product-thumb img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  margin-right: 14px;
+  background-color: #F2F2F2;
+}
+.tp-shop-widget-product-title {
+  font-weight: 500;
+  font-size: 16px;
+  margin-bottom: 0;
+}
+.tp-shop-widget-product-price {
+  font-size: 14px;
+  color: #55585B;
+}
+.tp-shop-widget-brand {
+  margin-right: 40px;
+}
+.tp-shop-widget-brand-item {
+  width: 50%;
+  flex: 0 0 50%;
+  margin-bottom: 30px;
+}
+.tp-shop-widget-brand-item a img {
+  object-fit: contain;
+}
+
+.tp-shop-widget-checkbox-circle-list {
+  height: 220px;
+  overflow-y: scroll;
+  overflow-y: scroll;
+  overscroll-behavior-y: contain;
+  scrollbar-width: thin;
+  padding-right: 10px;
+}

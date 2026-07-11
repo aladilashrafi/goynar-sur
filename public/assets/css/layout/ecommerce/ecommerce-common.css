@@ -1,0 +1,77 @@
+/*----------------------------------------*/
+/*  8.1 Ecommerce Common START
+/*----------------------------------------*/
+.tp-product-quantity-product-quantity {
+  width: 148px;
+  position: relative;
+}
+.tp-product-quantity-cart-plus, .tp-product-quantity-cart-minus {
+  width: 45px;
+  height: 44px;
+  line-height: 44px;
+  display: inline-block;
+  text-align: center;
+  font-size: 16px;
+  color: var(--tp-common-black);
+  position: absolute;
+  top: 50%;
+  left: 0;
+  -webkit-transition: all 0.3s 0s ease-out;
+  -moz-transition: all 0.3s 0s ease-out;
+  -ms-transition: all 0.3s 0s ease-out;
+  -o-transition: all 0.3s 0s ease-out;
+  transition: all 0.3s 0s ease-out;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.tp-product-quantity-cart-plus::after, .tp-product-quantity-cart-minus::after {
+  position: absolute;
+  content: "";
+  width: 1px;
+  height: 26px;
+  top: 50%;
+  right: 0;
+  background-color: #DADCE0;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.tp-product-quantity-cart-plus svg, .tp-product-quantity-cart-minus svg {
+  -webkit-transform: translateY(-2px);
+  -moz-transform: translateY(-2px);
+  -ms-transform: translateY(-2px);
+  -o-transform: translateY(-2px);
+  transform: translateY(-2px);
+}
+.tp-product-quantity-cart-plus:hover, .tp-product-quantity-cart-minus:hover {
+  cursor: pointer;
+  color: var(--tp-theme-primary);
+}
+.tp-product-quantity-cart-plus.tp-product-quantity-cart-plus, .tp-product-quantity-cart-minus.tp-product-quantity-cart-plus {
+  left: auto;
+  right: 0;
+}
+.tp-product-quantity-cart-plus.tp-product-quantity-cart-plus::after, .tp-product-quantity-cart-minus.tp-product-quantity-cart-plus::after {
+  left: 0;
+  right: auto;
+}
+.tp-product-quantity-cart-input[type=text] {
+  width: 100%;
+  height: 44px;
+  text-align: center;
+  font-size: 14px;
+  border: 1px solid #DADCE0;
+  background-color: var(--tp-common-white);
+  padding: 0 45px;
+}
+[dir=rtl] .tp-product-quantity-cart-input[type=text] {
+  text-align: center;
+}
+.tp-product-quantity-cart-input[type=text]:focus {
+  outline: none;
+}
