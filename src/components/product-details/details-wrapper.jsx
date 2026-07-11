@@ -258,7 +258,7 @@ const DetailsWrapper = ({
       <div className="tp-product-details-category">
         <span>{category.name}</span>
       </div>
-      <h3 className="tp-product-details-title">{title}</h3>
+      <h1 className="tp-product-details-title">{title}</h1>
 
       {/* inventory details */}
       <div className="tp-product-details-inventory d-flex align-items-center mb-10">

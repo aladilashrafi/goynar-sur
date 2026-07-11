@@ -276,15 +276,20 @@
             font-size: 20px;
             color: var(--tp-common-black);
             position: relative;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 44px;
+            min-height: 44px;
+            line-height: 1;
             &:hover{
                 color: var(--tp-theme-primary);
             }
         }
         &-badge{
             position: absolute;
-            top: -6px;
-            right: -13px;
+            top: 1px;
+            right: -8px;
             display: inline-block;
             width: 23px;
             height: 23px;
@@ -334,6 +339,15 @@
             }
         }
     }
+}
+
+.tp-offcanvas-open-btn{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    line-height: 1;
 }
 
 

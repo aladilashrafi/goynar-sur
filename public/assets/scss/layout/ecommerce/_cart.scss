@@ -42,12 +42,18 @@
                 border-color: #E0E2E3;
 
                 & .tp-cart-action-btn{
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    min-height: 44px;
+                    padding: 10px 12px;
                     font-weight: 400;
                     font-size: 14px;
                     color: #818487;
 
                     & svg{
                         @extend %tp-svg-y-2;
+                        margin-right: 4px;
                     }
 
                     &:hover{

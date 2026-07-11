@@ -250,12 +250,17 @@
         }
         &-list{
             & button{
-                display: inline-block;
-                width: 26px;
-                height: 26px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                min-width: 44px;
+                min-height: 44px;
+                padding: 0 14px;
                 border-radius: 50%;
                 position: relative;
                 margin-right: 3px;
+                margin-bottom: 6px;
+                line-height: 1.2;
                 @include tp-transition(box-shadow, .2s, linear);
 
                 & span[data-bg-color]{
@@ -302,8 +307,8 @@
                 }
 
                 &.tp-size-variation-btn{
-                    width: 40px;
-                    height: 40px;
+                    min-width: 44px;
+                    min-height: 44px;
                     border: 1px solid rgba($color: $black, $alpha: .2);
                     border-radius: 0;
                     @include tp-transition(all, .2s, linear);
@@ -350,12 +355,12 @@
         & .#{$theme-prifix}-cart{
             &-plus,
             &-minus{
-                width: 24px;
-                height: 24px;
-                line-height: 24px;
+                width: 44px;
+                height: 44px;
+                line-height: 44px;
                 text-align: center;
                 border-radius: 50%;
-                left: 14px;
+                left: 0;
                 &:hover{
                     background-color: var(--tp-common-white);
                     color: var(--tp-theme-primary);
@@ -363,17 +368,18 @@
             }
             &-plus{
                 left: auto;
-                right: 14px;
+                right: 0;
             }
 
             &-input[type="text"]{
-                height: 46px;
-                line-height: 46px;
+                height: 44px;
+                line-height: 44px;
                 background-color: #F3F5F6;
                 border: 0;
                 border-radius: 0;
                 font-size: 16px;
                 color: var(--tp-common-black);
+                padding: 0 44px;
             }
         }
     }
@@ -412,6 +418,11 @@
             border-bottom: 1px solid #EAEBED;
             margin-bottom: 25px;
             &-btn{
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 44px;
+                padding: 10px 14px;
                 font-size: 16px;
                 margin-bottom: 10px;
                 &:not(:last-child){

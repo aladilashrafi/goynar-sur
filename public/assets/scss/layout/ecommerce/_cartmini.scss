@@ -131,6 +131,11 @@
 		top: 17px;
 		right: 0;
 		&-btn{
+            width: 44px;
+            height: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
 			background: transparent;
 			color: var(--tp-common-black);
 			font-size: 22px;
@@ -170,7 +175,7 @@
         &-item{
             position: relative;
             display: flex;
-            padding: 20px 0;
+            padding: 20px 44px 20px 0;
             border-bottom: 1px solid rgba(129,129,129,.2);
 
             &:last-child{
@@ -239,11 +244,11 @@
     }
     &__del{
         position: absolute;
-        top: 15px;
+        top: 8px;
         right: 0;
-        width: 25px;
-        height: 25px;
-        line-height: 25px;
+        width: 44px;
+        height: 44px;
+        line-height: 44px;
         text-align: center;
         color: var(--tp-common-black);
         font-size: 14px;
