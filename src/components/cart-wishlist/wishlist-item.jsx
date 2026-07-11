@@ -6,16 +6,24 @@ import Link from "next/link";
 import { Close, Minus, Plus } from "@/svg";
 import {add_cart_product,quantityDecrement} from "@/redux/features/cartSlice";
 import { remove_wishlist_product } from "@/redux/features/wishlist-slice";
+import { handleProductModal } from "@/redux/features/productModalSlice";
 import { formatPrice } from "@/utils/formatPrice";
 import { productUrl } from "@/utils/routes";
+import { notifyWarning } from "@/utils/toast";
 
 const WishlistItem = ({ product }) => {
-  const { _id, img, title, price, isVariable } = product || {};
+  const { _id, img, title, price } = product || {};
   const { cart_products } = useSelector((state) => state.cart);
   const isAddToCart = cart_products.find((item) => item._id === _id);
   const dispatch = useDispatch();
   // handle add product
   const handleAddProduct = (prd) => {
+    if (prd?.isVariable) {
+      notifyWarning("Please choose product options before adding to cart.");
+      dispatch(handleProductModal(prd));
+      return;
+    }
+
     dispatch(add_cart_product(prd));
   };
   // handle decrement product
@@ -64,19 +72,13 @@ const WishlistItem = ({ product }) => {
       </td>
 
       <td className="tp-cart-add-to-cart">
-        {isVariable ? (
-          <Link href={productUrl(product)} className="tp-btn tp-btn-2 tp-btn-blue">
-            Select Options
-          </Link>
-        ) : (
-          <button
-            onClick={() => handleAddProduct(product)}
-            type="button"
-            className="tp-btn tp-btn-2 tp-btn-blue"
-          >
-            Add To Cart
-          </button>
-        )}
+        <button
+          onClick={() => handleAddProduct(product)}
+          type="button"
+          className="tp-btn tp-btn-2 tp-btn-blue"
+        >
+          Add To Cart
+        </button>
       </td>
 
       <td className="tp-cart-action">

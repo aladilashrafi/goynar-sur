@@ -6,6 +6,7 @@ import { handleModalClose } from "@/redux/features/productModalSlice";
 import DetailsThumbWrapper from "@/components/product-details/details-thumb-wrapper";
 import DetailsWrapper from "@/components/product-details/details-wrapper";
 import { initialOrderQuantity } from "@/redux/features/cartSlice";
+import { useGetProductVariationsQuery } from "@/redux/features/productApi";
 
 const customStyles = {
   content: {
@@ -23,9 +24,12 @@ const ProductModal = () => {
   const { productItem, isModalOpen } = useSelector(
     (state) => state.productModal
   );
-  const { img, imageURLs,status } = productItem || {};
+  const { _id, id, img, imageURLs,status, isVariable } = productItem || {};
   const [activeImg, setActiveImg] = useState(img);
   const [loading,setLoading] = useState(false);
+  const { data: variationData, isFetching: isVariationLoading } = useGetProductVariationsQuery(id || _id, {
+    skip: !isVariable || !(id || _id),
+  });
   const dispatch = useDispatch();
   // active image change when img change
   useEffect(() => {
@@ -74,6 +78,9 @@ const ProductModal = () => {
               productItem={productItem}
               handleImageActive={handleImageActive}
               activeImg={activeImg}
+              variations={variationData?.variations || []}
+              attributeTermSlugs={variationData?.attributeTermSlugs || {}}
+              isVariationLoading={isVariationLoading}
             />
             {/* product-details-wrapper end */}
           </div>

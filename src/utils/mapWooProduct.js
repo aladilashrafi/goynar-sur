@@ -32,6 +32,7 @@ export function mapWooProduct(product = {}) {
   const salePrice = Number(product.sale_price || 0);
   const rating = Number(product.average_rating || 0);
   const reviewCount = Number(product.rating_count || 0);
+  const totalSales = Number(product.total_sales || 0);
 
   return {
     _id: String(product.id),
@@ -44,6 +45,7 @@ export function mapWooProduct(product = {}) {
     price,
     regularPrice,
     salePrice,
+    totalSales,
     discount: calcDiscountPercent(regularPrice, salePrice),
     img: images[0]?.img || FALLBACK_IMAGE,
     imageURLs: images,

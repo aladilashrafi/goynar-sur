@@ -7,7 +7,7 @@ import { AddCart, Cart, QuickView, Wishlist } from "@/svg";
 import { handleProductModal } from "@/redux/features/productModalSlice";
 import { add_cart_product } from "@/redux/features/cartSlice";
 import { add_to_wishlist } from "@/redux/features/wishlist-slice";
-import { notifyError } from "@/utils/toast";
+import { notifyError, notifyWarning } from "@/utils/toast";
 import { formatPrice } from "@/utils/formatPrice";
 import { productUrl } from "@/utils/routes";
 
@@ -19,10 +19,18 @@ const ProductSliderItem = ({ product }) => {
   const isAddedToWishlist = wishlist.some((prd) => prd._id === _id);
   const dispatch = useDispatch();
 
+  const openQuickView = (prd) => {
+    dispatch(handleProductModal(prd));
+  };
+
   // handle add product
   const handleAddProduct = (prd) => {
     if (prd.status === 'out-of-stock') {
       notifyError(`This product out-of-stock`)
+    }
+    else if (prd?.isVariable) {
+      notifyWarning("Please choose product options before adding to cart.");
+      openQuickView(prd);
     }
     else {
       dispatch(add_cart_product(prd));
@@ -51,13 +59,15 @@ const ProductSliderItem = ({ product }) => {
       <div className="tp-product-action-3 tp-product-action-4 tp-product-action-blackStyle tp-product-action-brownStyle">
         <div className="tp-product-action-item-3 d-flex flex-column">
           {isVariable ? (
-            <Link
-              href={productUrl(product)}
+            <button
+              type="button"
+              onClick={() => handleAddProduct(product)}
               className="tp-product-action-btn-3 tp-product-add-cart-btn"
+              disabled={status === 'out-of-stock'}
             >
               <Cart />
-              <span className="tp-product-tooltip">Select Options</span>
-            </Link>
+              <span className="tp-product-tooltip">Add to Cart</span>
+            </button>
           ) : isAddedToCart ? (
             <Link
               href="/cart"
@@ -102,9 +112,9 @@ const ProductSliderItem = ({ product }) => {
           <span className="tp-category-price-4">{formatPrice(price)}</span>
           <div className="tp-category-add-to-cart">
             {isVariable ? (
-              <Link href={productUrl(product)} className="tp-category-add-to-cart-4">
-                <AddCart />{" "}Select Options
-              </Link>
+              <button disabled={status === 'out-of-stock'} onClick={() => handleAddProduct(product)} className="tp-category-add-to-cart-4">
+                <AddCart />{" "}Add to Cart
+              </button>
             ) : isAddedToCart ? (
               <Link href="/cart" className="tp-category-add-to-cart-4">
                 <AddCart />{" "}View Cart

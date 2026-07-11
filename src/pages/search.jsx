@@ -2,7 +2,7 @@ import CommonBreadcrumb from "@/components/breadcrumb/common-breadcrumb";
 import ErrorMsg from "@/components/common/error-msg";
 import SearchPrdLoader from "@/components/loader/search-prd-loader";
 import EmptyState from "@/components/common/empty-state";
-import ProductItem from "@/components/products/fashion/product-item";
+import ProductItem from "@/components/products/jewelry/product-item";
 import SEO from "@/components/seo";
 import Footer from "@/layout/footers/footer";
 import HeaderTwo from "@/layout/headers/header-2";

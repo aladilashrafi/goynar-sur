@@ -31,7 +31,10 @@ const slider_setting = {
 
 const BestSellerPrd = () => {
   const { data: products, isError, isLoading } =
-    useGetProductTypeQuery({ type: 'jewelry', query: `topSeller=true` });
+    useGetProductTypeQuery({
+      type: 'jewelry',
+      query: 'per_page=8&orderby=popularity&order=desc',
+    });
   // decide what to render
   let content = null;
 
@@ -67,7 +70,7 @@ const BestSellerPrd = () => {
             <div className="row">
               <div className="col-xl-12">
                   <div className="tp-section-title-wrapper-4 mb-50 text-center">
-                    <span className="tp-section-title-pre-4">Loved This Week</span>
+                    <span className="tp-section-title-pre-4">Most Purchased</span>
                     <h3 className="tp-section-title-4">Best-selling handmade jewellery</h3>
                   </div>
               </div>

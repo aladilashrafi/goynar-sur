@@ -11,9 +11,10 @@ import { add_to_wishlist } from "@/redux/features/wishlist-slice";
 import { add_to_compare } from "@/redux/features/compareSlice";
 import { formatPrice } from "@/utils/formatPrice";
 import { productUrl } from "@/utils/routes";
+import { notifyWarning } from "@/utils/toast";
 
 const ShopListItem = ({ product }) => {
-  const { _id, img, category, title, reviews, price, regularPrice, discount, tags, description, isVariable } = product || {};
+  const { _id, img, category, title, reviews, price, regularPrice, discount, tags, description } = product || {};
   const dispatch = useDispatch()
   const [ratingVal, setRatingVal] = useState(0);
   useEffect(() => {
@@ -29,6 +30,12 @@ const ShopListItem = ({ product }) => {
 
   // handle add product
   const handleAddProduct = (prd) => {
+    if (prd?.isVariable) {
+      notifyWarning("Please choose product options before adding to cart.");
+      dispatch(handleProductModal(prd));
+      return;
+    }
+
     dispatch(add_cart_product(prd));
   };
   // handle wishlist product
@@ -117,15 +124,9 @@ const ShopListItem = ({ product }) => {
             {description.substring(0, 100)}
           </p>
           <div className="tp-product-list-add-to-cart">
-            {isVariable ? (
-              <Link href={productUrl(product)} className="tp-product-list-add-to-cart-btn">
-                Select Options
-              </Link>
-            ) : (
-              <button onClick={() => handleAddProduct(product)} className="tp-product-list-add-to-cart-btn">
-                Add To Cart
-              </button>
-            )}
+            <button onClick={() => handleAddProduct(product)} className="tp-product-list-add-to-cart-btn">
+              Add To Cart
+            </button>
           </div>
         </div>
       </div>
