@@ -15,6 +15,13 @@ export const orderSlice = createSlice({
         JSON.stringify(payload)
       );
     },
+    patch_shipping: (state, { payload }) => {
+      state.shipping_info = {
+        ...state.shipping_info,
+        ...payload,
+      };
+      localStorage.setItem("shipping_info", JSON.stringify(state.shipping_info));
+    },
     get_shipping: (state, { payload }) => {
       const data = localStorage.getItem('shipping_info');
       if (data) {
@@ -27,5 +34,5 @@ export const orderSlice = createSlice({
   },
 });
 
-export const {get_shipping,set_shipping} = orderSlice.actions;
+export const {get_shipping,set_shipping,patch_shipping} = orderSlice.actions;
 export default orderSlice.reducer;

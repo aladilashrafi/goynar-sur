@@ -73,6 +73,9 @@ const CheckoutOrderArea = ({ checkoutData }) => {
                   </label>
                 </span>
               ))}
+              {watch("district") && shippingRates.length > 0 && (
+                <small>Final shipping is recalculated and confirmed at checkout.</small>
+              )}
               <ErrorMsg msg={errors?.shippingRateId?.message} />
               {shippingError && shippingRates.length > 0 && <small className="text-danger">{shippingError}</small>}
             </div>

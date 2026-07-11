@@ -1,18 +1,20 @@
 import React from "react";
 import Link from "next/link";
 import useCartInfo from "@/hooks/use-cart-info";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { formatPrice } from "@/utils/formatPrice";
 import { BD_DISTRICTS } from "@/lib/bd-regions";
 import { useValidateCouponMutation } from "@/redux/features/coupon/couponApi";
 import { clear_coupon, set_coupon } from "@/redux/features/coupon/couponSlice";
 import { notifyError, notifySuccess } from "@/utils/toast";
+import { patch_shipping } from "@/redux/features/order/orderSlice";
 
 const CartCheckout = () => {
   const {total} = useCartInfo();
   const { cart_products } = useSelector((state) => state.cart);
   const { coupon_info } = useSelector((state) => state.coupon);
+  const { shipping_info } = useSelector((state) => state.order);
   const dispatch = useDispatch();
   const [validateCoupon, { isLoading: isCouponLoading }] = useValidateCouponMutation();
   const [shipCost,setShipCost] = useState(0);
@@ -22,6 +24,37 @@ const CartCheckout = () => {
   const [selectedRateId, setSelectedRateId] = useState("");
   const [shippingError, setShippingError] = useState("");
   const [isShippingLoading, setIsShippingLoading] = useState(false);
+
+  useEffect(() => {
+    if (shipping_info.district) {
+      setDistrict(shipping_info.district);
+    }
+  }, [shipping_info.district]);
+
+  const handleShippingRateSelect = useCallback((rate, selectedDistrict = district) => {
+    if (!rate) return;
+    setSelectedRateId(rate.rateId);
+    setShipCost(Number(rate.price || 0));
+    dispatch(patch_shipping({
+      district: selectedDistrict,
+      city: selectedDistrict,
+      shippingRateId: rate.rateId,
+      shippingOption: rate.name,
+      shippingCost: Number(rate.price || 0),
+    }));
+  }, [dispatch, district]);
+
+  const handleDistrictChange = (event) => {
+    const nextDistrict = event.target.value;
+    setDistrict(nextDistrict);
+    dispatch(patch_shipping({
+      district: nextDistrict,
+      city: nextDistrict,
+      shippingRateId: "",
+      shippingOption: "",
+      shippingCost: 0,
+    }));
+  };
 
   useEffect(() => {
     if (!district || cart_products.length === 0) {
@@ -52,8 +85,10 @@ const CartCheckout = () => {
         const rates = data.rates || [];
         const selected = data.selectedRate || rates[0];
         setShippingRates(rates);
-        setSelectedRateId(selected?.rateId || "");
-        setShipCost(Number(selected?.price || 0));
+        if (selected) {
+          const persistedRate = rates.find((rate) => rate.rateId === shipping_info.shippingRateId);
+          handleShippingRateSelect(persistedRate || selected, district);
+        }
 
         if (!rates.length) {
           setShippingError("No shipping method is available for this district.");
@@ -76,12 +111,7 @@ const CartCheckout = () => {
       controller.abort();
       clearTimeout(timer);
     };
-  }, [cart_products, district]);
-
-  const handleShippingRateSelect = (rate) => {
-    setSelectedRateId(rate.rateId);
-    setShipCost(Number(rate.price || 0));
-  };
+  }, [cart_products, district, handleShippingRateSelect, shipping_info.shippingRateId]);
 
   const handleCouponSubmit = async (event) => {
     event.preventDefault();
@@ -115,7 +145,7 @@ const CartCheckout = () => {
         <h4 className="tp-cart-checkout-shipping-title">Shipping</h4>
         <div className="tp-cart-checkout-shipping-option-wrapper">
           <div className="tp-cart-checkout-shipping-option">
-            <select value={district} onChange={(event) => setDistrict(event.target.value)}>
+            <select value={district} onChange={handleDistrictChange}>
               <option value="">Select district</option>
               {BD_DISTRICTS.map((item) => (
                 <option key={item.name} value={item.name}>
@@ -143,6 +173,9 @@ const CartCheckout = () => {
             </label>
           </div>
           ))}
+          {district && shippingRates.length > 0 && (
+            <p className="mb-0">Estimated here. Final shipping is recalculated and confirmed at checkout.</p>
+          )}
         </div>
       </div>
       <div className="tp-cart-coupon mb-25">

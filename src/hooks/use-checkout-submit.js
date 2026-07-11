@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 // internal import
 import useCartInfo from "./use-cart-info";
-import { set_shipping } from "@/redux/features/order/orderSlice";
+import { patch_shipping, set_shipping } from "@/redux/features/order/orderSlice";
 import { clear_cart_after_order } from "@/redux/features/cartSlice";
 import { notifyError, notifySuccess } from "@/utils/toast";
 import { useSaveOrderMutation } from "@/redux/features/order/orderApi";
@@ -60,7 +60,12 @@ const useCheckoutSubmit = () => {
     setShippingCost(Number(rate.price || 0));
     setValue("shippingRateId", rate.rateId);
     setValue("shippingOption", rate.name);
-  }, [setValue]);
+    dispatch(patch_shipping({
+      shippingRateId: rate.rateId,
+      shippingOption: rate.name,
+      shippingCost: Number(rate.price || 0),
+    }));
+  }, [dispatch, setValue]);
 
   useEffect(() => {
     const billing = user?.customer?.billing || {};
@@ -95,6 +100,8 @@ const useCheckoutSubmit = () => {
       return;
     }
 
+    dispatch(patch_shipping({ district, city: district }));
+
     const controller = new AbortController();
     const timer = setTimeout(async () => {
       setIsShippingLoading(true);
@@ -121,8 +128,12 @@ const useCheckoutSubmit = () => {
 
         setShippingRates(data.rates || []);
 
-        if (data.selectedRate) {
-          handleShippingRateSelect(data.selectedRate);
+        const persistedRate = data.rates?.find(
+          (rate) => rate.rateId === shipping_info.shippingRateId
+        );
+
+        if (persistedRate || data.selectedRate) {
+          handleShippingRateSelect(persistedRate || data.selectedRate);
         } else if (data.rates?.[0]) {
           handleShippingRateSelect(data.rates[0]);
         } else {
@@ -148,7 +159,7 @@ const useCheckoutSubmit = () => {
       controller.abort();
       clearTimeout(timer);
     };
-  }, [address, cart_products, district, handleShippingRateSelect, upazila]);
+  }, [address, cart_products, dispatch, district, handleShippingRateSelect, shipping_info.shippingRateId, upazila]);
 
   useEffect(() => {
     if (coupon_info && !cart_products.length) {
@@ -210,7 +221,14 @@ const useCheckoutSubmit = () => {
       return;
     }
 
-    dispatch(set_shipping(data));
+    dispatch(set_shipping({
+      ...data,
+      district: districtValue,
+      city: districtValue,
+      shippingRateId: selectedShippingRate.rateId,
+      shippingOption: selectedShippingRate.name,
+      shippingCost,
+    }));
     setIsCheckoutSubmit(true);
 
     const orderPayload = {

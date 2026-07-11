@@ -13,6 +13,7 @@ import { get_compare_products } from "@/redux/features/compareSlice";
 import { get_coupons } from "@/redux/features/coupon/couponSlice";
 import useAuthCheck from "@/hooks/use-auth-check";
 import Loader from "@/components/loader/loader";
+import { get_shipping } from "@/redux/features/order/orderSlice";
 
 const ProductModal = dynamic(() => import("@/components/common/product-modal"), {
   ssr: false,
@@ -28,6 +29,7 @@ const Wrapper = ({ children }) => {
     dispatch(get_wishlist_products());
     dispatch(get_compare_products());
     dispatch(get_coupons());
+    dispatch(get_shipping());
     dispatch(initialOrderQuantity());
   }, [dispatch]);
 
