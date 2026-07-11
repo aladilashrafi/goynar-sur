@@ -11,9 +11,9 @@ import { add_cart_product } from '@/redux/features/cartSlice';
 import { add_to_wishlist } from '@/redux/features/wishlist-slice';
 import { add_to_compare } from '@/redux/features/compareSlice';
 import { handleModalClose } from '@/redux/features/productModalSlice';
-import { formatPrice } from '@/utils/formatPrice';
 import ProductRating from '@/components/common/product-rating';
 import { useGetProductReviewsQuery } from '@/redux/features/reviewApi';
+import SalePrice from '@/components/common/sale-price';
 
 function normalizeAttrName(name = "") {
   return String(name).replace(/^attribute_/, "").replace(/^pa_/, "").toLowerCase();
@@ -54,7 +54,6 @@ const DetailsWrapper = ({
     category,
     description = "",
     shortDescription = "",
-    discount,
     price,
     regularPrice,
     status,
@@ -279,16 +278,12 @@ const DetailsWrapper = ({
 
       {/* price */}
       <div className="tp-product-details-price-wrapper mb-20">
-        {discount > 0 ? (
-          <>
-            <span className="tp-product-details-price old-price">{formatPrice(selectedRegularPrice || selectedPrice)}</span>
-            <span className="tp-product-details-price new-price">
-              {" "}{formatPrice(selectedPrice)}
-            </span>
-          </>
-        ) : (
-          <span className="tp-product-details-price new-price">{formatPrice(selectedPrice)}</span>
-        )}
+        <SalePrice
+          price={selectedPrice}
+          regularPrice={selectedRegularPrice}
+          currentPriceClassName="tp-product-details-price new-price"
+          regularPriceClassName="tp-product-details-price old-price"
+        />
       </div>
 
       {isVariable && variableAttributes.length > 0 && (

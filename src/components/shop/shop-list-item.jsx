@@ -8,10 +8,10 @@ import { handleProductModal } from "@/redux/features/productModalSlice";
 import { add_cart_product } from "@/redux/features/cartSlice";
 import { add_to_wishlist } from "@/redux/features/wishlist-slice";
 import { add_to_compare } from "@/redux/features/compareSlice";
-import { formatPrice } from "@/utils/formatPrice";
 import { productUrl } from "@/utils/routes";
 import { notifyWarning } from "@/utils/toast";
 import ProductRating from "@/components/common/product-rating";
+import SalePrice from "@/components/common/sale-price";
 
 const ShopListItem = ({ product }) => {
   const {
@@ -23,7 +23,6 @@ const ShopListItem = ({ product }) => {
     ratingCount = 0,
     price,
     regularPrice,
-    discount,
     tags,
     description,
   } = product || {};
@@ -111,18 +110,13 @@ const ShopListItem = ({ product }) => {
             ratingCount={ratingCount}
             className="tp-product-rating-icon tp-product-rating-icon-2"
           />
-          <div className="tp-product-price-wrapper-2">
-            {discount > 0 ? (
-              <>
-                <span className="tp-product-price-2 new-price">{formatPrice(price)}</span>
-                <span className="tp-product-price-2 old-price">
-                  {" "}{formatPrice(regularPrice || price)}
-                </span>
-              </>
-            ) : (
-              <span className="tp-product-price-2 new-price">{formatPrice(price)}</span>
-            )}
-          </div>
+          <SalePrice
+            price={price}
+            regularPrice={regularPrice}
+            className="tp-product-price-wrapper-2"
+            currentPriceClassName="tp-product-price-2 new-price"
+            regularPriceClassName="tp-product-price-2 old-price"
+          />
           <p>
             {description.substring(0, 100)}
           </p>

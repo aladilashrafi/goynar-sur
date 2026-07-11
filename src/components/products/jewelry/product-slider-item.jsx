@@ -8,12 +8,12 @@ import { handleProductModal } from "@/redux/features/productModalSlice";
 import { add_cart_product } from "@/redux/features/cartSlice";
 import { add_to_wishlist } from "@/redux/features/wishlist-slice";
 import { notifyError, notifyWarning } from "@/utils/toast";
-import { formatPrice } from "@/utils/formatPrice";
 import { productUrl } from "@/utils/routes";
 import ProductRating from "@/components/common/product-rating";
+import SalePrice from "@/components/common/sale-price";
 
 const ProductSliderItem = ({ product }) => {
-  const { _id, title, price, img, status, isVariable, averageRating, ratingCount } = product || {};
+  const { _id, title, price, regularPrice, discount, img, status, isVariable, averageRating, ratingCount } = product || {};
   const { cart_products } = useSelector((state) => state.cart);
   const { wishlist } = useSelector((state) => state.wishlist);
   const isAddedToCart = cart_products.some((prd) => prd._id === _id);
@@ -56,6 +56,10 @@ const ProductSliderItem = ({ product }) => {
           sizes="(max-width: 575px) 92vw, (max-width: 991px) 46vw, 284px"
           style={{ objectFit: "cover", objectPosition: "center" }}
         />
+        <div className="tp-product-badge">
+          {discount > 0 && <span className="product-offer">Save {discount}%</span>}
+          {status === 'out-of-stock' && <span className="product-hot">out-stock</span>}
+        </div>
       </div>
       <div className="tp-product-action-3 tp-product-action-4 tp-product-action-blackStyle tp-product-action-brownStyle">
         <div className="tp-product-action-item-3 d-flex flex-column">
@@ -115,7 +119,13 @@ const ProductSliderItem = ({ product }) => {
           className="justify-content-center mb-5"
         />
         <div className="tp-category-price-wrapper-4">
-          <span className="tp-category-price-4">{formatPrice(price)}</span>
+          <SalePrice
+            price={price}
+            regularPrice={regularPrice}
+            className="justify-content-center"
+            currentPriceClassName="tp-category-price-4"
+            showSavings={false}
+          />
           <div className="tp-category-add-to-cart">
             {isVariable ? (
               <button disabled={status === 'out-of-stock'} onClick={() => handleAddProduct(product)} className="tp-category-add-to-cart-4">

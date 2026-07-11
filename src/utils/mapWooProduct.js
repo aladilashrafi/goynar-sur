@@ -23,13 +23,27 @@ function mapImages(images = []) {
   }));
 }
 
+function extractPriceFromHtml(priceHtml = "", tagName = "") {
+  const match = String(priceHtml).match(
+    new RegExp(`<${tagName}[^>]*>[\\s\\S]*?<bdi[^>]*>\\s*([\\d,.]+)`, "i")
+  );
+  if (!match?.[1]) return 0;
+  return Number(match[1].replace(/,/g, "")) || 0;
+}
+
 export function mapWooProduct(product = {}, reviewSummary = null) {
   const images = mapImages(product.images);
   const firstCategory = product.categories?.[0] || {};
   const secondCategory = product.categories?.[1] || {};
-  const price = Number(product.price || product.sale_price || product.regular_price || 0);
-  const regularPrice = Number(product.regular_price || price || 0);
-  const salePrice = Number(product.sale_price || 0);
+  const htmlRegularPrice = product.on_sale
+    ? extractPriceFromHtml(product.price_html, "del")
+    : 0;
+  const htmlSalePrice = product.on_sale
+    ? extractPriceFromHtml(product.price_html, "ins")
+    : 0;
+  const price = Number(product.price || product.sale_price || htmlSalePrice || product.regular_price || 0);
+  const regularPrice = Number(product.regular_price || htmlRegularPrice || price || 0);
+  const salePrice = Number(product.sale_price || htmlSalePrice || 0);
   const averageRating = Number(reviewSummary?.averageRating ?? product.average_rating ?? 0);
   const ratingCount = Number(reviewSummary?.ratingCount ?? product.rating_count ?? 0);
   const totalSales = Number(product.total_sales || 0);

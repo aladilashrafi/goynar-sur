@@ -7,12 +7,12 @@ import { Close, Minus, Plus } from "@/svg";
 import {add_cart_product,quantityDecrement} from "@/redux/features/cartSlice";
 import { remove_wishlist_product } from "@/redux/features/wishlist-slice";
 import { handleProductModal } from "@/redux/features/productModalSlice";
-import { formatPrice } from "@/utils/formatPrice";
 import { productUrl } from "@/utils/routes";
 import { notifyWarning } from "@/utils/toast";
+import SalePrice from "@/components/common/sale-price";
 
 const WishlistItem = ({ product }) => {
-  const { _id, img, title, price } = product || {};
+  const { _id, img, title, price, regularPrice } = product || {};
   const { cart_products } = useSelector((state) => state.cart);
   const isAddToCart = cart_products.find((item) => item._id === _id);
   const dispatch = useDispatch();
@@ -46,7 +46,7 @@ const WishlistItem = ({ product }) => {
         <Link href={productUrl(product)}>{title}</Link>
       </td>
       <td className="tp-cart-price">
-        <span>{formatPrice(price)}</span>
+        <SalePrice price={price} regularPrice={regularPrice} className="gs-sale-price--stacked" />
       </td>
       <td className="tp-cart-quantity">
         <div className="tp-product-quantity mt-10 mb-10">

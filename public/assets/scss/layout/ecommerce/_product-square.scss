@@ -71,3 +71,44 @@
 .cartmini__thumb a {
     width: 70px;
 }
+
+.gs-sale-price {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px 8px;
+}
+
+.gs-sale-price__current {
+    color: var(--tp-theme-primary);
+    font-weight: 600;
+}
+
+.gs-sale-price__regular {
+    color: var(--tp-text-3);
+    font-size: 0.88em;
+}
+
+.gs-sale-price__saving {
+    color: var(--tp-common-white);
+    background-color: var(--tp-orange-1);
+    border-radius: 4px;
+    padding: 3px 6px 2px;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.gs-sale-price--stacked {
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.gs-sale-price--compact {
+    gap: 3px 6px;
+}
+
+.gs-sale-price--compact .gs-sale-price__saving {
+    font-size: 10px;
+}

@@ -7,13 +7,13 @@ import { AddCart, Cart, QuickView, Wishlist } from "@/svg";
 import { handleProductModal } from "@/redux/features/productModalSlice";
 import { add_cart_product } from "@/redux/features/cartSlice";
 import { add_to_wishlist } from "@/redux/features/wishlist-slice";
-import { formatPrice } from "@/utils/formatPrice";
 import { productUrl } from "@/utils/routes";
 import { notifyWarning } from "@/utils/toast";
 import ProductRating from "@/components/common/product-rating";
+import SalePrice from "@/components/common/sale-price";
 
 const ProductItem = ({ product }) => {
-  const { _id, img, title, price, tags, status, isVariable, averageRating, ratingCount } = product || {};
+  const { _id, img, title, price, regularPrice, discount, tags, status, isVariable, averageRating, ratingCount } = product || {};
   const { cart_products } = useSelector((state) => state.cart);
   const { wishlist } = useSelector((state) => state.wishlist);
   const isAddedToCart = cart_products.some((prd) => prd._id === _id);
@@ -53,6 +53,7 @@ const ProductItem = ({ product }) => {
           />
         </Link>
         <div className="tp-product-badge">
+          {discount > 0 && <span className="product-offer">Save {discount}%</span>}
           {status === 'out-of-stock' && <span className="product-hot">out-stock</span>}
         </div>
         <div className="tp-product-action-3 tp-product-action-4 has-shadow tp-product-action-blackStyle tp-product-action-brownStyle">
@@ -117,7 +118,12 @@ const ProductItem = ({ product }) => {
 
         <div className="tp-product-price-inner-4">
           <div className="tp-product-price-wrapper-4">
-            <span className="tp-product-price-4">{formatPrice(price)}</span>
+            <SalePrice
+              price={price}
+              regularPrice={regularPrice}
+              currentPriceClassName="tp-product-price-4"
+              showSavings={false}
+            />
           </div>
           <div className="tp-product-price-add-to-cart">
             {isVariable ? <button disabled={status === 'out-of-stock'} onClick={() => handleAddProduct(product)} className="tp-product-add-to-cart-4">

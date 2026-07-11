@@ -9,6 +9,7 @@ import empty_cart_img from '@assets/img/product/cartmini/empty-cart.png';
 import { closeCartMini, remove_product } from '@/redux/features/cartSlice';
 import { formatPrice } from '@/utils/formatPrice';
 import { productUrl } from '@/utils/routes';
+import SalePrice from './sale-price';
 
 const CartMiniSidebar = () => {
   const { cart_products, cartMiniOpen } = useSelector((state) => state.cart);
@@ -60,7 +61,12 @@ const handleCloseCartMini = () => {
                       </p>
                     )}
                     <div className="cartmini__price-wrapper">
-                      <span className="cartmini__price">{formatPrice(item.price)}</span>
+                      <SalePrice
+                        price={item.price}
+                        regularPrice={item.regularPrice}
+                        className="gs-sale-price--compact"
+                        currentPriceClassName="cartmini__price"
+                      />
                       <span className="cartmini__quantity">{" "}x{item.orderQuantity}</span>
                     </div>
                   </div>

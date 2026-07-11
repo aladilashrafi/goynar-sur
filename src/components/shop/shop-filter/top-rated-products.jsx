@@ -5,9 +5,9 @@ import Link from 'next/link';
 import ErrorMsg from '@/components/common/error-msg';
 import { useGetTopRatedProductsQuery } from '@/redux/features/productApi';
 import ShopTopRatedLoader from '@/components/loader/shop/top-rated-prd-loader';
-import { formatPrice } from '@/utils/formatPrice';
 import { productUrl } from '@/utils/routes';
 import ProductRating from '@/components/common/product-rating';
+import SalePrice from '@/components/common/sale-price';
 
 const TopRatedProducts = () => {
   const { data: products, isError, isLoading } = useGetTopRatedProductsQuery();
@@ -44,7 +44,12 @@ const TopRatedProducts = () => {
             <Link href={productUrl(item)}>{item.title.substring(0,20)}...</Link>
           </h4>
           <div className="tp-shop-widget-product-price-wrapper">
-            <span className="tp-shop-widget-product-price">{formatPrice(item.price)}</span>
+            <SalePrice
+              price={item.price}
+              regularPrice={item.regularPrice}
+              className="gs-sale-price--compact"
+              currentPriceClassName="tp-shop-widget-product-price"
+            />
           </div>
         </div>
       </div>
