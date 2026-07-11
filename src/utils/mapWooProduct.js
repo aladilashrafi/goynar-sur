@@ -2,6 +2,26 @@ import { calcDiscountPercent } from "./formatPrice";
 import { getAvailableQuantity } from "./inventory";
 
 const FALLBACK_IMAGE = "/assets/img/logo/goynar-sur-logo.png";
+const HANDMADE_ATTRIBUTE_LABELS = {
+  material: "Material",
+  size: "Size",
+  color: "Color",
+  occasion: "Occasion",
+  "work-type": "Work Type",
+  "care-instruction": "Care Instruction",
+  "gift-suitability": "Gift Suitability",
+  "lead-time": "Lead Time",
+};
+const ATTRIBUTE_ALIASES = {
+  colour: "color",
+  work: "work-type",
+  care: "care-instruction",
+  "care-instructions": "care-instruction",
+  gift: "gift-suitability",
+  "gift-ready": "gift-suitability",
+  "processing-time": "lead-time",
+  "production-time": "lead-time",
+};
 
 function stripHtml(value = "") {
   return String(value)
@@ -31,6 +51,36 @@ function extractPriceFromHtml(priceHtml = "", tagName = "") {
   return Number(match[1].replace(/,/g, "")) || 0;
 }
 
+function normalizeAttributeKey(attribute = {}) {
+  const source = attribute.slug || attribute.name || "";
+  const normalized = String(source)
+    .replace(/^pa_/, "")
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+  return ATTRIBUTE_ALIASES[normalized] || normalized;
+}
+
+function mapAttributes(attributes = []) {
+  return attributes
+    .map((attribute) => {
+      const key = normalizeAttributeKey(attribute);
+      const options = (attribute.options || []).map(String).filter(Boolean);
+
+      return {
+        id: attribute.id || 0,
+        key,
+        name: HANDMADE_ATTRIBUTE_LABELS[key] || attribute.name || "Product detail",
+        slug: attribute.slug || attribute.name || "",
+        variation: Boolean(attribute.variation),
+        options,
+        value: options.join(", "),
+      };
+    })
+    .filter((attribute) => attribute.value);
+}
+
 export function mapWooProduct(product = {}, reviewSummary = null) {
   const images = mapImages(product.images);
   const firstCategory = product.categories?.[0] || {};
@@ -47,6 +97,17 @@ export function mapWooProduct(product = {}, reviewSummary = null) {
   const averageRating = Number(reviewSummary?.averageRating ?? product.average_rating ?? 0);
   const ratingCount = Number(reviewSummary?.ratingCount ?? product.rating_count ?? 0);
   const totalSales = Number(product.total_sales || 0);
+  const attributes = mapAttributes(product.attributes);
+  const handmadeAttributeKeys = Object.keys(HANDMADE_ATTRIBUTE_LABELS);
+  const additionalInformation = [...attributes].sort((left, right) => {
+    const leftIndex = handmadeAttributeKeys.indexOf(left.key);
+    const rightIndex = handmadeAttributeKeys.indexOf(right.key);
+    return (leftIndex < 0 ? handmadeAttributeKeys.length : leftIndex) -
+      (rightIndex < 0 ? handmadeAttributeKeys.length : rightIndex);
+  });
+  const trustAttributes = additionalInformation.filter((attribute) =>
+    handmadeAttributeKeys.includes(attribute.key)
+  );
 
   return {
     _id: String(product.id),
@@ -81,13 +142,9 @@ export function mapWooProduct(product = {}, reviewSummary = null) {
     status: product.stock_status === "instock" ? "in-stock" : "out-of-stock",
     reviews: [],
     brand: { name: "Goynar Sur" },
-    attributes: (product.attributes || []).map((attribute) => ({
-      id: attribute.id || 0,
-      name: attribute.name || "",
-      slug: attribute.slug || attribute.name || "",
-      variation: Boolean(attribute.variation),
-      options: attribute.options || [],
-    })),
+    attributes,
+    additionalInformation,
+    trustAttributes,
     defaultAttributes: (product.default_attributes || []).map((attribute) => ({
       id: attribute.id || 0,
       name: attribute.name || "",

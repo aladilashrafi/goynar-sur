@@ -3,7 +3,7 @@ import ReviewForm from '../forms/review-form';
 import ReviewItem from './review-item';
 
 const DetailsTabNav = ({ product }) => {
-  const {_id, description, additionalInformation, reviews } = product || {};
+  const {_id, description, additionalInformation = [], reviews = [] } = product || {};
   const activeRef = useRef(null)
   const marker = useRef(null);
   // handleActive
@@ -79,15 +79,19 @@ const DetailsTabNav = ({ product }) => {
               <div className="row justify-content-center">
                 <div className="col-xl-10">
                   <table>
+                    <caption className="visually-hidden">Product materials and handmade details</caption>
                     <tbody>
-                      {additionalInformation?.map((item, i) => (
-                        <tr key={i}>
-                          <td>{item.key}</td>
+                      {additionalInformation.map((item) => (
+                        <tr key={item.key || item.name}>
+                          <th scope="row">{item.name}</th>
                           <td>{item.value}</td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
+                  {additionalInformation.length === 0 && (
+                    <p className="text-center mb-0">No additional product details are available yet.</p>
+                  )}
                 </div>
               </div>
             </div>

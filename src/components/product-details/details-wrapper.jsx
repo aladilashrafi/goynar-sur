@@ -14,6 +14,7 @@ import { handleModalClose } from '@/redux/features/productModalSlice';
 import ProductRating from '@/components/common/product-rating';
 import { useGetProductReviewsQuery } from '@/redux/features/reviewApi';
 import SalePrice from '@/components/common/sale-price';
+import HandmadeTrustDetails from './handmade-trust-details';
 
 function normalizeAttrName(name = "") {
   return String(name).replace(/^attribute_/, "").replace(/^pa_/, "").toLowerCase();
@@ -62,6 +63,7 @@ const DetailsWrapper = ({
     tags = [],
     offerDate,
     attributes = [],
+    trustAttributes = [],
     defaultAttributes = [],
     isVariable,
   } = productItem || {};
@@ -275,6 +277,7 @@ const DetailsWrapper = ({
           dangerouslySetInnerHTML={{ __html: shortDescription || description }}
         />
       )}
+      <HandmadeTrustDetails attributes={trustAttributes} />
 
       {/* price */}
       <div className="tp-product-details-price-wrapper mb-20">
