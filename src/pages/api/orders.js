@@ -1,8 +1,25 @@
 import { wcFetch } from "@/lib/woocommerce";
-import { sendApiError } from "@/lib/api-error";
+import { apiError, sendApiError } from "@/lib/api-error";
 import { getStateCodeByName } from "@/lib/bd-states";
 
-function normalizeLineItems(cart = []) {
+function toMoney(value) {
+  const amount = Number(value);
+  return Number.isFinite(amount) ? Number(amount.toFixed(2)) : 0;
+}
+
+function hasManagedStock(item = {}) {
+  return Boolean(item.manage_stock) && Number.isFinite(Number(item.stock_quantity));
+}
+
+function hasBackorders(item = {}) {
+  return Boolean(item.backorders_allowed) || item.backorders === "yes" || item.backorders === "notify";
+}
+
+function itemTitle(cartItem = {}, wcItem = {}) {
+  return wcItem.name || cartItem.title || "This product";
+}
+
+function normalizeCartItems(cart = []) {
   return cart
     .map((item) => {
       const metaData = Array.isArray(item.selectedAttributes)
@@ -16,10 +33,89 @@ function normalizeLineItems(cart = []) {
         product_id: Number(item.product_id || item.id || item._id),
         variation_id: item.variation_id ? Number(item.variation_id) : undefined,
         quantity: Number(item.orderQuantity || item.quantity || 1),
+        client_price: item.price,
+        title: item.title,
         ...(metaData.length ? { meta_data: metaData } : {}),
       };
     })
     .filter((item) => item.product_id && item.quantity > 0);
+}
+
+async function getCurrentPurchasableItem(item) {
+  const { data: product } = await wcFetch(`/products/${item.product_id}`);
+
+  if (!product || product.status !== "publish") {
+    throw apiError(`${itemTitle(item, product)} is no longer available.`, 409, "product_unavailable");
+  }
+
+  if (product.type === "variable" && !item.variation_id) {
+    throw apiError(`Please select product options again for ${itemTitle(item, product)}.`, 409, "variation_required");
+  }
+
+  if (!item.variation_id) {
+    return { product, purchasableItem: product };
+  }
+
+  const { data: variation } = await wcFetch(`/products/${item.product_id}/variations/${item.variation_id}`);
+
+  if (!variation || Number(variation.parent_id) !== Number(item.product_id)) {
+    throw apiError(`Selected options for ${itemTitle(item, product)} are no longer valid.`, 409, "variation_unavailable");
+  }
+
+  return { product, purchasableItem: variation };
+}
+
+async function verifyLineItem(item) {
+  const { product, purchasableItem } = await getCurrentPurchasableItem(item);
+  const title = itemTitle(item, purchasableItem.name ? purchasableItem : product);
+
+  if (purchasableItem.purchasable === false) {
+    throw apiError(`${title} is not purchasable right now.`, 409, "product_not_purchasable");
+  }
+
+  if (purchasableItem.stock_status === "outofstock") {
+    throw apiError(`${title} is out of stock. Please remove it from your cart.`, 409, "product_out_of_stock");
+  }
+
+  if (hasManagedStock(purchasableItem) && !hasBackorders(purchasableItem)) {
+    const availableQuantity = Number(purchasableItem.stock_quantity);
+    if (item.quantity > availableQuantity) {
+      throw apiError(
+        `Only ${availableQuantity} of ${title} is available. Please update your cart quantity.`,
+        409,
+        "insufficient_stock"
+      );
+    }
+  }
+
+  if (item.client_price !== undefined && item.client_price !== null && item.client_price !== "") {
+    const clientPrice = toMoney(item.client_price);
+    const currentPrice = toMoney(purchasableItem.price || purchasableItem.sale_price || purchasableItem.regular_price);
+    if (clientPrice !== currentPrice) {
+      throw apiError(
+        `Price changed for ${title}. Please remove and add it to your cart again.`,
+        409,
+        "price_changed"
+      );
+    }
+  }
+
+  return {
+    product_id: item.product_id,
+    ...(item.variation_id ? { variation_id: item.variation_id } : {}),
+    quantity: item.quantity,
+    ...(item.meta_data ? { meta_data: item.meta_data } : {}),
+  };
+}
+
+async function verifyLineItems(cart = []) {
+  const normalizedItems = normalizeCartItems(cart);
+
+  if (!normalizedItems.length) {
+    throw apiError("Cart does not contain valid WooCommerce products", 400, "invalid_cart");
+  }
+
+  return Promise.all(normalizedItems.map(verifyLineItem));
 }
 
 function validate(body) {
@@ -51,11 +147,7 @@ export default async function handler(req, res) {
     const body = req.body;
     const district = body.district || body.city;
     const phone = body.phone || body.contactNo;
-    const lineItems = normalizeLineItems(body.cart);
-
-    if (!lineItems.length) {
-      return res.status(400).json({ success: false, message: "Cart does not contain valid WooCommerce products" });
-    }
+    const lineItems = await verifyLineItems(body.cart);
 
     const firstName = body.firstName.trim();
     const lastName = body.lastName?.trim() || "-";
