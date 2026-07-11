@@ -35,8 +35,8 @@
     }
     &-badge{
         position: absolute;
-        top: 16px;
-        right: 20px;
+        top: 10px;
+        right: 10px;
         z-index: 1;
         & span{
             @extend %tp-ff-roboto;
@@ -45,7 +45,7 @@
             line-height: 1;
             color: var(--tp-common-white);
             background-color: var(--tp-theme-primary);
-            border-radius: 4px;
+            border-radius: 5px;
             display: inline-block;
             padding: 4px 8px 2px;
             text-transform: capitalize;
@@ -57,10 +57,10 @@
                 background-color: var(--tp-green-1);
             }
             &.product-offer{
-                background-color: var(--tp-orange-1);
+                background-color: var(--tp-theme-brown);
             }
             &.product-sale{
-                background-color: var(--tp-blue-1);
+                background-color: var(--tp-theme-brown);
             }
         }
     }
