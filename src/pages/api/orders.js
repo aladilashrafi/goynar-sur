@@ -1,6 +1,7 @@
 import { wcFetch } from "@/lib/woocommerce";
 import { apiError, sendApiError } from "@/lib/api-error";
 import { getStateCodeByName } from "@/lib/bd-states";
+import { validateCouponForCart } from "@/lib/coupon-validation";
 
 function toMoney(value) {
   const amount = Number(value);
@@ -153,8 +154,17 @@ export default async function handler(req, res) {
     const lastName = body.lastName?.trim() || "-";
     const state = getStateCodeByName(district) || district;
     const shippingCost = Number(body.shippingCost || 0);
-    const discountAmount = Number(body.discount || body.coupon?.discountAmount || 0);
     const couponCode = String(body.coupon?.code || "").trim();
+    const validatedCoupon = couponCode
+      ? await validateCouponForCart({
+          code: couponCode,
+          cart: body.cart,
+          email: body.email,
+          customerId: body.customerId,
+        })
+      : null;
+    const discountAmount = Number(validatedCoupon?.discountAmount || 0);
+    const finalShippingCost = validatedCoupon?.freeShipping ? 0 : shippingCost;
     const fullAddress = [body.address, body.upazila || body.address_2].filter(Boolean).join(", ");
 
     const orderPayload = {
@@ -190,7 +200,7 @@ export default async function handler(req, res) {
         {
           method_id: "flat_rate",
           method_title: body.shippingOption || "Cash on Delivery Shipping",
-          total: shippingCost.toFixed(2),
+          total: finalShippingCost.toFixed(2),
         },
       ],
       ...(couponCode

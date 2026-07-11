@@ -1,6 +1,7 @@
 import React from "react";
 import useSearchFormSubmit from "@/hooks/use-search-form-submit";
 import { useGetShowCategoryQuery } from "@/redux/features/categoryApi";
+import SearchSuggestionItem from "@/components/common/search-suggestion-item";
 
 const SearchBar = ({ isSearchOpen, setIsSearchOpen }) => {
   const {
@@ -53,17 +54,14 @@ const SearchBar = ({ isSearchOpen, setIsSearchOpen }) => {
                         {isSuggestionsLoading && <span>Searching...</span>}
                         {!isSuggestionsLoading &&
                           suggestions.map((product) => (
-                            <button
+                            <SearchSuggestionItem
                               key={product._id}
-                              type="button"
-                              onClick={() => {
+                              product={product}
+                              onSelect={(selectedProduct) => {
                                 setIsSearchOpen(false);
-                                handleSuggestionClick(product);
+                                handleSuggestionClick(selectedProduct);
                               }}
-                            >
-                              {product.title}
-                              <small>{product.parent}</small>
-                            </button>
+                            />
                           ))}
                       </div>
                     )}

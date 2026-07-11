@@ -10,6 +10,7 @@ export default async function handler(req, res) {
 
   try {
     const search = String(req.query.search || req.query.q || "").trim();
+    const category = Number(req.query.category || 0);
 
     if (search.length < 2) {
       return res.status(200).json({ success: true, suggestions: [] });
@@ -17,14 +18,27 @@ export default async function handler(req, res) {
 
     const result = await getProducts({
       search,
+      ...(category > 0 ? { category } : {}),
       status: "publish",
       per_page: 6,
-      orderby: "relevance",
     });
+
+    const suggestions = mapWooProducts(result.products).map((product) => ({
+      _id: product._id,
+      id: product.id,
+      slug: product.slug,
+      title: product.title,
+      parent: product.parent,
+      category: product.category,
+      img: product.img,
+      price: product.price,
+      regularPrice: product.regularPrice,
+      discount: product.discount,
+    }));
 
     return res.status(200).json({
       success: true,
-      suggestions: mapWooProducts(result.products),
+      suggestions,
     });
   } catch (error) {
     return sendApiError(res, error, "Search suggestions are unavailable right now.");

@@ -276,10 +276,10 @@
     padding: 8px 0;
 }
 
-.tp-header-search-suggestions span,
-.tp-search-suggestions span,
-.tp-header-search-suggestions button,
-.tp-search-suggestions button {
+.tp-header-search-suggestions > span,
+.tp-search-suggestions > span,
+.tp-header-search-suggestions > button,
+.tp-search-suggestions > button {
     display: block;
     width: 100%;
     position: static;
@@ -292,8 +292,64 @@
     background: transparent;
 }
 
-.tp-header-search-suggestions button,
-.tp-search-suggestions button {
+.tp-header-search-suggestions .tp-search-suggestion-item,
+.tp-search-suggestions .tp-search-suggestion-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 9px 12px;
+    text-align: left;
+}
+
+.tp-search-suggestion-item-thumb {
+    flex: 0 0 52px;
+    width: 52px;
+    height: 52px;
+    border-radius: 6px;
+    object-fit: cover;
+}
+
+.tp-search-suggestion-item-content {
+    display: flex;
+    flex: 1 1 auto;
+    min-width: 0;
+    flex-direction: column;
+}
+
+.tp-search-suggestion-item-content strong {
+    overflow: hidden;
+    color: var(--tp-common-black);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.3;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.tp-search-suggestion-item-content small {
+    color: var(--tp-text-body);
+    font-size: 12px;
+}
+
+.tp-search-suggestion-item-price {
+    display: flex;
+    flex: 0 0 auto;
+    color: var(--tp-theme-primary);
+    font-size: 13px;
+    font-weight: 600;
+    flex-direction: column;
+    text-align: right;
+}
+
+.tp-search-suggestion-item-price del {
+    color: var(--tp-text-3);
+    font-size: 11px;
+    font-weight: 400;
+}
+
+.tp-header-search-suggestions > button,
+.tp-search-suggestions > button {
     &:hover {
         color: var(--tp-theme-primary);
         background: rgba($color: $black, $alpha: .03);

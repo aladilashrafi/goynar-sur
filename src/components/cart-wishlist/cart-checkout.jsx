@@ -134,6 +134,7 @@ const CartCheckout = () => {
   };
 
   const discount = Number(coupon_info?.discountAmount || 0);
+  const finalShipCost = coupon_info?.freeShipping ? 0 : shipCost;
 
   return (
     <div className="tp-cart-checkout-wrapper">
@@ -198,6 +199,7 @@ const CartCheckout = () => {
         {coupon_info && (
           <p className="mt-10 mb-0">
             Coupon <strong>{coupon_info.code}</strong> applied: -{formatPrice(discount)}
+            {coupon_info.freeShipping ? " + free shipping" : ""}
           </p>
         )}
       </div>
@@ -207,7 +209,7 @@ const CartCheckout = () => {
       </div>
       <div className="tp-cart-checkout-total d-flex align-items-center justify-content-between">
         <span>Total</span>
-        <span>{formatPrice(total + shipCost - discount)}</span>
+        <span>{formatPrice(total + finalShipCost - discount)}</span>
       </div>
       <div className="tp-cart-checkout-proceed">
         <Link href="/checkout" className="tp-cart-checkout-btn w-100">

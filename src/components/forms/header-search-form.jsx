@@ -4,6 +4,7 @@ import { Search } from "@/svg";
 import NiceSelect from "@/ui/nice-select";
 import useSearchFormSubmit from "@/hooks/use-search-form-submit";
 import { useGetShowCategoryQuery } from "@/redux/features/categoryApi";
+import SearchSuggestionItem from "@/components/common/search-suggestion-item";
 
 const HeaderSearchForm = () => {
   const {
@@ -44,10 +45,11 @@ const HeaderSearchForm = () => {
               {isSuggestionsLoading && <span>Searching...</span>}
               {!isSuggestionsLoading &&
                 suggestions.map((product) => (
-                  <button key={product._id} type="button" onClick={() => handleSuggestionClick(product)}>
-                    {product.title}
-                    <small>{product.parent}</small>
-                  </button>
+                  <SearchSuggestionItem
+                    key={product._id}
+                    product={product}
+                    onSelect={handleSuggestionClick}
+                  />
                 ))}
             </div>
           )}

@@ -49,7 +49,8 @@ const useCheckoutSubmit = () => {
     },
   });
 
-  const cartTotal = total + shippingCost - discountAmount;
+  const finalShippingCost = coupon_info?.freeShipping ? 0 : shippingCost;
+  const cartTotal = total + finalShippingCost - discountAmount;
 
   const selectedShippingRate =
     shippingRates.find((rate) => rate.rateId === selectedShippingRateId) || shippingRates[0] || null;
@@ -181,6 +182,8 @@ const useCheckoutSubmit = () => {
       const response = await validateCoupon({
         code,
         cart: cart_products,
+        email: watch("email"),
+        customerId: user?.id || user?._id || user?.customer?.id,
       }).unwrap();
       dispatch(set_coupon(response.coupon));
       setCouponApplyMsg(`${response.coupon.code} applied successfully.`);
@@ -227,7 +230,7 @@ const useCheckoutSubmit = () => {
       city: districtValue,
       shippingRateId: selectedShippingRate.rateId,
       shippingOption: selectedShippingRate.name,
-      shippingCost,
+      shippingCost: finalShippingCost,
     }));
     setIsCheckoutSubmit(true);
 
@@ -247,7 +250,7 @@ const useCheckoutSubmit = () => {
       orderNote: String(data.orderNote || "").trim(),
       cart: cart_products,
       subTotal: total,
-      shippingCost,
+      shippingCost: finalShippingCost,
       shippingOption: selectedShippingRate.name,
       shippingRateId: selectedShippingRate.rateId,
       discount: discountAmount,
@@ -324,7 +327,7 @@ const useCheckoutSubmit = () => {
     handleShippingRateSelect,
     discountAmount,
     total,
-    shippingCost,
+    shippingCost: finalShippingCost,
     discountPercentage: coupon_info?.discountType === "percent" ? Number(coupon_info.amount || 0) : 0,
     discountProductType: coupon_info?.discountType || "",
     isCheckoutSubmit,

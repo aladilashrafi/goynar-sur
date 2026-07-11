@@ -24,7 +24,11 @@ const useSearchFormSubmit = () => {
       requestStarted = true;
       if (isActive) setIsSuggestionsLoading(true);
       try {
-        const response = await fetch(`/api/search/suggestions?search=${encodeURIComponent(query)}`, {
+        const params = new URLSearchParams({ search: query });
+        if (category && category !== "Select Category") {
+          params.set("category", category);
+        }
+        const response = await fetch(`/api/search/suggestions?${params.toString()}`, {
           signal: controller.signal,
         });
         const data = await response.json();
@@ -53,7 +57,7 @@ const useSearchFormSubmit = () => {
         controller.abort(reason);
       }
     };
-  }, [searchText]);
+  }, [category, searchText]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
