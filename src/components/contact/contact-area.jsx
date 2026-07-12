@@ -15,7 +15,7 @@ const ContactArea = () => {
             <div className="row">
               <div className="col-xl-9 col-lg-8">
                 <div className="tp-contact-wrapper">
-                  <h3 className="tp-contact-title">Sent A Message</h3>
+                  <h3 className="tp-contact-title">Send A Message</h3>
 
                   <div className="tp-contact-form">
                     {/* form start */}
@@ -38,7 +38,7 @@ const ContactArea = () => {
                         <a href="mailto:support@goynarsur.com">support@goynarsur.com</a>
                       </p>
                       <p data-info="phone">
-                        <a href="tel:670-413-90-762">+670 413 90 762</a>
+                        <a href="tel:+8801940861467">+880 1940-861467</a>
                       </p>
                     </div>
                   </div>
@@ -51,10 +51,11 @@ const ContactArea = () => {
                     <div className="tp-contact-info-content">
                       <p>
                         <a
-                          href="https://www.google.com/maps/place/New+York,+NY,+USA/@40.6976637,-74.1197638,11z/data=!3m1!4b1!4m6!3m5!1s0x89c24fa5d33f083b:0xc80b8f06e177fe62!8m2!3d40.7127753!4d-74.0059728!16zL20vMDJfMjg2"
+                          href="https://www.google.com/maps/search/?api=1&query=Dhaka%2C%20Bangladesh"
                           target="_blank"
+                          rel="noreferrer"
                         >
-                          84 sleepy hollow st. <br /> jamaica, New York 1432
+                          Dhaka, Bangladesh
                         </a>
                       </p>
                     </div>
@@ -72,14 +73,14 @@ const ContactArea = () => {
                         </h4>
 
                         <div className="tp-contact-social-icon">
-                          <a href="#">
+                          <a href="https://www.facebook.com/goynarsur" target="_blank" rel="noreferrer" aria-label="Goynar Sur on Facebook">
                             <i className="fa-brands fa-facebook-f"></i>
                           </a>
-                          <a href="#">
-                            <i className="fa-brands fa-twitter"></i>
+                          <a href="https://www.instagram.com/goynarsur" target="_blank" rel="noreferrer" aria-label="Goynar Sur on Instagram">
+                            <i className="fa-brands fa-instagram"></i>
                           </a>
-                          <a href="#">
-                            <i className="fa-brands fa-linkedin-in"></i>
+                          <a href="mailto:support@goynarsur.com" aria-label="Email Goynar Sur">
+                            <i className="fa-regular fa-envelope"></i>
                           </a>
                         </div>
                       </div>

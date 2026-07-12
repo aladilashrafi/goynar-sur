@@ -2,7 +2,7 @@ import ErrorMsg from '@/components/common/error-msg';
 import { useGetProductTypeQuery } from '@/redux/features/productApi';
 import React, { useEffect, useRef, useState } from 'react';
 import ProductItem from './product-item';
-import HomeTwoPrdLoader from '@/components/loader/home-2/home-2-prd-loder';
+import Loader from '@/components/loader/loader';
 
 // tabs
 const tabs = ["All Collection", "Bracelets", "Necklaces", "Earrings"];
@@ -30,7 +30,7 @@ const ProductArea = () => {
 
   if (isLoading) {
     content = (
-      <HomeTwoPrdLoader loading={isLoading} />
+      <Loader loading={isLoading} />
     );
   }
   if (!isLoading && isError) {

@@ -12,7 +12,6 @@ const JewelryAbout = dynamic(() => import("@/components/about/jewelry-about"));
 const ProductArea = dynamic(() => import("@/components/products/jewelry/product-area"));
 const JewelryCollectionBanner = dynamic(() => import("@/components/shop-banner/jewelry-collection-banner"));
 const BestSellerPrd = dynamic(() => import("@/components/products/jewelry/best-seller-prd"));
-const JewelryBrands = dynamic(() => import("@/components/brand/jewelry-brands"));
 const InstagramAreaFour = dynamic(() => import("@/components/instagram/instagram-area-4"));
 
 export default function Home() {
@@ -49,7 +48,3 @@ export default function Home() {
   )
 }
 
-//       <PopularProducts/> 
-//       <LazySection minHeight={180}>
-//        <JewelryBrands/>
-//       </LazySection>

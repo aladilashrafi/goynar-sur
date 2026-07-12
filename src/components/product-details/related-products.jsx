@@ -5,7 +5,7 @@ import { Scrollbar, Navigation,Autoplay } from "swiper/modules";
 import { useGetRelatedProductsQuery } from "@/redux/features/productApi";
 import ProductItem from "../products/jewelry/product-item";
 import ErrorMsg from "../common/error-msg";
-import HomeNewArrivalPrdLoader from "../loader/home/home-newArrival-prd-loader";
+import Loader from "../loader/loader";
 
 // slider setting
 const slider_setting = {
@@ -43,7 +43,7 @@ const RelatedProducts = ({id}) => {
   let content = null;
 
   if (isLoading) {
-    content = <HomeNewArrivalPrdLoader loading={isLoading}/>;
+    content = <Loader loading={isLoading}/>;
   }
   if (!isLoading && isError) {
     content = <ErrorMsg msg="There was an error" />;
