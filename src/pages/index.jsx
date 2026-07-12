@@ -18,10 +18,10 @@ const InstagramAreaFour = dynamic(() => import("@/components/instagram/instagram
 export default function Home() {
   return (
     <Wrapper>
-      <SEO pageTitle='Handmade Jewellery in Bangladesh'/>
+      <SEO pageTitle='Create The Tune of Your Own Story'/>
       <HeaderFour/>
       <main id="main-content" tabIndex="-1" className="goynar-home">
-        <h1 className="visually-hidden">Goynar Sur handmade jewellery in Bangladesh</h1>
+        <h1 className="visually-hidden">Goynar Sur - Create The Tune of Your Own Story</h1>
         <JewelryBanner/>
         <FeatureAreaThree />
         <LazySection minHeight={580}>

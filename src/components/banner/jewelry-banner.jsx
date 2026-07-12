@@ -28,7 +28,7 @@ const slider_nav_data = [
   { icon: nav_icon_2, title: <>Occassional</> },
   { icon: nav_icon_3, title: <>Premium</> },
   { icon: nav_icon_4, title: <>Festival</> },
-] 
+]
 
 const JewelryBanner = () => {
   const [slider1, setSlider1] = useState(null);
@@ -89,12 +89,12 @@ const JewelryBanner = () => {
         {/* arrow start */}
         <div className="tp-slider-arrow-4">
           <button type="button" className="tp-slider-3-button-prev slick-arrow" onClick={() => slider1?.slickPrev()} aria-label="Previous featured collection">
-            <ArrowPrevTwo/>
+            <ArrowPrevTwo />
           </button>
           <button type="button" className="tp-slider-3-button-next slick-arrow" onClick={() => slider1?.slickNext()} aria-label="Next featured collection">
-            <ArrowNextTwo/>
+            <ArrowNextTwo />
           </button>
-          </div>
+        </div>
         {/* arrow end */}
 
         <div className="tp-slider-nav">
