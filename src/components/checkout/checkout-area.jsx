@@ -29,18 +29,22 @@ const CheckoutArea = () => {
             </div>
           )}
           {cart_products.length > 0 && (
-            <div className="row">
+            <div>
               {!accessToken && (
-                <div className="col-12">
-                  <CheckoutLogin />
+                <div className="row">
+                  <div className="col-12">
+                    <CheckoutLogin />
+                  </div>
                 </div>
               )}
-              <div className="col-12">
-                <CheckoutCoupon
-                  handleCouponCode={checkoutData.handleCouponCode}
-                  couponRef={checkoutData.couponRef}
-                  couponApplyMsg={checkoutData.couponApplyMsg}
-                />
+              <div className="row">
+                <div className="col-12">
+                  <CheckoutCoupon
+                    handleCouponCode={checkoutData.handleCouponCode}
+                    couponRef={checkoutData.couponRef}
+                    couponApplyMsg={checkoutData.couponApplyMsg}
+                  />
+                </div>
               </div>
               <form onSubmit={handleSubmit(submitHandler)}>
                 <div className="row">

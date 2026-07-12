@@ -27,21 +27,23 @@ const CartArea = () => {
                   <div className="cartmini__shipping">
                     <RenderCartProgress />
                   </div>
-                  <table className="table">
-                    <thead>
-                      <tr>
-                        <th colSpan="2" className="tp-cart-header-product">Product</th>
-                        <th className="tp-cart-header-price">Price</th>
-                        <th className="tp-cart-header-quantity">Quantity</th>
-                        <th></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {cart_products.map((item, i) => (
-                        <CartItem key={i} product={item} />
-                      ))}
-                    </tbody>
-                  </table>
+                  <div className="table-responsive">
+                    <table className="table">
+                      <thead>
+                        <tr>
+                          <th colSpan="2" className="tp-cart-header-product">Product</th>
+                          <th className="tp-cart-header-price">Price</th>
+                          <th className="tp-cart-header-quantity">Quantity</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {cart_products.map((item, i) => (
+                          <CartItem key={i} product={item} />
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
                 <div className="tp-cart-bottom">
                   <div className="row align-items-end">
