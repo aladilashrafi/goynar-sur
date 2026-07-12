@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // internal
 import logo_white from '@assets/img/logo/goynar-sur-logo.png';
 import logo_dark from '@assets/img/logo/goynar-sur-logo.png';
-import { CartTwo, Menu, Search, Wishlist } from '@/svg';
+import { CartTwo, Menu, Search, Wishlist, UserTwo } from '@/svg';
 import Menus from './header-com/menus';
 import useSticky from '@/hooks/use-sticky';
 import SearchBar from './header-com/search-bar';
@@ -56,11 +56,17 @@ const HeaderThree = () => {
                         <span className="tp-header-action-badge">{wishlist.length}</span>
                       </Link>
                     </div>
+                    
                     <div className="tp-header-action-item d-none d-sm-block">
                       <button onClick={() => dispatch(openCartMini())} type="button" className="tp-header-action-btn cartmini-open-btn">
                         <CartTwo />
                         <span className="tp-header-action-badge">{quantity}</span>
                       </button>
+                    </div>
+                    <div className="tp-header-action-item d-none d-sm-block">
+                      <Link href="/profile" className="tp-header-action-btn" aria-label="My Account">
+                        <UserTwo />
+                      </Link>
                     </div>
                     <div className="tp-header-action-item d-lg-none">
                       <button onClick={() => setIsCanvasOpen(true)} type="button" className="tp-header-action-btn tp-offcanvas-open-btn">

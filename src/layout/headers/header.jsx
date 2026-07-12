@@ -14,7 +14,7 @@ import HeaderTopRight from "./header-com/header-top-right";
 import HeaderMainRight from "./header-com/header-main-right";
 import CartMiniSidebar from "@/components/common/cart-mini-sidebar";
 import HeaderSearchForm from "@/components/forms/header-search-form";
-import { CartTwo, CategoryMenu, Menu, Phone, ShippingCar, Wishlist } from "@/svg";
+import { CartTwo, CategoryMenu, Menu, Phone, ShippingCar, UserTwo, Wishlist } from "@/svg";
 
 const Header = () => {
   const { wishlist } = useSelector((state) => state.wishlist);
@@ -150,11 +150,17 @@ const Header = () => {
                       <span className="tp-header-action-badge">{wishlist.length}</span>
                     </Link>
                   </div>
+                  
                   <div className="tp-header-action-item">
                     <button onClick={() => dispatch(openCartMini())} type="button" className="tp-header-action-btn cartmini-open-btn">
                       <CartTwo />
                       <span className="tp-header-action-badge">{quantity}</span>
                     </button>
+                  </div>
+                  <div className="tp-header-action-item d-none d-lg-block">
+                    <Link href="/profile" className="tp-header-action-btn" aria-label="My Account">
+                      <UserTwo />
+                    </Link>
                   </div>
                   <div className="tp-header-action-item d-lg-none">
                     <button onClick={() => setIsCanvasOpen(true)} type="button" className="tp-header-action-btn tp-offcanvas-open-btn">

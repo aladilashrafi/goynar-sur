@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useSelector } from 'react-redux';
 // internal
 import { CloseTwo } from '@/svg';
 import logo from '@assets/img/logo/goynar-sur-logo.png';
@@ -10,11 +11,12 @@ import MobileCategory from '@/layout/headers/header-com/mobile-category';
 import MobileMenus from './mobile-menus';
 
 const OffCanvas = ({ isOffCanvasOpen, setIsCanvasOpen,categoryType = "electronics" }) => {
+  const { user } = useSelector((state) => state.auth);
   const [isCategoryActive, setIsCategoryActive] = useState(false);
   const [isCurrencyActive, setIsCurrencyActive] = useState(false);
   const [isLanguageActive, setIsLanguageActive] = useState(false);
 
-  // handle language active
+  // handle active
   const handleLanguageActive = () => {
     setIsLanguageActive(!isLanguageActive)
     setIsCurrencyActive(false)
@@ -69,31 +71,14 @@ const OffCanvas = ({ isOffCanvasOpen, setIsCanvasOpen,categoryType = "electronic
               </div>
             </div>
             <div className="offcanvas__btn">
-              <Link href="/contact" className="tp-btn-2 tp-btn-border-2">Contact Us</Link>
+              {user ? (
+                <Link href="/profile" className="tp-btn-4 tp-btn-border-4 w-100 text-center" style={{ backgroundColor: 'var(--tp-theme-primary)', color: '#fff', borderColor: 'var(--tp-theme-primary)', padding: '10px'}}>My Account</Link>
+              ) : (
+                <Link href="/login" className="tp-btn-4 tp-btn-border-4 w-100 text-center" style={{ backgroundColor: 'var(--tp-theme-primary)', color: '#fff', borderColor: 'var(--tp-theme-primary)', padding: '10px'}}>Login / Register</Link>
+              )}
             </div>
           </div>
           <div className="offcanvas__bottom">
-            <div className="offcanvas__footer d-flex align-items-center justify-content-between">
-              <div className="offcanvas__currency-wrapper currency">
-                <span onClick={handleCurrencyActive} className="offcanvas__currency-selected-currency tp-currency-toggle" id="tp-offcanvas-currency-toggle">Currency : BDT</span>
-                <ul className={`offcanvas__currency-list tp-currency-list ${isCurrencyActive ? 'tp-currency-list-open' : ''}`}>
-                  <li>৳ BDT</li>
-                </ul>
-              </div>
-              <div className="offcanvas__select language">
-                <div className="offcanvas__lang d-flex align-items-center justify-content-md-end">
-                  <div className="offcanvas__lang-img mr-15">
-                    <Image src={language_img} alt="language-flag" />
-                  </div>
-                  <div className="offcanvas__lang-wrapper">
-                    <span onClick={handleLanguageActive} className="offcanvas__lang-selected-lang tp-lang-toggle" id="tp-offcanvas-lang-toggle">English</span>
-                    <ul className={`offcanvas__lang-list tp-lang-list ${isLanguageActive ? 'tp-lang-list-open' : ''}`}>
-                      <li>Bangla</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>

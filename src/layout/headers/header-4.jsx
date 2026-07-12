@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 // internal
-import { CartTwo, Menu, Search, Wishlist } from '@/svg';
+import { CartTwo, Menu, Search, UserTwo, Wishlist } from '@/svg';
 import Menus from './header-com/menus';
 import logo_white from '@assets/img/logo/goynar-sur-logo.png';
 import logo_dark from '@assets/img/logo/goynar-sur-logo.png';
@@ -46,23 +46,37 @@ const HeaderFour = () => {
                 <div className="col-xl-2 col-lg-2 col-6">
                   <div className="tp-header-action d-flex align-items-center justify-content-end ml-50">
 
-                    <div className="tp-header-action-item d-none d-sm-block">
+                    {/* Search - always visible */}
+                    <div className="tp-header-action-item">
                       <button onClick={() => setIsSearchOpen(true)} type="button" className="tp-header-action-btn tp-search-open-btn" aria-label="Open product search">
                         <Search />
                       </button>
                     </div>
+
+                    {/* Wishlist - hidden on xs only */}
                     <div className="tp-header-action-item d-none d-sm-block">
                       <Link href="/wishlist" className="tp-header-action-btn" aria-label={`Wishlist with ${wishlist.length} items`}>
                         <Wishlist />
                         <span className="tp-header-action-badge">{wishlist.length}</span>
                       </Link>
                     </div>
-                    <div className="tp-header-action-item d-none d-sm-block">
+
+                    {/* Cart - always visible */}
+                    <div className="tp-header-action-item">
                       <button onClick={() => dispatch(openCartMini())} type="button" className="tp-header-action-btn cartmini-open-btn" aria-label={`Open cart with ${quantity} items`}>
                         <CartTwo />
                         <span className="tp-header-action-badge">{quantity}</span>
                       </button>
                     </div>
+
+                    {/* User Profile */}
+                    <div className="tp-header-action-item d-none d-sm-block">
+                      <Link href="/profile" className="tp-header-action-btn" aria-label="My Account">
+                        <UserTwo />
+                      </Link>
+                    </div>
+
+                    {/* Hamburger - mobile/tablet only */}
                     <div className="tp-header-action-item d-lg-none">
                       <button onClick={() => setIsCanvasOpen(true)} type="button" className="tp-offcanvas-open-btn" aria-label="Open navigation menu" aria-expanded={isOffCanvasOpen}>
                         <Menu />

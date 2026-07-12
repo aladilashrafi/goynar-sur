@@ -10,7 +10,7 @@ import useCartInfo from '@/hooks/use-cart-info';
 import { openCartMini } from '@/redux/features/cartSlice';
 import HeaderTopRight from './header-com/header-top-right';
 import CartMiniSidebar from '@/components/common/cart-mini-sidebar';
-import { CartTwo, Facebook, Menu, PhoneTwo, Wishlist, Search } from '@/svg';
+import { CartTwo, Facebook, Menu, PhoneTwo, Wishlist, Search, UserTwo } from '@/svg';
 import useSearchFormSubmit from '@/hooks/use-search-form-submit';
 import OffCanvas from '@/components/common/off-canvas';
 
@@ -100,11 +100,17 @@ const HeaderTwo = ({ style_2 = false }) => {
                             <span className="tp-header-action-badge">{wishlist.length}</span>
                           </Link>
                         </div>
+                       
                         <div className="tp-header-action-item">
                           <button onClick={() => dispatch(openCartMini())} className="tp-header-action-btn cartmini-open-btn" >
                             <CartTwo />
                             <span className="tp-header-action-badge">{quantity}</span>
                           </button>
+                        </div>
+                         <div className="tp-header-action-item d-none d-lg-block">
+                          <Link href="/profile" className="tp-header-action-btn">
+                            <UserTwo />
+                          </Link>
                         </div>
                         <div className="tp-header-action-item tp-header-hamburger mr-20 d-xl-none">
                           <button onClick={() => setIsCanvasOpen(true)} type="button" className="tp-offcanvas-open-btn">

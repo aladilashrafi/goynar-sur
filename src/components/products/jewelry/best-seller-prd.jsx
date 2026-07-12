@@ -15,7 +15,7 @@ const slider_setting = {
 				slidesPerView: 4,
 			},
 			'992': {
-				slidesPerView: 4,
+				slidesPerView: 3,
 			},
 			'768': {
 				slidesPerView: 2,

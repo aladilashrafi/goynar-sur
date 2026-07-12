@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 // internal
 import useCartInfo from "@/hooks/use-cart-info";
-import { CartTwo, Menu, Wishlist } from "@/svg";
+import { CartTwo, Menu, Wishlist, UserTwo } from "@/svg";
 import { openCartMini } from "@/redux/features/cartSlice";
 
 const HeaderMainRight = ({ setIsCanvasOpen }) => {
@@ -19,6 +19,7 @@ const HeaderMainRight = ({ setIsCanvasOpen }) => {
             <span className="tp-header-action-badge">{wishlist.length}</span>
           </Link>
         </div>
+        
         <div className="tp-header-action-item">
           <button
             onClick={() => dispatch(openCartMini())}
@@ -29,6 +30,11 @@ const HeaderMainRight = ({ setIsCanvasOpen }) => {
             <CartTwo />
             <span className="tp-header-action-badge">{quantity}</span>
           </button>
+        </div>
+        <div className="tp-header-action-item d-none d-lg-block">
+          <Link href="/profile" className="tp-header-action-btn" aria-label="My Account">
+            <UserTwo />
+          </Link>
         </div>
         <div className="tp-header-action-item d-lg-none">
           <button

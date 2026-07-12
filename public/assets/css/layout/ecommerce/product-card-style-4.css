@@ -51,12 +51,20 @@
   position: relative;
   margin-bottom: 21px;
   background-color: #F6F6F6;
+  /* Fixed aspect ratio so all cards are the same height */
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
 }
 .tp-product-title-4 {
   font-weight: 400;
   font-size: 20px;
-  line-height: 1;
-  margin-bottom: 2px;
+  line-height: 1.25;
+  margin-bottom: 6px;
+  /* Clamp to 2 lines so long titles don't break grid alignment */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 .tp-product-title-4 a:hover {
   color: var(--tp-theme-brown);
