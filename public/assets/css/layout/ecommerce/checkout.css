@@ -16,6 +16,32 @@
   padding: 8px 26px;
   width: 100%;
 }
+.tp-checkout-verify-reveal.gs-mobile-checkout-reveal-btn {
+  background: transparent;
+  text-align: left;
+}
+.tp-checkout-verify-reveal.gs-mobile-checkout-reveal-btn > span {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.tp-checkout-verify-reveal.gs-mobile-checkout-reveal-btn strong {
+  color: var(--tp-theme-brown);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-weight: 500;
+}
+.tp-checkout-verify-reveal.gs-mobile-checkout-reveal-btn strong::after {
+  position: absolute;
+  content: "";
+  left: 0;
+  bottom: 4px;
+  width: 100%;
+  height: 1px;
+  background-color: currentColor;
+}
 .tp-checkout-verify-reveal button {
   color: var(--tp-theme-primary);
   position: relative;

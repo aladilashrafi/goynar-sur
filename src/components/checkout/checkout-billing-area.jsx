@@ -18,7 +18,7 @@ const CheckoutBillingArea = ({ register, errors, watch }) => {
       : "No saved delivery address—add one for this order.";
 
   return (
-    <div className="tp-checkout-bill-area">
+    <div className="tp-checkout-bill-area gs-mobile-checkout-section">
       <h3 className="tp-checkout-bill-title">Billing Details</h3>
       {user && (
         <p className="alert alert-success mb-25">
@@ -192,7 +192,7 @@ const CheckoutBillingArea = ({ register, errors, watch }) => {
                 </div>
               </div>
             )}
-            <div className="col-md-12">
+            <div className="col-md-12 gs-mobile-checkout-order-notes">
               <div className="tp-checkout-input">
                 <label htmlFor="orderNote">Order notes (optional)</label>
                 <textarea

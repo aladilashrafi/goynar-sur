@@ -78,6 +78,7 @@
 @import "../../public/assets/css/layout/ecommerce/deal.css";
 @import "../../public/assets/css/layout/ecommerce/side-banner.css";
 @import "../../public/assets/css/layout/ecommerce/coupon.css";
+@import "../../public/assets/css/layout/ecommerce/goynar-mobile-pdp-checkout.css";
 
 :root {
   --gs-surface: #ffffff;

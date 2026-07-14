@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import useCartInfo from "@/hooks/use-cart-info";
 import ErrorMsg from "../common/error-msg";
 import { formatPrice } from "@/utils/formatPrice";
+import Image from "next/image";
 
 const CheckoutOrderArea = ({ checkoutData }) => {
   const {
@@ -23,7 +24,7 @@ const CheckoutOrderArea = ({ checkoutData }) => {
   const { cart_products } = useSelector((state) => state.cart);
   const { total } = useCartInfo();
   return (
-    <div className="tp-checkout-place white-bg">
+    <div className="tp-checkout-place white-bg gs-mobile-checkout-order">
       <h3 className="tp-checkout-place-title">Your Order</h3>
 
       <div className="tp-order-info-list">
@@ -37,12 +38,28 @@ const CheckoutOrderArea = ({ checkoutData }) => {
           {/*  item list */}
           {cart_products.map((item) => (
             <li key={item._id} className="tp-order-info-list-desc">
-              <p>
-                {item.title} <span> x {item.orderQuantity}</span>
-              </p>
-              {item.selectedAttributes?.length > 0 && (
-                <small>{item.selectedAttributes.map((attr) => `${attr.name}: ${attr.value}`).join(" / ")}</small>
-              )}
+              <div className="gs-mobile-checkout-product">
+                {item.img && (
+                  <div className="gs-mobile-checkout-product-image">
+                    <Image
+                      src={item.img}
+                      alt=""
+                      width={56}
+                      height={56}
+                      sizes="56px"
+                    />
+                    <span aria-hidden="true">{item.orderQuantity}</span>
+                  </div>
+                )}
+                <div>
+                  <p>
+                    {item.title} <span className="gs-desktop-order-quantity"> x {item.orderQuantity}</span>
+                  </p>
+                  {item.selectedAttributes?.length > 0 && (
+                    <small>{item.selectedAttributes.map((attr) => `${attr.name}: ${attr.value}`).join(" / ")}</small>
+                  )}
+                </div>
+              </div>
               <span>{formatPrice(item.price * item.orderQuantity)}</span>
             </li>
           ))}
@@ -108,6 +125,7 @@ const CheckoutOrderArea = ({ checkoutData }) => {
         </ul>
       </div>
       <div className="tp-checkout-payment">
+        <h4 className="gs-mobile-checkout-payment-title">Payment Method</h4>
         <div className="tp-checkout-payment-item">
           <input
             {...register(`payment`, {
@@ -119,12 +137,15 @@ const CheckoutOrderArea = ({ checkoutData }) => {
             value="COD"
             defaultChecked
           />
-          <label htmlFor="cod">Cash on Delivery</label>
+          <label htmlFor="cod">
+            <strong>Cash on Delivery</strong>
+            <span>Pay cash when your parcel arrives. No upfront payment is needed.</span>
+          </label>
           <ErrorMsg msg={errors?.payment?.message} />
         </div>
       </div>
 
-      <div className="tp-checkout-btn-wrapper">
+      <div className="tp-checkout-btn-wrapper gs-desktop-checkout-submit">
         <button
           type="submit"
           disabled={isCheckoutSubmit || !isCheckoutReady}
@@ -132,6 +153,21 @@ const CheckoutOrderArea = ({ checkoutData }) => {
         >
           {isCheckoutSubmit ? "Placing Order..." : isCheckoutReady ? "Place Order" : "Complete delivery details"}
         </button>
+      </div>
+
+      <div className="gs-mobile-checkout-submit" role="region" aria-label="Place order">
+        <div>
+          <span>Order total</span>
+          <strong>{formatPrice(cartTotal)}</strong>
+        </div>
+        <button
+          type="submit"
+          disabled={isCheckoutSubmit || !isCheckoutReady}
+          className="tp-checkout-btn"
+        >
+          {isCheckoutSubmit ? "Placing Order..." : isCheckoutReady ? "Place Order" : "Complete details"}
+        </button>
+        <small>Cash on Delivery · Final shipping confirmed above</small>
       </div>
     </div>
   );

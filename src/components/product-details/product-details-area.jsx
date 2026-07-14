@@ -24,11 +24,11 @@ const ProductDetailsArea = ({ productItem }) => {
     setActiveImg(item.img);
   }, []);
   return (
-    <section className="tp-product-details-area">
+    <section className="tp-product-details-area gs-mobile-pdp">
       <div className="tp-product-details-top pb-115">
         <div className="container">
-          <div className="row">
-            <div className="col-xl-7 col-lg-6">
+          <div className="row gs-mobile-pdp-top-row">
+            <div className="col-xl-7 col-lg-6 gs-mobile-pdp-gallery-column">
               {/* product-details-thumb-wrapper start */}
               <DetailsThumbWrapper
                 activeImg={activeImg}
@@ -42,7 +42,7 @@ const ProductDetailsArea = ({ productItem }) => {
               />
               {/* product-details-thumb-wrapper end */}
             </div>
-            <div className="col-xl-5 col-lg-6">
+            <div className="col-xl-5 col-lg-6 gs-mobile-pdp-info-column">
               {/* product-details-wrapper start */}
               <DetailsWrapper
                 productItem={productItem}

@@ -21,12 +21,15 @@ const DetailsThumbWrapper = ({
             {imageURLs?.map((item, i) => (
               <button
                 key={i}
+                type="button"
                 className={`nav-link ${item.img === activeImg ? "active" : ""}`}
                 onClick={() => handleImageActive(item)}
+                aria-label={`View product image ${i + 1}`}
+                aria-pressed={item.img === activeImg}
               >
                 <Image
                   src={item.img}
-                  alt="image"
+                  alt={`Product thumbnail ${i + 1}`}
                   width={78}
                   height={78}
                   sizes="78px"
@@ -41,7 +44,7 @@ const DetailsThumbWrapper = ({
             <div className="tp-product-details-nav-main-thumb p-relative">
               <Image
                 src={activeImg}
-                alt="product img"
+                alt="Selected product image"
                 width={imgWidth}
                 height={imgHeight}
                 priority={priority}
@@ -51,14 +54,16 @@ const DetailsThumbWrapper = ({
                 {status === 'out-of-stock' && <span className="product-hot">out-stock</span>}
               </div>
               {videoId && (
-                <div
+                <button
+                  type="button"
                   onClick={() => setIsVideoOpen(true)}
                   className="tp-product-details-thumb-video"
+                  aria-label="Play product video"
                 >
-                  <a className="tp-product-details-thumb-video-btn cursor-pointer popup-video">
+                  <span className="tp-product-details-thumb-video-btn cursor-pointer popup-video">
                     <i className="fas fa-play"></i>
-                  </a>
-                </div>
+                  </span>
+                </button>
               )}
             </div>
           </div>

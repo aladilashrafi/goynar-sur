@@ -16,9 +16,13 @@ const CheckoutArea = () => {
   return (
     <>
       <section
-        className="tp-checkout-area pb-120"
+        className="tp-checkout-area pb-120 gs-mobile-checkout"
         style={{ backgroundColor: "#EFF1F5" }}
       >
+        <div className="gs-mobile-checkout-trust" role="note">
+          <i className="fa-regular fa-shield-check" aria-hidden="true"></i>
+          <span>Secure checkout · Your order details are protected</span>
+        </div>
         <div className="container">
           {cart_products.length === 0 && (
             <div className="text-center pt-50">
@@ -29,7 +33,7 @@ const CheckoutArea = () => {
             </div>
           )}
           {cart_products.length > 0 && (
-            <div>
+            <div className="gs-mobile-checkout-shell">
               {!accessToken && (
                 <div className="row">
                   <div className="col-12">
@@ -46,7 +50,7 @@ const CheckoutArea = () => {
                   />
                 </div>
               </div>
-              <form onSubmit={handleSubmit(submitHandler)}>
+              <form onSubmit={handleSubmit(submitHandler)} noValidate>
                 <div className="row">
                   <div className="col-lg-7">
                     <CheckoutBillingArea register={register} errors={errors} watch={watch} />

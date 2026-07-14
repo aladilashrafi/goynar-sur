@@ -132,6 +132,8 @@ const DetailsWrapper = ({
     : status;
   const selectedQuantity = matchedVariation ? Number(matchedVariation.quantity || 0) : productItem?.quantity;
   const needsVariationSelection = Boolean(isVariable && (!variations.length || !matchedVariation));
+  const addToCartLabel = needsVariationSelection ? "Select Options" : "Add To Cart";
+  const addToCartDisabled = selectedStatus === "out-of-stock" || needsVariationSelection;
   const categoryName =
     typeof category === "string"
       ? category
@@ -367,10 +369,10 @@ const DetailsWrapper = ({
           <div className="tp-product-details-add-to-cart mb-15 w-100">
             <button
               onClick={handleAddProduct}
-              disabled={selectedStatus === 'out-of-stock' || needsVariationSelection}
+              disabled={addToCartDisabled}
               className="tp-product-details-add-to-cart-btn w-100"
             >
-              {needsVariationSelection ? "Select Options" : "Add To Cart"}
+              {addToCartLabel}
             </button>
           </div>
         </div>
@@ -401,7 +403,52 @@ const DetailsWrapper = ({
       </div>
       {/* product-details-action-sm end */}
 
-      {detailsBottom && <DetailsBottomInfo category={category?.name} sku={sku} tag={tags[0]} />}
+      <div className="gs-mobile-pdp-assurance" aria-label="Shopping assurances">
+        <div>
+          <strong>Cash on Delivery</strong>
+          <span>Pay when your jewellery arrives</span>
+        </div>
+        <div>
+          <strong>Made with care</strong>
+          <span>Handcrafted by Goynar Sur artisans</span>
+        </div>
+        <div>
+          <strong>Bangladesh delivery</strong>
+          <span>Shipping is confirmed at checkout</span>
+        </div>
+        <div>
+          <strong>Secure checkout</strong>
+          <span>Your order details stay protected</span>
+        </div>
+      </div>
+
+      <div className="gs-mobile-pdp-payment-note">
+        <span>Available payment</span>
+        <strong>Cash on Delivery</strong>
+      </div>
+
+      {detailsBottom && <DetailsBottomInfo category={categoryName} sku={sku} tag={tags[0]} />}
+
+      <div className="gs-mobile-pdp-sticky-atc" role="region" aria-label="Add product to cart">
+        <div className="gs-mobile-pdp-sticky-info">
+          <span>{title}</span>
+          <SalePrice
+            price={selectedPrice}
+            regularPrice={selectedRegularPrice}
+            showSavings={false}
+            currentPriceClassName="gs-mobile-pdp-sticky-price"
+            regularPriceClassName="gs-mobile-pdp-sticky-old-price"
+          />
+        </div>
+        <button
+          type="button"
+          onClick={handleAddProduct}
+          disabled={addToCartDisabled}
+          className="gs-mobile-pdp-sticky-button"
+        >
+          {addToCartLabel}
+        </button>
+      </div>
     </div>
   );
 };

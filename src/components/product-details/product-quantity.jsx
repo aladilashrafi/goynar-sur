@@ -18,13 +18,29 @@ const ProductQuantity = ({ product }) => {
   return (
     <div className="tp-product-details-quantity">
     <div className="tp-product-quantity mb-15 mr-15">
-      <span className="tp-cart-minus" onClick={handleDecrease}>
+      <button
+        type="button"
+        className="tp-cart-minus"
+        onClick={handleDecrease}
+        aria-label="Decrease quantity"
+      >
         <Minus />
-      </span>
-      <input className="tp-cart-input" type="text" readOnly value={orderQuantity} />
-      <span className="tp-cart-plus" onClick={handleIncrease}>
+      </button>
+      <input
+        className="tp-cart-input"
+        type="text"
+        readOnly
+        value={orderQuantity}
+        aria-label="Product quantity"
+      />
+      <button
+        type="button"
+        className="tp-cart-plus"
+        onClick={handleIncrease}
+        aria-label="Increase quantity"
+      >
         <Plus />
-      </span>
+      </button>
     </div>
   </div>
   );

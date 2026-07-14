@@ -6,23 +6,38 @@ const CheckoutCoupon = ({ handleCouponCode, couponRef,couponApplyMsg }) => {
   const { coupon_info } = useSelector((state) => state.coupon);
   return (
     <div className="tp-checkout-verify-item">
-      <p className="tp-checkout-verify-reveal">
-        Have a coupon?{" "}
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          type="button"
-          className="tp-checkout-coupon-form-reveal-btn"
-        >
-          Click here to enter your code
-        </button>
-      </p>
+      <button
+        onClick={() => setIsOpen((open) => !open)}
+        type="button"
+        className="tp-checkout-verify-reveal tp-checkout-coupon-form-reveal-btn gs-mobile-checkout-reveal-btn"
+        aria-expanded={isOpen}
+        aria-controls="tpCheckoutCouponForm"
+      >
+        <span>
+          <span className="gs-mobile-checkout-reveal-kicker">Have a coupon?</span>
+          <strong>Apply a discount code</strong>
+        </span>
+        <i className={`fa-regular fa-angle-${isOpen ? "up" : "down"}`} aria-hidden="true"></i>
+      </button>
 
       {isOpen && (
-        <div id="tpCheckoutCouponForm" className="tp-return-customer">
+        <div
+          id="tpCheckoutCouponForm"
+          className="tp-return-customer gs-mobile-checkout-collapsible-panel gs-mobile-checkout-coupon-panel"
+          role="region"
+          aria-label="Coupon code"
+        >
           <form onSubmit={handleCouponCode}>
             <div className="tp-return-customer-input">
-              <label>Coupon Code :</label>
-              <input ref={couponRef} type="text" placeholder="Coupon" />
+              <label htmlFor="checkoutCouponCode">Coupon code</label>
+              <input
+                ref={couponRef}
+                id="checkoutCouponCode"
+                type="text"
+                autoComplete="off"
+                placeholder="Enter coupon code"
+                aria-describedby="checkoutCouponStatus"
+              />
             </div>
             <button
               type="submit"
@@ -31,12 +46,14 @@ const CheckoutCoupon = ({ handleCouponCode, couponRef,couponApplyMsg }) => {
               Apply
             </button>
           </form>
-          {couponApplyMsg && <p className="p-2" style={{ color: "green" }}>{couponApplyMsg}</p>}
-          {coupon_info && (
-            <p className="p-2">
-              Applied coupon: <strong>{coupon_info.code}</strong>
-            </p>
-          )}
+          <div id="checkoutCouponStatus" className="gs-mobile-checkout-status" aria-live="polite">
+            {couponApplyMsg && <p className="is-success">{couponApplyMsg}</p>}
+            {coupon_info && (
+              <p>
+                Applied coupon: <strong>{coupon_info.code}</strong>
+              </p>
+            )}
+          </div>
         </div>
       )}
     </div>
