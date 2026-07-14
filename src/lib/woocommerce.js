@@ -264,6 +264,17 @@ export async function getProductAttributeTerms(attributeId) {
   return data;
 }
 
+export async function getProductAttributes(params = {}) {
+  const { data } = await wcFetch("/products/attributes", {
+    params: {
+      per_page: 100,
+      ...params,
+    },
+  });
+
+  return data;
+}
+
 export async function getProductsByIds(ids = []) {
   const cleanIds = ids.map(Number).filter(Boolean);
   if (!cleanIds.length) return [];

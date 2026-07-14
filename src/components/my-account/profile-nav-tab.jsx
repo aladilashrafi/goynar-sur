@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 function SingleNav({ active = false, id, title, icon, onSelect }) {
   return (
     <button
-      className={`nav-link ${active ? "active" : ""}`}
+      className={`nav-link gs-account-nav-link ${active ? "active" : ""}`}
       id={`nav-${id}-tab`}
       data-bs-toggle="tab"
       data-bs-target={`#nav-${id}`}
@@ -30,7 +30,7 @@ const ProfileNavTab = () => {
   return (
     <nav>
       <div
-        className="nav nav-tabs tp-tab-menu flex-column"
+        className="nav nav-tabs tp-tab-menu flex-column gs-account-nav"
         id="profile-tab"
         role="tablist"
       >

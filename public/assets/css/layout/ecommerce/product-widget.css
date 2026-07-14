@@ -118,10 +118,9 @@
   cursor: pointer;
 }
 .tp-shop-widget-categories {
-  height: 288px;
+  max-height: 288px;
   overflow-y: scroll;
-  overflow-y: scroll;
-  overscroll-behavior-y: contain;
+  overscroll-behavior-y: ;
   scrollbar-width: thin;
   padding-right: 10px;
 }

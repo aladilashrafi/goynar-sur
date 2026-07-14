@@ -8,18 +8,6 @@ import DetailsWrapper from "@/components/product-details/details-wrapper";
 import { initialOrderQuantity } from "@/redux/features/cartSlice";
 import { useGetProductVariationsQuery } from "@/redux/features/productApi";
 
-const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    height: "calc(100% - 300px)",
-  },
-};
-
 const ProductModal = () => {
   const { productItem, isModalOpen } = useSelector(
     (state) => state.productModal
@@ -49,11 +37,23 @@ const ProductModal = () => {
       <ReactModal
         isOpen={isModalOpen}
         onRequestClose={() => dispatch(handleModalClose())}
-        style={customStyles}
-        contentLabel="Product Modal"
+        className="gs-product-modal-content"
+        overlayClassName="gs-product-modal-overlay"
+        contentLabel="Quick view product"
       >
         {productItem && (
         <div className="tp-product-modal">
+          <div className="gs-product-modal-handle" aria-hidden="true"></div>
+          <div className="gs-product-modal-header">
+            <span>Quick View</span>
+            <button
+              onClick={() => dispatch(handleModalClose())}
+              type="button"
+              aria-label="Close quick view"
+            >
+              <i className="fa-regular fa-xmark"></i>
+            </button>
+          </div>
           <div className="tp-product-modal-content d-lg-flex">
             <button
               onClick={() => dispatch(handleModalClose())}

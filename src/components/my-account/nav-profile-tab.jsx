@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 // internal
 import { Box, DeliveryTwo, Processing, Truck } from "@/svg";
 import { userLoggedOut } from "@/redux/features/auth/authSlice";
+import Link from "next/link";
 
 const NavProfileTab = ({ orderData, isOrderLoading = false }) => {
   const {user} = useSelector(state => state.auth)
@@ -15,21 +16,22 @@ const NavProfileTab = ({ orderData, isOrderLoading = false }) => {
     router.push('/')
   }
   return (
-    <div className="profile__main">
+    <div className="profile__main gs-account-dashboard">
       <div className="profile__main-top pb-80">
         <div className="row align-items-center">
           <div className="col-md-6">
             <div className="profile__main-inner d-flex flex-wrap align-items-center">
               <div className="profile__main-content">
-                <h4 className="profile__main-title">Welcome {user?.name || "Goynar Sur Customer"}</h4>
+                <span className="gs-account-welcome-label">Welcome back</span>
+                <h4 className="profile__main-title">{user?.name || "Goynar Sur Customer"}</h4>
               </div>
             </div>
           </div>
           <div className="col-md-6">
             <div className="profile__main-logout text-sm-end">
-              <a onClick={handleLogout} className="cursor-pointer tp-logout-btn">
+              <button type="button" onClick={handleLogout} className="cursor-pointer tp-logout-btn gs-account-logout">
                 Logout
-              </a>
+              </button>
             </div>
           </div>
         </div>
@@ -85,6 +87,22 @@ const NavProfileTab = ({ orderData, isOrderLoading = false }) => {
             </div>
           </div>
         </div>
+      </div>
+      <div className="gs-account-quick-actions">
+        <h5>Quick Actions</h5>
+        <Link href="/profile?section=information">
+          <span><i className="fa-regular fa-user-pen" aria-hidden="true"></i> Personal &amp; Address Details</span>
+          <i className="fa-regular fa-angle-right" aria-hidden="true"></i>
+        </Link>
+        <Link href="/profile?section=orders">
+          <span><i className="fa-light fa-clipboard-list-check" aria-hidden="true"></i> Order History</span>
+          <strong>{isOrderLoading ? "…" : orderData?.totalDoc || 0}</strong>
+          <i className="fa-regular fa-angle-right" aria-hidden="true"></i>
+        </Link>
+        <Link href="/profile?section=password">
+          <span><i className="fa-regular fa-lock" aria-hidden="true"></i> Change Password</span>
+          <i className="fa-regular fa-angle-right" aria-hidden="true"></i>
+        </Link>
       </div>
     </div>
   );

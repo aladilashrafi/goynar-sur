@@ -141,13 +141,13 @@ const ProfileInfo = () => {
   };
 
   return (
-    <div className="profile__info">
+    <div className="profile__info gs-account-information">
       <h3 className="profile__info-title">Personal & Address Details</h3>
       <div className="profile__info-content">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="row">
+          <div className="row gs-info-card gs-info-personal">
             <div className="col-12">
-              <h5 className="mb-20">Personal Information</h5>
+              <h5 className="mb-20"><UserThree /> Personal Information</h5>
             </div>
             <div className="col-xxl-6 col-md-6">
               <div className="profile__input-box">
@@ -177,8 +177,8 @@ const ProfileInfo = () => {
               </div>
             </div>
 
-            <div className="col-12 mt-20">
-              <h5 className="mb-20">Billing Address</h5>
+            <div className="col-12 mt-20 gs-info-section-start">
+              <h5 className="mb-20"><LocationTwo /> Billing Address</h5>
             </div>
             <div className="col-xxl-12">
               <div className="profile__input-box">
@@ -223,7 +223,7 @@ const ProfileInfo = () => {
               </div>
             </div>
 
-            <div className="col-12 mt-20">
+            <div className="col-12 mt-20 gs-info-same-address">
               <div className="tp-checkout-option mb-20">
                 <input {...register("sameAsBilling")} id="sameAsBilling" type="checkbox" />
                 <label htmlFor="sameAsBilling">Shipping address is same as billing</label>
@@ -232,8 +232,8 @@ const ProfileInfo = () => {
 
             {!sameAsBilling && (
               <>
-                <div className="col-12">
-                  <h5 className="mb-20">Shipping Address</h5>
+                <div className="col-12 gs-info-section-start">
+                  <h5 className="mb-20"><LocationTwo /> Shipping Address</h5>
                 </div>
                 <div className="col-xxl-12">
                   <div className="profile__input-box">

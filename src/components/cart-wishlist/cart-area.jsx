@@ -12,7 +12,7 @@ const CartArea = () => {
   const dispatch = useDispatch()
   return (
     <>
-      <section className="tp-cart-area pb-120">
+      <section className="tp-cart-area gs-mobile-cart-page pb-120">
         <div className="container">
           {cart_products.length === 0 &&
             <div className='text-center pt-50'>
@@ -27,7 +27,11 @@ const CartArea = () => {
                   <div className="cartmini__shipping">
                     <RenderCartProgress />
                   </div>
-                  <div className="table-responsive">
+                  <div className="gs-cart-mobile-heading" aria-hidden="true">
+                    <span>Product</span>
+                    <span>Total</span>
+                  </div>
+                  <div className="table-responsive gs-cart-table-wrap">
                     <table className="table">
                       <thead>
                         <tr>
@@ -38,14 +42,14 @@ const CartArea = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {cart_products.map((item, i) => (
-                          <CartItem key={i} product={item} />
+                        {cart_products.map((item) => (
+                          <CartItem key={item._id} product={item} />
                         ))}
                       </tbody>
                     </table>
                   </div>
                 </div>
-                <div className="tp-cart-bottom">
+                <div className="tp-cart-bottom gs-cart-actions">
                   <div className="row align-items-end">
                     <div className="col-xl-6 col-md-8">
                       {/* <div className="tp-cart-coupon">
@@ -60,9 +64,10 @@ const CartArea = () => {
                         </form>
                       </div> */}
                     </div>
-                    <div className="col-xl-6 col-md-4">
+                    <div className="col-xl-6 col-md-4 ms-auto">
                       <div className="tp-cart-update text-md-end mr-30">
                         <button onClick={() => dispatch(clearCart())} type="button" className="tp-cart-update-btn">Clear Cart</button>
+                        <Link href="/shop" className="gs-cart-continue-link">Continue Shopping</Link>
                       </div>
                     </div>
                   </div>

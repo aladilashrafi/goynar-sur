@@ -137,7 +137,8 @@ const CartCheckout = () => {
   const finalShipCost = coupon_info?.freeShipping ? 0 : shipCost;
 
   return (
-    <div className="tp-cart-checkout-wrapper">
+    <div className="tp-cart-checkout-wrapper gs-cart-summary">
+      <div className="gs-cart-summary-heading">Cart Totals</div>
       <div className="tp-cart-checkout-top d-flex align-items-center justify-content-between">
         <span className="tp-cart-checkout-top-title">Subtotal</span>
         <span className="tp-cart-checkout-top-price">{formatPrice(total)}</span>
@@ -208,7 +209,7 @@ const CartCheckout = () => {
         <span className="tp-cart-checkout-top-price">-{formatPrice(discount)}</span>
       </div>
       <div className="tp-cart-checkout-total d-flex align-items-center justify-content-between">
-        <span>Total</span>
+        <span>Total Payable</span>
         <span>{formatPrice(total + finalShipCost - discount)}</span>
       </div>
       <div className="tp-cart-checkout-proceed">

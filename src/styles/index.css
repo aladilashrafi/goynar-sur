@@ -79,6 +79,8 @@
 @import "../../public/assets/css/layout/ecommerce/side-banner.css";
 @import "../../public/assets/css/layout/ecommerce/coupon.css";
 @import "../../public/assets/css/layout/ecommerce/goynar-mobile-pdp-checkout.css";
+@import "../../public/assets/css/layout/ecommerce/goynar-mobile-cart-account.css";
+@import "../../public/assets/css/layout/ecommerce/goynar-mobile-shop.css";
 
 :root {
   --gs-surface: #ffffff;
@@ -154,15 +156,15 @@
 
 .account-order-cards {
   display: grid;
-  gap: 16px;
+  gap: 5px;
   margin-top: 20px;
+  padding: 5px;
 }
 
 .account-order-card {
   padding: 20px;
   background: var(--gs-surface);
   border: 1px solid var(--gs-border);
-  border-radius: 8px;
   box-shadow: var(--gs-elevation);
 }
 
@@ -189,6 +191,47 @@
 }
 
 @media (max-width: 767px) {
+  html,
+  body {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tp-header-sticky.header-sticky {
+    animation: none;
+  }
+
+  .back-to-top-wrapper,
+  .cartmini__area,
+  .offcanvas__area,
+  .tp-search-area {
+    will-change: transform;
+  }
+
+  .offcanvas__area {
+    width: min(88vw, 340px);
+  }
+
+  .offcanvas-body-overlay {
+    z-index: 99998;
+    pointer-events: none;
+  }
+
+  .offcanvas-body-overlay.opened {
+    pointer-events: auto;
+  }
+
+  .gs-mobile-pdp-sticky-atc,
+  .gs-mobile-shop-toolbar {
+    will-change: transform;
+    transform: translateZ(0);
+  }
+
+  .gs-mobile-product-card .tp-product-action-btn-3,
+  .gs-mobile-shop-list-item .tp-product-action-btn-2 {
+    backdrop-filter: none !important;
+    box-shadow: 0 2px 8px rgba(42, 30, 24, 0.08) !important;
+  }
+
   .goynar-home .tp-slider-height-4 {
     min-height: 680px;
     height: auto;

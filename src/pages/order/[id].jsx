@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import Image from "next/image";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import { skipToken } from "@reduxjs/toolkit/query";
@@ -124,9 +125,29 @@ function OrderTimeline({ order }) {
   );
 }
 
+function MobileOrderTimeline({ order }) {
+  const currentStatus = order?.status || "pending";
+  const terminal = terminalStatuses.includes(currentStatus);
+
+  return (
+    <div className="gs-order-progress">
+      {timelineSteps.map((step, index) => {
+        const done = !terminal && step.statuses.includes(currentStatus);
+        const current = !terminal && currentStatus === step.key;
+        return (
+          <div className={`gs-order-progress-step ${done ? "is-done" : ""} ${current ? "is-current" : ""}`} key={step.key}>
+            <span>{done ? <i className="fa-regular fa-check" aria-hidden="true"></i> : index + 1}</span>
+            <small>{step.title}</small>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 function GuestOrderFallback({ orderId }) {
   return (
-    <div className="invoice__wrapper grey-bg-2 pt-60 pb-60 pl-40 pr-40 text-center">
+    <div className="invoice__wrapper gs-guest-order grey-bg-2 pt-60 pb-60 pl-40 pr-40 text-center">
       <p className="text-black alert alert-success mb-30">
         Thank you. Your order has been received.
       </p>
@@ -149,13 +170,94 @@ function GuestOrderFallback({ orderId }) {
   );
 }
 
+function MobileOrderDetails({ order }) {
+  const billingLines = addressLines(order.billing, true);
+  const shippingLines = addressLines(order.shipping);
+  const shippingMethod = order.shippingLines?.[0]?.method_title || "Cash on Delivery Shipping";
+  const currentStatus = order.status || "pending";
+  const activeStep = timelineSteps.find((step) => step.key === currentStatus) || timelineSteps.find((step) => step.statuses.includes(currentStatus));
+
+  return (
+    <div className="gs-mobile-order-detail d-md-none">
+      <header className="gs-order-hero">
+        <div>
+          <span>Order Details</span>
+          <h1>Order #{order.number || order.id}</h1>
+          <p>Placed {formatDate(order.createdAt)}</p>
+        </div>
+        <div>
+          <span className={`gs-order-status gs-status-${currentStatus}`}>{order.statusLabel || statusLabel(currentStatus)}</span>
+          <strong>{formatPrice(order.total)}</strong>
+        </div>
+      </header>
+
+      <MobileOrderTimeline order={order} />
+
+      <div className="gs-order-notice">
+        <strong>{activeStep?.description || `Current status: ${statusLabel(currentStatus)}.`}</strong>
+        {!terminalStatuses.includes(currentStatus) && " We will update you as your order moves forward."}
+      </div>
+
+      <section className="gs-order-section">
+        <h2>Items in this Order</h2>
+        {(order.lineItems || []).map((item) => (
+          <article className="gs-order-product" key={item.id}>
+            <div className="gs-order-product-image">
+              {item.image?.src ? <Image src={item.image.src} alt="" width={64} height={64} /> : <i className="fa-light fa-gem" aria-hidden="true"></i>}
+            </div>
+            <div>
+              <h3>{item.name}</h3>
+              <p>{[metaLine(item.meta_data), `Qty: ${item.quantity}`].filter(Boolean).join(" · ")}</p>
+            </div>
+            <strong>{formatPrice(item.total)}</strong>
+          </article>
+        ))}
+      </section>
+
+      <section className="gs-order-meta">
+        <h2>Payment &amp; Delivery</h2>
+        <dl>
+          <div><dt>Payment Method</dt><dd>{order.paymentMethod || "Cash on Delivery"}</dd></div>
+          <div><dt>Payment Status</dt><dd>{order.datePaid ? "Paid" : "Not yet collected"}</dd></div>
+          <div><dt>Delivery Type</dt><dd>{shippingMethod}</dd></div>
+          <div><dt>Shipping Charge</dt><dd>{formatPrice(order.shippingTotal)}</dd></div>
+          <div><dt>Last Updated</dt><dd>{formatDate(order.dateModified)}</dd></div>
+        </dl>
+      </section>
+
+      <section className="gs-order-addresses">
+        <div><h2>Billing</h2>{billingLines.map((line) => <p key={line}>{line}</p>)}</div>
+        <div><h2>Shipping</h2>{shippingLines.map((line) => <p key={line}>{line}</p>)}</div>
+      </section>
+
+      {order.customerNote && <section className="gs-order-meta"><h2>Order Note</h2><p>{order.customerNote}</p></section>}
+
+      <section className="gs-order-summary-block">
+        <h2>Order Summary</h2>
+        <dl>
+          <div><dt>Subtotal</dt><dd>{formatPrice(order.subtotal)}</dd></div>
+          <div><dt>Shipping</dt><dd>{formatPrice(order.shippingTotal)}</dd></div>
+          <div><dt>Discount</dt><dd>-{formatPrice(order.discountTotal)}</dd></div>
+          <div><dt>Tax</dt><dd>{formatPrice(order.taxTotal)}</dd></div>
+        </dl>
+        <div><span>Total Payable</span><strong>{formatPrice(order.total)}</strong></div>
+      </section>
+
+      <div className="gs-order-actions">
+        <Link href="/profile?section=orders" className="tp-btn tp-btn-border"><i className="fa-regular fa-arrow-left" aria-hidden="true"></i> Back</Link>
+        <Link href="/contact" className="tp-btn">Need Help?</Link>
+      </div>
+    </div>
+  );
+}
+
 function OrderDetails({ order }) {
   const billingLines = addressLines(order.billing, true);
   const shippingLines = addressLines(order.shipping);
   const shippingMethod = order.shippingLines?.[0]?.method_title || "Cash on Delivery Shipping";
 
   return (
-    <div className="invoice__wrapper grey-bg-2 pt-50 pb-50 pl-40 pr-40">
+    <div className="invoice__wrapper gs-order-desktop d-none d-md-block grey-bg-2 pt-50 pb-50 pl-40 pr-40">
       <div className="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-35">
         <div>
           <span className="text-uppercase" style={{ letterSpacing: 1, fontSize: 12 }}>
@@ -313,8 +415,9 @@ const SingleOrder = ({ params }) => {
     <Wrapper>
       <SEO pageTitle={order ? `Order #${order.number || order.id}` : "Order Details"} />
       <HeaderTwo style_2={true} />
-      <CommonBreadcrumb title="Order Details" subtitle="Account" center={true} />
-      <section className="invoice__area pt-120 pb-120">
+      <main id="main-content" tabIndex="-1" className="gs-order-page-shell">
+        <CommonBreadcrumb title="Order Details" subtitle="Account" center={true} />
+        <section className="invoice__area pt-120 pb-120">
         <div className="container">
           {!accessToken && <GuestOrderFallback orderId={orderId} />}
           {accessToken && isLoading && (
@@ -332,9 +435,10 @@ const SingleOrder = ({ params }) => {
               </Link>
             </div>
           )}
-          {accessToken && order && <OrderDetails order={order} />}
+          {accessToken && order && <><MobileOrderDetails order={order} /><OrderDetails order={order} /></>}
         </div>
-      </section>
+        </section>
+      </main>
       <Footer primary_style={true} />
     </Wrapper>
   );

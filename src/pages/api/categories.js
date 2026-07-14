@@ -1,5 +1,6 @@
 import { wcFetch } from "@/lib/woocommerce";
 import { sendApiError } from "@/lib/api-error";
+import { setPublicCache } from "@/lib/cache-control";
 
 const FALLBACK_IMAGE = "/assets/img/logo/goynar-sur-logo.png";
 
@@ -29,6 +30,7 @@ export default async function handler(req, res) {
       products: Array.from({ length: category.count || 0 }),
     }));
 
+    setPublicCache(res, { sMaxage: 600, staleWhileRevalidate: 1800 });
     return res.status(200).json({ success: true, categories });
   } catch (error) {
     return sendApiError(res, error, "Categories are unavailable right now. Please try again soon.");

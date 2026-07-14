@@ -1,5 +1,6 @@
 import { getProducts } from "@/lib/woocommerce";
 import { sendApiError } from "@/lib/api-error";
+import { setPublicCache } from "@/lib/cache-control";
 import { mapWooProducts } from "@/utils/mapWooProduct";
 
 export default async function handler(req, res) {
@@ -36,6 +37,7 @@ export default async function handler(req, res) {
       discount: product.discount,
     }));
 
+    setPublicCache(res, { sMaxage: 60, staleWhileRevalidate: 300 });
     return res.status(200).json({
       success: true,
       suggestions,

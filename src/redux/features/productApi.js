@@ -65,6 +65,11 @@ export const productApi = apiSlice.injectEndpoints({
       }),
       providesTags: (result, error, arg) => [{ type: "Product", id: `${arg}-variations` }],
     }),
+    getProductFilters: builder.query({
+      query: () => "/api/products/filters",
+      transformResponse: (response) => response.filters || { categories: [], attributes: [], statuses: [] },
+      providesTags: ["ProductFilters"],
+    }),
   }),
 });
 
@@ -77,4 +82,5 @@ export const {
   useGetProductQuery,
   useGetRelatedProductsQuery,
   useGetProductVariationsQuery,
+  useGetProductFiltersQuery,
 } = productApi;

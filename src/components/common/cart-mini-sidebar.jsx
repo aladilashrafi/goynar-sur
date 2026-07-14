@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import useCartInfo from '@/hooks/use-cart-info';
 import RenderCartProgress from './render-cart-progress';
 import empty_cart_img from '@assets/img/product/cartmini/empty-cart.png';
-import { closeCartMini, remove_product } from '@/redux/features/cartSlice';
+import { add_cart_product, closeCartMini, quantityDecrement, remove_product } from '@/redux/features/cartSlice';
 import { formatPrice } from '@/utils/formatPrice';
 import { productUrl } from '@/utils/routes';
 import SalePrice from './sale-price';
@@ -32,11 +32,18 @@ const handleCloseCartMini = () => {
           <div className="cartmini__top-wrapper">
             <div className="cartmini__top p-relative">
               <div className="cartmini__top-title">
-                <h4>Shopping cart</h4>
+                <h4>Shopping Cart</h4>
+                <span className="gs-cartmini-count">
+                  {cart_products.length} {cart_products.length === 1 ? "item" : "items"}
+                </span>
               </div>
               <div className="cartmini__close">
                 <button onClick={() => dispatch(closeCartMini())} type="button" className="cartmini__close-btn cartmini-close-btn">
-                  <i className="fal fa-times"></i>
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
+                  <span className="visually-hidden">Close cart</span>
                 </button>
               </div>
             </div>
@@ -67,7 +74,12 @@ const handleCloseCartMini = () => {
                         className="gs-sale-price--compact"
                         currentPriceClassName="cartmini__price"
                       />
-                      <span className="cartmini__quantity">{" "}x{item.orderQuantity}</span>
+                      <span className="cartmini__quantity"> x{item.orderQuantity}</span>
+                    </div>
+                    <div className="gs-cartmini-quantity" aria-label={`Quantity for ${item.title}`}>
+                      <button type="button" onClick={() => dispatch(quantityDecrement(item))} aria-label={`Decrease ${item.title} quantity`}>−</button>
+                      <span>{item.orderQuantity}</span>
+                      <button type="button" onClick={() => dispatch(add_cart_product(item))} aria-label={`Increase ${item.title} quantity`}>+</button>
                     </div>
                   </div>
                   <a onClick={() => handleRemovePrd({ title: item.title, id: item._id })} className="cartmini__del cursor-pointer"><i className="fa-regular fa-xmark"></i></a>
@@ -86,9 +98,10 @@ const handleCloseCartMini = () => {
               <h4>Subtotal:</h4>
               <span>{formatPrice(total)}</span>
             </div>
+            <p className="gs-cartmini-shipping-note">Shipping calculated at checkout</p>
             <div className="cartmini__checkout-btn">
-              <Link href="/cart" onClick={handleCloseCartMini} className="tp-btn mb-10 w-100"> view cart</Link>
-              <Link href="/checkout" onClick={handleCloseCartMini} className="tp-btn tp-btn-border w-100"> checkout</Link>
+              <Link href="/checkout" onClick={handleCloseCartMini} className="tp-btn mb-10 w-100">Proceed to Checkout</Link>
+              <Link href="/cart" onClick={handleCloseCartMini} className="tp-btn tp-btn-border w-100">View Full Cart</Link>
             </div>
           </div>
         </div>

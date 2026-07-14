@@ -22,7 +22,7 @@ const StatusFilter = ({setCurrPage,shop_right=false}) => {
       nextQuery[filter.key] = filter.value;
     }
     router.push({
-      pathname: `/${shop_right ? "shop-right-sidebar" : "shop"}`,
+      pathname: router.pathname.includes("product-category") ? router.pathname : `/${shop_right ? "shop-right-sidebar" : "shop"}`,
       query: nextQuery,
     }, undefined, { scroll: false });
       dispatch(handleFilterSidebarClose())

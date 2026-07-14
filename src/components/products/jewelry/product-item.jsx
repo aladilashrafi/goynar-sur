@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
@@ -12,13 +12,32 @@ import { notifyWarning } from "@/utils/toast";
 import ProductRating from "@/components/common/product-rating";
 import SalePrice from "@/components/common/sale-price";
 
+function getVariationHint(product = {}) {
+  const variationAttribute = product.attributes?.find((attribute) =>
+    attribute.variation && attribute.options?.length
+  );
+  if (!variationAttribute) return "";
+  return `${variationAttribute.name}: ${variationAttribute.options.slice(0, 4).join(" / ")}`;
+}
+
+function isNewProduct(product = {}) {
+  if (!product.createdAt) return false;
+  const created = new Date(product.createdAt).getTime();
+  if (!Number.isFinite(created)) return false;
+  return Date.now() - created < 1000 * 60 * 60 * 24 * 30;
+}
+
 const ProductItem = ({ product }) => {
-  const { _id, img, title, price, regularPrice, discount, tags, status, isVariable, averageRating, ratingCount } = product || {};
+  const { _id, img, title, price, regularPrice, discount, tags, status, isVariable, averageRating, ratingCount, category, raw } = product || {};
   const { cart_products } = useSelector((state) => state.cart);
   const { wishlist } = useSelector((state) => state.wishlist);
   const isAddedToCart = cart_products.some((prd) => prd._id === _id);
   const isAddedToWishlist = wishlist.some((prd) => prd._id === _id);
   const dispatch = useDispatch();
+  const variationHint = getVariationHint(product);
+  const categoryName = category?.name || product?.parent || tags?.[0] || "Jewellery";
+  const featured = Boolean(raw?.featured);
+  const [actionsOpen, setActionsOpen] = useState(false);
 
   const openQuickView = (prd) => {
     dispatch(handleProductModal(prd));
@@ -41,7 +60,10 @@ const ProductItem = ({ product }) => {
   };
 
   return (
-    <div className="tp-product-item-4 p-relative mb-40">
+    <div
+      className={`tp-product-item-4 p-relative mb-40 gs-mobile-product-card ${actionsOpen ? "is-actions-open" : ""}`}
+      onTouchStart={() => setActionsOpen(true)}
+    >
       <div className="tp-product-thumb-4 p-relative fix">
         <Link href={productUrl(product)}>
           <Image
@@ -54,6 +76,8 @@ const ProductItem = ({ product }) => {
         </Link>
         <div className="tp-product-badge">
           {discount > 0 && <span className="product-offer">Save {discount}%</span>}
+          {isNewProduct(product) && <span className="product-new">New</span>}
+          {featured && <span className="product-hot">Featured</span>}
           {status === 'out-of-stock' && <span className="product-hot">out-stock</span>}
         </div>
         <div className="tp-product-action-3 tp-product-action-4 has-shadow tp-product-action-blackStyle tp-product-action-brownStyle">
@@ -108,6 +132,7 @@ const ProductItem = ({ product }) => {
         </div>
       </div>
       <div className="tp-product-content-4">
+        <div className="gs-mobile-product-category">{categoryName}</div>
         <h3 className="tp-product-title-4">
           <Link href={productUrl(product)}>{title}</Link>
         </h3>
@@ -115,6 +140,7 @@ const ProductItem = ({ product }) => {
         <div className="tp-product-info-4">
           <p>{tags?.[0]}</p>
         </div>
+        {variationHint && <div className="gs-mobile-product-variation-hint">{variationHint}</div>}
 
         <div className="tp-product-price-inner-4">
           <div className="tp-product-price-wrapper-4">

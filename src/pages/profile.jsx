@@ -25,7 +25,7 @@ const ProfilePage = () => {
     <Wrapper>
       <SEO pageTitle="Account" />
       <HeaderTwo style_2={true} />
-      <main id="main-content" tabIndex="-1">
+      <main id="main-content" tabIndex="-1" className="gs-account-page-shell">
         <CommonBreadcrumb title="My Account" subtitle="Account" center={true} />
         {accessToken && <ProfileArea />}
       </main>

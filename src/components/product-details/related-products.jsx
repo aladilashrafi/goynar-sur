@@ -1,6 +1,6 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Scrollbar, Navigation,Autoplay } from "swiper/modules";
+import { Navigation, Autoplay } from "swiper/modules";
 // internal
 import { useGetRelatedProductsQuery } from "@/redux/features/productApi";
 import ProductItem from "../products/jewelry/product-item";

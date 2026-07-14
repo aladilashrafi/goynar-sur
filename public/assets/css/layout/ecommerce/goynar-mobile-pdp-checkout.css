@@ -350,18 +350,17 @@
   .gs-mobile-pdp-sticky-button {
     min-height: 48px;
     padding: 0 18px;
-    color: var(--gs-mobile-white);
+    color: var(--gs-mobile-maroon);
     border: 2px solid var(--gs-mobile-maroon);
     border-radius: 0;
-    background: var(--gs-mobile-maroon);
     font-size: 14px;
     font-weight: 700;
   }
 
   .gs-mobile-pdp .tp-product-details-buy-now-btn {
     margin-top: 8px;
-    color: var(--gs-mobile-maroon);
-    background: var(--gs-mobile-white);
+    color: var(--gs-mobile-white);
+    background: var(--gs-mobile-maroon);
   }
 
   .gs-mobile-pdp :is(.tp-product-details-add-to-cart-btn, .tp-product-details-buy-now-btn, .gs-mobile-pdp-sticky-button):disabled {

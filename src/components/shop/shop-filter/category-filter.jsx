@@ -15,8 +15,18 @@ const CategoryFilter = ({setCurrPage,shop_right=false}) => {
   // handle category route
   const handleCategoryRoute = (categoryId) => {
     setCurrPage(1);
-    const category = categories?.result?.find((item) => Number(item.id) === Number(categoryId));
-    router.push(`/product-category/${category?.slug || categoryId}`, undefined, { scroll: false });
+    const nextQuery = { ...router.query };
+
+    if (String(router.query.category) === String(categoryId)) {
+      delete nextQuery.category;
+      delete nextQuery.category_label;
+    } else {
+      const category = categories?.result?.find((item) => Number(item.id) === Number(categoryId));
+      nextQuery.category = String(categoryId);
+      nextQuery.category_label = category?.name || "";
+    }
+
+    router.push({ pathname: "/shop", query: nextQuery }, undefined, { scroll: false });
     dispatch(handleFilterSidebarClose());
   }
   // decide what to render

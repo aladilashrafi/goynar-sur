@@ -22,8 +22,9 @@ const SORT_MAP = {
   Rating: { orderby: "rating", order: "desc" },
 };
 
-const ShopPage = ({ query }) => {
+const ShopPage = () => {
   const router = useRouter();
+  const query = router.query;
   const [priceValue, setPriceValue] = useState([Number(query.min_price || 0), Number(query.max_price || 0)]);
   const [currPage, setCurrPage] = useState(1);
 
@@ -49,6 +50,14 @@ const ShopPage = ({ query }) => {
 
     if (query.min_price) params.set("min_price", query.min_price);
     if (query.max_price) params.set("max_price", query.max_price);
+    if (query.attribute) params.set("attribute", query.attribute);
+    if (query.attribute_term) params.set("attribute_term", query.attribute_term);
+    if (query.attribute_relation) params.set("attribute_relation", query.attribute_relation);
+    Object.entries(query).forEach(([key, value]) => {
+      if (key.startsWith("attr_pa_") && value) {
+        params.set(key, String(value));
+      }
+    });
 
     const sortParams = SORT_MAP[query.sort] || {};
     Object.entries(sortParams).forEach(([key, value]) => {
@@ -141,23 +150,15 @@ const ShopPage = ({ query }) => {
 
   return (
     <Wrapper>
-      <SEO pageTitle="Shop" />
-      <HeaderTwo style_2={true} />
-      <ShopBreadcrumb title="Shop" subtitle="Shop" />
-      {content}
-      <Footer primary_style={true} />
+      <div className="gs-shop-page-shell">
+        <SEO pageTitle="Shop" />
+        <HeaderTwo style_2={true} />
+        <ShopBreadcrumb title="Shop" subtitle="Shop" />
+        {content}
+        <Footer primary_style={true} />
+      </div>
     </Wrapper>
   );
 };
 
 export default ShopPage;
-
-export const getServerSideProps = async (context) => {
-  const { query } = context;
-
-  return {
-    props: {
-      query,
-    },
-  };
-};

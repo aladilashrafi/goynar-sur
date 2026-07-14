@@ -11,8 +11,10 @@ const CartPage = () => {
     <Wrapper>
       <SEO pageTitle="Cart" />
       <HeaderTwo style_2={true} />
-      <CommonBreadcrumb title="Shopping Cart" subtitle="Shopping Cart" />
-      <CartArea/>
+      <main id="main-content" tabIndex="-1" className="gs-cart-page-shell">
+        <CommonBreadcrumb title="Shopping Cart" subtitle="Shopping Cart" />
+        <CartArea/>
+      </main>
       <Footer primary_style={true} />
     </Wrapper>
   );

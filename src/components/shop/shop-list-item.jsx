@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import Image from "next/image";
 import Link from "next/link";
@@ -25,8 +25,12 @@ const ShopListItem = ({ product }) => {
     regularPrice,
     tags,
     description,
+    status,
+    isVariable,
   } = product || {};
   const dispatch = useDispatch()
+  const variationHint = product?.attributes?.find((attribute) => attribute.variation && attribute.options?.length);
+  const [actionsOpen, setActionsOpen] = useState(false);
 
   // handle add product
   const handleAddProduct = (prd) => {
@@ -49,7 +53,10 @@ const ShopListItem = ({ product }) => {
   };
 
   return (
-    <div className="tp-product-list-item d-md-flex">
+    <div
+      className={`tp-product-list-item d-md-flex gs-mobile-shop-list-item ${actionsOpen ? "is-actions-open" : ""}`}
+      onTouchStart={() => setActionsOpen(true)}
+    >
       <div className="tp-product-list-thumb p-relative fix">
         <Link href={productUrl(product)}>
           <Image
@@ -99,6 +106,7 @@ const ShopListItem = ({ product }) => {
       </div>
       <div className="tp-product-list-content">
         <div className="tp-product-content-2 pt-15">
+          <div className="gs-mobile-product-category">{category?.name || category || "Jewellery"}</div>
           <div className="tp-product-tag-2">
             {tags?.map((t, i) => <a key={i} href="#">{t}</a>)}
           </div>
@@ -120,9 +128,14 @@ const ShopListItem = ({ product }) => {
           <p>
             {description.substring(0, 100)}
           </p>
+          {variationHint && (
+            <div className="gs-mobile-product-variation-hint">
+              {variationHint.name}: {variationHint.options.slice(0, 4).join(" / ")}
+            </div>
+          )}
           <div className="tp-product-list-add-to-cart">
-            <button onClick={() => handleAddProduct(product)} className="tp-product-list-add-to-cart-btn">
-              Add To Cart
+            <button disabled={status === "out-of-stock"} onClick={() => handleAddProduct(product)} className="tp-product-list-add-to-cart-btn">
+              {isVariable ? "Select Options" : "Add To Cart"}
             </button>
           </div>
         </div>

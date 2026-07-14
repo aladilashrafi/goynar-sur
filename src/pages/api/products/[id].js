@@ -1,5 +1,6 @@
 import { getProductById, getProductBySlug } from "@/lib/woocommerce";
 import { sendApiError } from "@/lib/api-error";
+import { setPublicCache } from "@/lib/cache-control";
 import { mapWooProduct } from "@/utils/mapWooProduct";
 
 export default async function handler(req, res) {
@@ -18,6 +19,7 @@ export default async function handler(req, res) {
       return res.status(404).json({ success: false, message: "Product not found" });
     }
 
+    setPublicCache(res, { sMaxage: 300, staleWhileRevalidate: 600 });
     return res.status(200).json({ success: true, product: mapWooProduct(product) });
   } catch (error) {
     return sendApiError(

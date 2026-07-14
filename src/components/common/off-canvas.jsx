@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useSelector } from 'react-redux';
@@ -12,6 +12,7 @@ import MobileMenus from './mobile-menus';
 
 const OffCanvas = ({ isOffCanvasOpen, setIsCanvasOpen,categoryType = "electronics" }) => {
   const { user } = useSelector((state) => state.auth);
+  const drawerRef = useRef(null);
   const [isCategoryActive, setIsCategoryActive] = useState(false);
   const [isCurrencyActive, setIsCurrencyActive] = useState(false);
   const [isLanguageActive, setIsLanguageActive] = useState(false);
@@ -26,12 +27,39 @@ const OffCanvas = ({ isOffCanvasOpen, setIsCanvasOpen,categoryType = "electronic
     setIsCurrencyActive(!isCurrencyActive)
     setIsLanguageActive(false)
   }
+
+  useEffect(() => {
+    if (!isOffCanvasOpen) {
+      setIsCategoryActive(false);
+      setIsCurrencyActive(false);
+      setIsLanguageActive(false);
+      return undefined;
+    }
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") setIsCanvasOpen(false);
+    };
+    const handlePointerDown = (event) => {
+      if (drawerRef.current && !drawerRef.current.contains(event.target)) {
+        setIsCanvasOpen(false);
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("pointerdown", handlePointerDown, true);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("pointerdown", handlePointerDown, true);
+    };
+  }, [isOffCanvasOpen, setIsCanvasOpen]);
+
   return (
     <>
-      <div className={`offcanvas__area offcanvas__radius ${isOffCanvasOpen ? "offcanvas-opened" : ""}`}>
+      <div ref={drawerRef} className={`offcanvas__area offcanvas__radius ${isOffCanvasOpen ? "offcanvas-opened" : ""}`}>
         <div className="offcanvas__wrapper">
           <div className="offcanvas__close">
-            <button onClick={() => setIsCanvasOpen(false)} className="offcanvas__close-btn offcanvas-close-btn">
+            <button onClick={() => setIsCanvasOpen(false)} className="offcanvas__close-btn offcanvas-close-btn" aria-label="Close menu">
               <CloseTwo />
             </button>
           </div>
@@ -83,7 +111,12 @@ const OffCanvas = ({ isOffCanvasOpen, setIsCanvasOpen,categoryType = "electronic
         </div>
       </div>
       {/* body overlay start */}
-      <div onClick={() => setIsCanvasOpen(false)} className={`body-overlay ${isOffCanvasOpen ? 'opened' : ''}`}></div>
+      <div
+        onClick={() => setIsCanvasOpen(false)}
+        onPointerDown={() => setIsCanvasOpen(false)}
+        className={`body-overlay offcanvas-body-overlay ${isOffCanvasOpen ? 'opened' : ''}`}
+        aria-hidden="true"
+      ></div>
       {/* body overlay end */}
     </>
   );

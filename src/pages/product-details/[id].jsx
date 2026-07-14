@@ -69,8 +69,15 @@ const ProductDetailsPage = ({ query, initialProduct, productLoadFailed }) => {
 
 export default ProductDetailsPage;
 
-export const getServerSideProps = async (context) => {
-  const { query } = context;
+export const getStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: "blocking",
+  };
+};
+
+export const getStaticProps = async (context) => {
+  const query = { id: context.params?.id || "" };
   let initialProduct = null;
   let productLoadFailed = false;
 
@@ -93,5 +100,6 @@ export const getServerSideProps = async (context) => {
       initialProduct,
       productLoadFailed,
     },
+    revalidate: 300,
   };
 };

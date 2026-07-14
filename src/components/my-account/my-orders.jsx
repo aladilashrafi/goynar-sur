@@ -39,7 +39,10 @@ const MyOrders = ({ orderData, isLoading = false, isError = false }) => {
 
   return (
     <div className="profile__ticket">
-      <h3 className="profile__info-title">Order History</h3>
+      <div className="gs-order-history-heading">
+        <h3 className="profile__info-title">Order History</h3>
+        <span>{orderItems.length} {orderItems.length === 1 ? "order" : "orders"}</span>
+      </div>
       {orderItems.length === 0 && (
         <div
           style={{ height: "210px" }}
@@ -60,14 +63,17 @@ const MyOrders = ({ orderData, isLoading = false, isError = false }) => {
           {orderItems.map((item) => {
             const number = item.number || item.id;
             return (
-              <article className="account-order-card" key={item.id}>
-                <div><strong>Order #{number}</strong><span className={`status ${statusClass(item.status)}`}>{item.statusLabel || item.status}</span></div>
+              <article className={`account-order-card gs-order-card gs-order-${statusClass(item.status) || "default"}`} key={item.id}>
+                <header><div><strong>Order #{number}</strong><span>{item.createdAt ? dayjs(item.createdAt).format("MMMM D, YYYY · h:mm A") : "N/A"}</span></div><span className={`status ${statusClass(item.status)}`}>{item.statusLabel || item.status}</span></header>
                 <dl>
-                  <div><dt>Date</dt><dd>{item.createdAt ? dayjs(item.createdAt).format("MMMM D, YYYY") : "N/A"}</dd></div>
                   <div><dt>Total</dt><dd>{formatPrice(item.total)}</dd></div>
                   <div><dt>Items</dt><dd>{item.lineItems?.length || item.items?.length || 0}</dd></div>
+                  <div><dt>Payment</dt><dd>{item.paymentMethod === "cod" ? "COD" : item.paymentMethod || "COD"}</dd></div>
                 </dl>
-                <Link href={`/order/${item.id}`} className="tp-logout-btn" aria-label={`View order ${number}`}>View order</Link>
+                <footer>
+                  <Link href={`/order/${item.id}`} className="tp-logout-btn" aria-label={`View order ${number}`}>{item.status === "processing" ? "Track Order" : "View Details"}</Link>
+                  <Link href="/contact" className="gs-order-help">Need Help?</Link>
+                </footer>
               </article>
             );
           })}

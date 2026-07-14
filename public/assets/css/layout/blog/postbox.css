@@ -689,8 +689,8 @@
 }
 
 blockquote {
-  background: var(--tp-theme-primary);
-  padding: 45px 58px;
+  background: var(--tp-theme-blush);
+  padding: 20px 20px;
   margin-bottom: 35px;
   position: relative;
   z-index: 1;
@@ -703,8 +703,8 @@ blockquote {
 }
 blockquote p {
   line-height: 1.31;
-  font-size: 26px;
-  color: #fff;
+  font-size: 20px;
+  color: var(--tp-theme-primary);
   font-weight: 400;
 }
 blockquote cite {

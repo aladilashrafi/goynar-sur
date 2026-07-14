@@ -11,9 +11,12 @@ import { useGetShowCategoryQuery } from "@/redux/features/categoryApi";
 import { useGetAllProductsQuery, useGetPopularProductByTypeQuery } from "@/redux/features/productApi";
 import NiceSelect from "@/ui/nice-select";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useMemo, useState } from "react";
 
-export default function SearchPage({ query }) {
+export default function SearchPage() {
+  const router = useRouter();
+  const query = router.query;
   const { searchText = "", productType = "" } = query;
   const productQuery = useMemo(() => {
     const params = new URLSearchParams();
@@ -164,13 +167,3 @@ export default function SearchPage({ query }) {
     </Wrapper>
   );
 }
-
-export const getServerSideProps = async (context) => {
-  const { query } = context;
-
-  return {
-    props: {
-      query,
-    },
-  };
-};

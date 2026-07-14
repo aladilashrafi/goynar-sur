@@ -27,13 +27,13 @@ const ProfileArea = () => {
 
   return (
     <>
-      <section className="profile__area pt-120 pb-120">
+      <section className="profile__area gs-mobile-account pt-120 pb-120">
         <div className="container">
           <div className="profile__inner p-relative">
             <ProfileShape />
-            <div className="row">
+            <div className="row gs-account-layout">
               <div className="col-xxl-4 col-lg-4">
-                <div className="profile__tab mr-40">
+                <div className="profile__tab mr-40 gs-account-nav-shell">
                   <ProfileNavTab />
                 </div>
               </div>

@@ -3,8 +3,9 @@ import React, { useEffect } from "react";
 
 function BackToTopCom({ cls }) {
   useEffect(() => {
-    BackToTop(".back-to-top-wrapper");
-  },[]);
+    return BackToTop(".back-to-top-wrapper");
+  }, []);
+
   return (
     <div className={`back-to-top-wrapper ${cls || ""}`}>
       <button id="back_to_top" type="button" className="back-to-top-btn">

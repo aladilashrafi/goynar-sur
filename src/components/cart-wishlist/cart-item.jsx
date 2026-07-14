@@ -9,7 +9,7 @@ import { formatPrice } from "@/utils/formatPrice";
 import { productUrl } from "@/utils/routes";
 
 const CartItem = ({product}) => {
-  const {_id, id, img,title,price, orderQuantity = 0, selectedAttributes = [] } = product || {};
+  const {_id, img,title,price, orderQuantity = 0, selectedAttributes = [] } = product || {};
 
   const dispatch = useDispatch();
 
@@ -28,7 +28,7 @@ const CartItem = ({product}) => {
     }
 
   return (
-    <tr>
+    <tr className="gs-cart-product-row">
       {/* img */}
       <td className="tp-cart-img">
         <Link href={productUrl(product)}>
@@ -36,7 +36,7 @@ const CartItem = ({product}) => {
         </Link>
       </td>
       {/* title */}
-      <td className="tp-cart-title">
+      <td className="tp-cart-title gs-cart-product-info">
         <Link href={productUrl(product)}>{title}</Link>
         {selectedAttributes.length > 0 && (
           <p className="mb-0">
@@ -45,24 +45,24 @@ const CartItem = ({product}) => {
         )}
       </td>
       {/* price */}
-      <td className="tp-cart-price">
+      <td className="tp-cart-price gs-cart-line-total">
         <span>{formatPrice(price * orderQuantity)}</span>
       </td>
       {/* quantity */}
       <td className="tp-cart-quantity">
         <div className="tp-product-quantity mt-10 mb-10">
-          <span onClick={()=> handleDecrement(product)} className="tp-cart-minus">
+          <button type="button" onClick={()=> handleDecrement(product)} className="tp-cart-minus" aria-label={`Decrease ${title} quantity`}>
             <Minus />
-          </span>
+          </button>
           <input className="tp-cart-input" type="text" value={orderQuantity} readOnly />
-          <span onClick={()=> handleAddProduct(product)} className="tp-cart-plus">
+          <button type="button" onClick={()=> handleAddProduct(product)} className="tp-cart-plus" aria-label={`Increase ${title} quantity`}>
             <Plus />
-          </span>
+          </button>
         </div>
       </td>
       {/* action */}
       <td className="tp-cart-action">
-        <button onClick={()=> handleRemovePrd({title,id:_id})} className="tp-cart-action-btn">
+        <button onClick={()=> handleRemovePrd({title,id:_id})} className="tp-cart-action-btn" aria-label={`Remove ${title} from cart`}>
           <Close />
           <span>{" "}Remove</span>
         </button>

@@ -1,6 +1,7 @@
 import { customerHasPurchasedProduct } from "@/lib/customer-auth";
 import { sendApiError } from "@/lib/api-error";
 import { createProductReview, getProductReviews } from "@/lib/woocommerce";
+import { setPublicCache } from "@/lib/cache-control";
 import { mapWooReview, mapWooReviews } from "@/utils/mapWooReview";
 
 function getBearerToken(req) {
@@ -27,6 +28,7 @@ export default async function handler(req, res) {
         per_page: req.query.per_page || 20,
       });
 
+      setPublicCache(res, { sMaxage: 60, staleWhileRevalidate: 300 });
       return res.status(200).json({
         success: true,
         reviews: mapWooReviews(result.reviews),

@@ -1,5 +1,6 @@
 import { getProductById, getProductReviewSummaries, getProducts, getProductsByIds } from "@/lib/woocommerce";
 import { sendApiError } from "@/lib/api-error";
+import { setPublicCache } from "@/lib/cache-control";
 import { mapWooProducts } from "@/utils/mapWooProduct";
 
 export default async function handler(req, res) {
@@ -28,6 +29,7 @@ export default async function handler(req, res) {
 
     const reviewSummaries = await getProductReviewSummaries();
 
+    setPublicCache(res, { sMaxage: 300, staleWhileRevalidate: 600 });
     return res.status(200).json({
       success: true,
       products: mapWooProducts(related, reviewSummaries).filter((item) => item.id !== Number(req.query.id)),
